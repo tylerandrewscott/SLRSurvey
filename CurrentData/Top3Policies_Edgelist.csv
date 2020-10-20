@@ -1,0 +1,878 @@
+Policy 1,Policy 2,Policy 3
+Vulnerable,Lobby,FirstOther
+Permit,Vision,Regional Authority
+,,
+SLR Plan,Green Infra,FirstOther
+Innov Design,FirstOther,SecondOther
+Vulnerable,Lobby,Collab
+,,
+SLR Plan,Vulnerable,Collab
+DACs,Vision,Existing Agency
+Local Tax,Regional Authority,
+Lobby,Permits,Collab
+,,
+Permits,Green Infra,Collab
+SLR Plan,Vision,Existing Agency
+SLR Plan,Existing Agency,Collab
+Innov Design,Local Response,FirstOther
+,,
+Info Platform,Green Infra,Collab
+,,
+Info Platform,Innov Design,Existing Agency
+Permits,,
+Permits,Green Infra,Regional Authority
+Vulnerable,Green Infra,Innov Design
+Green Infra,Innov Design,Collab
+SLR Plan,Vision,Collab
+Vulnerable,Permits,Green Infra
+Vulnerable,Info Platform,Green Infra
+Vulnerable,Local Tax,Green Infra
+SLR Plan,DACs,Vision
+Permits,Info Platform,Collab
+SLR Plan,Green Infra,Innov Design
+SLR Plan,DACs,Existing Agency
+,,
+,,
+Permits,,
+Vulnerable,Green Infra,Local Response
+Vulnerable,DACs,Vision
+SLR Plan,Green Infra,Vision
+Local Tax,Permits,Collab
+,,
+Vulnerable,Lobby,Innov Design
+SLR Plan,Info Platform,Innov Design
+SLR Plan,Lobby,
+Info Platform,Innov Design,Collab
+Vulnerable,Innov Design,Existing Agency
+Info Platform,,
+,,
+Vulnerable,Permits,Collab
+SLR Plan,Green Infra,Collab
+DACs,Green Infra,Regional Authority
+SLR Plan,Vulnerabe,Collab
+Vulnerable,Info Platform,Collab
+Vulnerable,Vision,
+Lobby,DACs,Local Response
+FirstOther,,
+Permits,Info Platform,Collab
+,,
+,,
+SLR Plan,Permits,Collab
+SLR Plan,Innov Design,Collab
+Permits,Innov Design,Existing Agency
+Vision,Innov Design,FirstOther
+Local Tax,Regional Authority,Existing Agency
+SLR Plan,Innov Design,Regional Authority
+SLR Plan,Vision,Collab
+SLR Plan,DACs,Vision
+SLR Plan,Lobby,Regional Authority
+Vulnerable,DACs,Green Infra
+SLR Plan,FirstOther,SecondOther
+Permits,,
+SLR Plan,Permits,Collab
+Innov Design,Regional Authority,Collab
+,,
+SLR Plan,Permits,Vision
+SLR Plan,Local Tax,Collab
+SLR Plan,Green Infra,Vision
+Vulnerable,Info Platform,Green Infra
+SLR Plan,Vulnerable,Existing Agency
+SLR Plan,Green Infra,Regional Authority
+,,
+SLR Plan,Lobby,Collab
+,,
+Lobby,Permits,Collab
+SLR Plan,Local Tax,Regional Authority
+SLR Plan,Info Platform,Green Infra
+,,
+,,
+SLR Plan,Permits,Info Platform
+Info Platform,DACs,Collab
+SLR Plan,Lobby,Existing Agency
+Collab,,
+Vulnerable,DACs,Collab
+SLR Plan,Innov Design,Regional Authority
+,,
+SLR Plan,Green Infra,Regional Authority
+SLR Plan,Green Infra,Collab
+Lobby,Local Response,FirstOther
+Vulnerable,Green Infra,Existing Agency
+SLR Plan,Innov Design,Existing Agency
+,,
+SLR Plan,Info Platform,Green Infra
+SLR Plan,Local Tax,Existing Agency
+Lobby,Collab,FirstOther
+SLR Plan,Innov Design,Collab
+Vulnerable,Lobby,DACs
+Green Infra,Local Response,Existing Agency
+Lobby,Permits,Green Infra
+SLR Plan,Permits,Regional Authority
+Permits,Innov Design,Regional Authority
+SLR Plan,Permits,Collab
+SLR Plan,Vision,Existing Agency
+,,
+Vulnerable,Existing Agency,FirstOther
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+Collab,,
+SLR Plan,Vulnerable,Info Platform
+SLR Plan,Local Tax,Green Infra
+SLR Plan,Lobby,Green Infra
+DACs,Vision,Collab
+DACs,Local Response,Collab
+Vulnerable,Lobby,Collab
+Local Tax,Green Infra,Innov Design
+Vulnerable,Info Platform,Collab
+SLR Plan,Permits,Collab
+Permits,Regional Authority,Collab
+Lobby,Permits,Existing Agency
+SLR Plan,Green Infra,Regional Authority
+Permits,Existing Agency,Collab
+Lobby,Green Infra,Local Response
+SLR Plan,Vulnerable,Lobby
+SLR Plan,Lobby,Permits
+Regional Authority,FirstOther,SecondOther
+,,
+Green Infra,Innov Design,Existing Agency
+SLR Plan,Green Infra,Local Response
+Vulnerable,Green Infra,Collab
+Vulnerable,Existing Agency,
+Permits,Existing Agency,Collab
+Local Tax,Permits,Local Response
+Green Infra,Regional Authority,Collab
+Vulnerable,Regional Authority,Existing Agency
+Vulnerable,Innov Design,Existing Agency
+SLR Plan,Info Platform,Regional Authority
+SLR Plan,Vulnerable,Existing Agency
+Vulnerable,Lobby,Info Platform
+SLR Plan,Green Infra,Existing Agency
+Info Platform,,
+Lobby,Innov Design,Local Response
+SLR Plan,Info Platform,Existing Agency
+Permits,Green Infra,Innov Design
+SLR Plan,Vulnerable,Green Infra
+SLR Plan,Existing Agency,Collab
+Vulnerable,DACs,Collab
+Existing Agency,,
+SLR Plan,Vulnerable,Existing Agency
+Local Tax,DACs,FirstOther
+Vulnerable,Local Tax,Green Infra
+Info Platform,DACs,Green Infra
+Green Infra,Vision,Collab
+SLR Plan,Vision,Collab
+Lobby,DACs,Collab
+Permits,Info Platform,Collab
+SLR Plan,Permits,Innov Design
+Info Platform,DACs,Innov Design
+SLR Plan,Existing Agency,
+SLR Plan,Lobby,Existing Agency
+Innov Design,Collab,FirstOther
+Vulnerable,Green Infra,FirstOther
+,,
+Info Platform,Existing Agency,Collab
+SLR Plan,Vulnerable,Green Infra
+Permits,Collab,
+SLR Plan,Info Platform,Existing Agency
+SLR Plan,Green Infra,Existing Agency
+Lobby,DACs,Collab
+Lobby,Info Platform,DACs
+SLR Plan,Vulnerable,Info Platform
+Vulnerable,Existing Agency,FirstOther
+,,
+Local Tax,Regional Authority,Collab
+DACs,Existing Agency,Collab
+SLR Plan,Innov Design,Existing Agency
+Lobby,Regional Authority,Collab
+Lobby,Green Infra,Collab
+Lobby,Permits,Collab
+Vulnerable,Permits,Local Response
+SLR Plan,Vulnerable,Green Infra
+Lobby,Permits,Collab
+,,
+SLR Plan,Vulnerable,Green Infra
+Vulnerable,Permits,Innov Design
+SLR Plan,Vulnerable,Local Response
+SLR Plan,Collab,FirstOther
+Vulnerable,Local Tax,Regional Authority
+Permits,Innov Design,Existing Agency
+Local Tax,Permits,Innov Design
+FirstOther,,
+SLR Plan,Info Platform,Vision
+SLR Plan,Vulnerable,Collab
+SLR Plan,Info Platform,Collab
+Local Tax,DACs,Collab
+Vulnerable,Lobby,Collab
+SLR Plan,Vulnerable,Info Platform
+Vulnerable,Regional Authority,Collab
+Innov Design,Collab,FirstOther
+SLR Plan,Green Infra,Collab
+Local Tax,Lobby,Existing Agency
+SLR Plan,Info Platform,Existing Agency
+SLR Plan,Vision,Collab
+SLR Plan,Vulnerable,Collab
+,,
+Lobby,Permits,Existing Agency
+SLR Plan,Vulnerable,Info Platform
+Green Infra,FirstOther,SecondOther
+SLR Plan,Vulnerable,Green Infra
+SLR Plan,Existing Agency,Collab
+SLR Plan,Vulnerable,Existing Agency
+Vulnerable,DACs,FirstOther
+Green Infra,Vision,Collab
+SLR Plan,Local Tax,DACs
+Permits,Green Infra,Existing Agency
+Vulnerable,Info Platform,Existing Agency
+Permits,Green Infra,Innov Design
+DACs,Green Infra,Collab
+Lobby,Permits,DACs
+Vulnerable,DACs,Green Infra
+SLR Plan,Lobby,DACs
+Lobby,Green Infra,Innov Design
+Vulnerable,Info Platform,Collab
+SLR Plan,Permits,Existing Agency
+,,
+SLR Plan,Vulnerable,Collab
+Vulnerable,Permits,Existing Agency
+SLR Plan,Vulnerable,Info Platform
+,,
+Innov Design,Regional Authority,Collab
+SLR Plan,Local Tax,Vision
+SLR Plan,Lobby,Existing Agency
+SLR Plan,Existing Agency,Collab
+DACs,Green Infra,Vision
+SLR Plan,Vulnerable,Info Platform
+DACs,Regional Authority,
+SLR Plan,,
+SLR Plan,Existing Agency,Collab
+,,
+Lobby,Green Infra,Collab
+Vision,Regional Authority,Collab
+Green Infra,Innov Design,Regional Authority
+Local Tax,Permits,Collab
+Collab,,
+Permits,DACs,Vision
+Lobby,DACs,Local Response
+Local Tax,Green Infra,Existing Agency
+,,
+SLR Plan,Permits,Info Platform
+Permits,DACs,FirstOther
+Green Infra,Regional Authority,
+,,
+SLR Plan,DACs,Green Infra
+Permits,DACs,Vision
+Lobby,Innov Design,Collab
+Permits,Vision,Collab
+SLR Plan,DACs,Collab
+Local Response,Existing Agency,FirstOther
+SLR Plan,Info Platform,Collab
+Vulnerable,Lobby,Vision
+Permits,Innov Design,Local Response
+Lobby,Innov Design,Collab
+SLR Plan,Green Infra,Collab
+Local Tax,Green Infra,Local Response
+SLR Plan,Vulnerable,Green Infra
+Info Platform,Innov Design,Collab
+Vulnerable,Permits,Existing Agency
+Vulnerable,DACs,Local Response
+SLR Plan,,
+SLR Plan,Local Tax,Lobby
+SLR Plan,Green Infra,Existing Agency
+Lobby,Permits,Regional Authority
+Lobby,Permits,Innov Design
+SLR Plan,Collab,FirstOther
+SLR Plan,Permits,Vision
+Lobby,Vision,Innov Design
+SLR Plan,Local Tax,Info Platform
+Vulnerable,,
+Lobby,Green Infra,Innov Design
+Green Infra,Innov Design,Existing Agency
+Vision,Collab,FirstOther
+Vulnerable,Lobby,Info Platform
+Vulnerable,Info Platform,Existing Agency
+Vulnerable,Green Infra,Local Response
+SLR Plan,Lobby,DACs
+Vulnerable,Local Tax,Local Response
+Permits,DACs,Existing Agency
+Vulnerable,Lobby,Existing Agency
+SLR Plan,Permits,Collab
+DACs,Green Infra,Existing Agency
+SLR Plan,Innov Design,Local Response
+SLR Plan,Local Tax,Permits
+Vulnerable,DACs,Vision
+SLR Plan,Info Platform,Vision
+SLR Plan,Vulnerable,Existing Agency
+Lobby,Green Infra,Local Response
+SLR Plan,Vulnerable,Existing Agency
+SLR Plan,Vulnerable,Collab
+SLR Plan,Lobby,Permits
+SLR Plan,Local Tax,Info Platform
+Lobby,Innov Design,Local Response
+SLR Plan,Vulnerable,Green Infra
+Green Infra,Existing Agency,Collab
+SLR Plan,Local Tax,Regional Authority
+Vulnerable,Lobby,Local Response
+Lobby,DACs,
+,,
+,,
+Vulnerable,Lobby,Collab
+Vision,Innov Design,Collab
+Vulnerable,Lobby,DACs
+Lobby,Vision,Innov Design
+FirstOther,SecondOther,
+Vulnerable,Local Tax,Green Infra
+Green Infra,Innov Design,Collab
+Lobby,DACs,Collab
+SLR Plan,Lobby,Regional Authority
+Lobby,Vision,Collab
+DACs,Regional Authority,Collab
+SLR Plan,DACs,Vision
+SLR Plan,Green Infra,Innov Design
+Permits,Vision,Collab
+SLR Plan,Info Platform,Regional Authority
+SLR Plan,Regional Authority,Collab
+Green Infra,Collab,FirstOther
+Lobby,Green Infra,Existing Agency
+SLR Plan,Permits,Collab
+Lobby,Regional Authority,Existing Agency
+Info Platform,FirstOther,SecondOther
+SLR Plan,Info Platform,Collab
+Vision,Regional Authority,Collab
+SLR Plan,Vulnerable,Permits
+Vulnerable,Permits,Green Infra
+Lobby,Info Platform,Green Infra
+SLR Plan,Info Platform,Vision
+SLR Plan,Lobby,Collab
+Vulnerable,Info Platform,Existing Agency
+Permits,DACs,Collab
+Permits,Green Infra,Regional Authority
+SLR Plan,Vulnerable,Collab
+Vulnerable,Info Platform,Collab
+,,
+Green Infra,Vision,Collab
+Vulnerable,Info Platform,Collab
+,,
+SLR Plan,Info Platform,Existing Agency
+Regional Authority,,
+Green Infra,Existing Agency,Collab
+SLR Plan,Vulnerable,Vision
+Lobby,Green Infra,Regional Authority
+Vulnerable,Green Infra,Regional Authority
+Collab,,
+Info Platform,Vision,Collab
+Permits,Local Response,Collab
+Vulnerable,Lobby,DACs
+Permits,Local Response,Collab
+Local Tax,Permits,Info Platform
+SLR Plan,Local Tax,Permits
+Vulnerable,Vision,Collab
+SLR Plan,Permits,Green Infra
+Info Platform,DACs,Green Infra
+SLR Plan,Lobby,DACs
+SLR Plan,Green Infra,Innov Design
+DACs,Green Infra,FirstOther
+SLR Plan,Vision,Existing Agency
+SLR Plan,Innov Design,Regional Authority
+Vulnerable,Lobby,Collab
+DACs,,
+SLR Plan,Local Tax,Existing Agency
+SLR Plan,Green Infra,Collab
+Green Infra,Innov Design,FirstOther
+Info Platform,DACs,Innov Design
+Permits,DACs,Collab
+Vulnerable,Existing Agency,FirstOther
+Vulnerable,Innov Design,Collab
+SLR Plan,Vision,
+Permits,Green Infra,Innov Design
+SLR Plan,Green Infra,Vision
+Lobby,FirstOther,SecondOther
+SLR Plan,Local Tax,Collab
+Info Platform,DACs,Regional Authority
+DACs,Green Infra,Collab
+SLR Plan,Innov Design,Collab
+SLR Plan,Vulnerable,Collab
+SLR Plan,Vulnerable,Permits
+Green Infra,Vision,Collab
+Green Infra,Innov Design,Collab
+SLR Plan,Vulnerable,Lobby
+DACs,Existing Agency,Collab
+SLR Plan,Innov Design,Collab
+SLR Plan,Local Tax,Regional Authority
+Local Tax,Innov Design,Existing Agency
+SLR Plan,Permits,Green Infra
+SLR Plan,Permits,Collab
+Permits,Info Platform,Green Infra
+Green Infra,Innov Design,FirstOther
+Green Infra,Local Response,Collab
+Local Tax,Permits,Green Infra
+Lobby,Permits,FirstOther
+SLR Plan,Vulnerable,Green Infra
+SLR Plan,Info Platform,Regional Authority
+Green Infra,Vision,Collab
+SLR Plan,Vulnerable,Collab
+Vulnerable,Permits,Collab
+Permits,Local Response,FirstOther
+SLR Plan,Vulnerable,Existing Agency
+Permits,Green Infra,Collab
+SLR Plan,Green Infra,Regional Authority
+Vulnerable,Local Tax,Green Infra
+SLR Plan,Green Infra,Existing Agency
+Info Platform,Green Infra,Innov Design
+Green Infra,Vision,Collab
+Vulnerable,DACs,FirstOther
+,,
+Local Tax,Info Platform,Vision
+FirstOther,SecondOther,
+Info Platform,DACs,FirstOther
+Vulnerable,Permits,Regional Authority
+SLR Plan,Vision,Regional Authority
+SLR Plan,Existing Agency,Collab
+SLR Plan,Info Platform,Green Infra
+SLR Plan,Info Platform,Green Infra
+Info Platform,Innov Design,Existing Agency
+Permits,Regional Authority,Collab
+SLR Plan,Local Tax,Existing Agency
+Permits,Regional Authority,Collab
+DACs,Vision,Existing Agency
+Vulnerable,FirstOther,SecondOther
+SLR Plan,Regional Authority,Collab
+,,
+,,
+SLR Plan,Regional Authority,Collab
+Permits,Info Platform,Collab
+Vulnerable,Permits,FirstOther
+Green Infra,,
+Vulnerable,Local Tax,Lobby
+Green Infra,Innov Design,Collab
+Permits,Existing Agency,Collab
+Local Tax,Permits,Green Infra
+Vulnerable,Local Response,Regional Authority
+Permits,Local Response,Collab
+Permits,Green Infra,Innov Design
+,,
+Info Platform,Vision,Collab
+SLR Plan,DACs,Collab
+SLR Plan,Vulnerable,Info Platform
+,,
+SLR Plan,Lobby,Permits
+SLR Plan,Green Infra,Regional Authority
+SLR Plan,Info Platform,Innov Design
+SLR Plan,Local Tax,Green Infra
+SLR Plan,Vulnerable,Collab
+Lobby,DACs,Regional Authority
+Permits,Green Infra,Collab
+Local Tax,Lobby,Collab
+Vulnerable,Permits,Green Infra
+Vulnerable,Green Infra,Existing Agency
+Green Infra,Vision,Innov Design
+Info Platform,Green Infra,Collab
+Lobby,DACs,Innov Design
+SLR Plan,Permits,Existing Agency
+Lobby,Local Response,
+Lobby,Permits,DACs
+Vulnerable,Permits,Innov Design
+SLR Plan,DACs,Green Infra
+SLR Plan,Local Tax,Permits
+Permits,Green Infra,Local Response
+Local Tax,Permits,Existing Agency
+SLR Plan,Info Platform,Existing Agency
+Lobby,Existing Agency,Collab
+DACs,Green Infra,FirstOther
+Lobby,Green Infra,Collab
+Permits,FirstOther,
+Local Tax,Innov Design,Collab
+SLR Plan,Info Platform,Regional Authority
+,,
+Local Tax,Green Infra,Existing Agency
+SLR Plan,Vulnerable,Existing Agency
+SLR Plan,Info Platform,Existing Agency
+Local Tax,Permits,Existing Agency
+Lobby,Permits,Existing Agency
+Vulnerable,Local Tax,Regional Authority
+SLR Plan,Green Infra,Existing Agency
+SLR Plan,Regional Authority,Collab
+Lobby,DACs,Green Infra
+Green Infra,Existing Agency,Collab
+Lobby,Info Platform,Collab
+Green Infra,Collab,FirstOther
+Vulnerable,Regional Authority,Collab
+DACs,Existing Agency,
+Vulnerable,Innov Design,Collab
+DACs,Vision,Collab
+SLR Plan,Green Infra,Innov Design
+DACs,Green Infra,Existing Agency
+SLR Plan,Innov Design,Local Response
+,,
+SLR Plan,Lobby,Collab
+,,
+Vulnerable,Lobby,Local Response
+SLR Plan,Vulnerable,Permits
+Lobby,Info Platform,Collab
+,,
+Permits,Green Infra,Regional Authority
+Local Tax,Permits,Green Infra
+Info Platform,Green Infra,Collab
+Vulnerable,DACs,Green Infra
+DACs,Innov Design,Existing Agency
+SLR Plan,Vulnerable,Green Infra
+Permits,Info Platform,Existing Agency
+Info Platform,Innov Design,FirstOther
+Existing Agency,,
+Lobby,Permits,Existing Agency
+,,
+SLR Plan,Vulnerable,Collab
+,,
+Vulnerable,Green Infra,FirstOther
+Vision,Existing Agency,Collab
+SLR Plan,Info Platform,Green Infra
+FirstOther,,
+Info Platform,Existing Agency,Collab
+Vulnerable,Existing Agency,Collab
+Green Infra,Existing Agency,Collab
+Permits,Existing Agency,Collab
+SLR Plan,Local Tax,Existing Agency
+SLR Plan,Existing Agency,Collab
+Regional Authority,,
+Vulnerable,DACs,Green Infra
+Green Infra,Regional Authority,
+DACs,Green Infra,Vision
+Local Tax,Green Infra,Collab
+Info Platform,Regional Authority,FirstOther
+Green Infra,Innov Design,Collab
+SLR Plan,Permits,Green Infra
+SLR Plan,Local Tax,Lobby
+Lobby,DACs,Collab
+SLR Plan,Lobby,Collab
+Lobby,Vision,Collab
+,,
+SLR Plan,DACs,Collab
+,,
+Lobby,Permits,
+SLR Plan,Permits,Local Response
+Permits,Innov Design,Local Response
+DACs,Innov Design,Collab
+Permits,DACs,Existing Agency
+Local Tax,Permits,Regional Authority
+SLR Plan,Innov Design,Collab
+SLR Plan,Permits,Innov Design
+Vision,Local Response,Existing Agency
+DACs,Vision,
+Local Tax,Info Platform,Collab
+Local Tax,Permits,DACs
+SLR Plan,Local Tax,Regional Authority
+,,
+DACs,FirstOther,
+Local Tax,Lobby,Existing Agency
+SLR Plan,Green Infra,Regional Authority
+SLR Plan,Local Tax,Regional Authority
+Vulnerable,DACs,Green Infra
+Permits,DACs,Vision
+Local Tax,Green Infra,Existing Agency
+Lobby,Green Infra,Existing Agency
+Vulnerable,Lobby,Green Infra
+Vulnerable,Info Platform,Collab
+SLR Plan,Vulnerable,Info Platform
+SLR Plan,Lobby,DACs
+Info Platform,Existing Agency,Collab
+Local Tax,Permits,Existing Agency
+SLR Plan,Green Infra,
+Green Infra,Vision,Regional Authority
+Permits,DACs,Collab
+Permits,Green Infra,Vision
+Green Infra,Vision,Regional Authority
+Green Infra,Regional Authority,Collab
+,,
+Lobby,Green Infra,Collab
+SLR Plan,Permits,Collab
+Info Platform,Existing Agency,Collab
+Vulnerable,Lobby,Collab
+Lobby,Innov Design,Local Response
+SLR Plan,Vulnerable,Green Infra
+Vulnerable,Lobby,Info Platform
+SLR Plan,Vulnerable,Existing Agency
+SLR Plan,Regional Authority,FirstOther
+SLR Plan,Info Platform,Existing Agency
+Permits,Vision,Collab
+SLR Plan,Local Tax,Lobby
+Local Tax,Permits,Existing Agency
+Permits,Green Infra,Collab
+Vulnerable,Info Platform,DACs
+Lobby,DACs,Existing Agency
+Local Tax,Vision,Existing Agency
+Lobby,Green Infra,Collab
+Lobby,Info Platform,Collab
+SLR Plan,Info Platform,Collab
+Local Tax,DACs,Regional Authority
+SLR Plan,Innov Design,Collab
+Lobby,Permits,Existing Agency
+Info Platform,DACs,Green Infra
+SLR Plan,Innov Design,Regional Authority
+Vulnerable,DACs,Existing Agency
+Vulnerable,Green Infra,Regional Authority
+Info Platform,Collab,
+SLR Plan,Existing Agency,Collab
+Vulnerable,Lobby,Green Infra
+Permits,Green Infra,Collab
+Vulnerable,Permits,
+,,
+SLR Plan,Green Infra,Innov Design
+Lobby,Permits,Collab
+Lobby,Existing Agency,Collab
+SLR Plan,Lobby,Permits
+SLR Plan,Regional Authority,Existing Agency
+Vulnerable,Info Platform,Vision
+SLR Plan,Info Platform,Regional Authority
+DACs,Green Infra,Existing Agency
+DACs,Existing Agency,FirstOther
+Vulnerable,Permits,Green Infra
+Permits,Green Infra,Existing Agency
+Permits,Innov Design,Collab
+SLR Plan,Local Tax,Lobby
+Collab,,
+Vulnerable,Permits,Info Platform
+Lobby,Info Platform,FirstOther
+Info Platform,Green Infra,Collab
+Lobby,Local Response,Collab
+Info Platform,DACs,Collab
+DACs,Existing Agency,Collab
+SLR Plan,Vulnerable,DACs
+Vulnerable,Info Platform,FirstOther
+SLR Plan,Info Platform,Existing Agency
+Vulnerable,Lobby,Info Platform
+Lobby,Info Platform,Green Infra
+Vulnerable,Info Platform,DACs
+Info Platform,,
+Local Tax,,
+SLR Plan,Green Infra,Collab
+Vulnerable,Permits,Vision
+SLR Plan,Green Infra,Collab
+Vulnerable,Green Infra,Existing Agency
+Local Tax,Lobby,Collab
+Vulnerable,Local Response,
+Vulnerable,Info Platform,Collab
+Lobby,Vision,
+SLR Plan,Vulnerable,Existing Agency
+Green Infra,Vision,Collab
+Vulnerable,Innov Design,Existing Agency
+Permits,Innov Design,Existing Agency
+Permits,Info Platform,Collab
+Permits,Green Infra,Local Response
+Vulnerable,DACs,Innov Design
+Local Tax,,
+SLR Plan,Vulnerable,Lobby
+Lobby,Green Infra,Existing Agency
+,,
+Vulnerable,Permits,Collab
+Local Tax,Lobby,Green Infra
+SLR Plan,DACs,Regional Authority
+,,
+SLR Plan,Permits,Collab
+SLR Plan,Permits,Green Infra
+,,
+SLR Plan,Info Platform,
+Vulnerable,Vision,Collab
+,,
+DACs,Green Infra,Vision
+SLR Plan,DACs,Existing Agency
+Vulnerable,Lobby,Collab
+,,
+DACs,Green Infra,Collab
+DACs,Innov Design,Regional Authority
+Lobby,Green Infra,Vision
+Lobby,DACs,Green Infra
+Lobby,Regional Authority,Collab
+Lobby,Permits,Collab
+SLR Plan,Info Platform,Innov Design
+SLR Plan,Vulnerable,Collab
+SLR Plan,Vulnerable,Collab
+,,
+,,
+Info Platform,Green Infra,FirstOther
+SLR Plan,Green Infra,Vision
+SLR Plan,Green Infra,Collab
+,,
+Lobby,Green Infra,Regional Authority
+Local Tax,DACs,Innov Design
+SLR Plan,Green Infra,Regional Authority
+DACs,Innov Design,Collab
+SLR Plan,Permits,Existing Agency
+Lobby,Regional Authority,Existing Agency
+SLR Plan,Info Platform,Collab
+,,
+Regional Authority,,
+Lobby,Permits,Local Response
+SLR Plan,Vision,Collab
+DACs,Vision,Local Response
+Green Infra,Innov Design,
+SLR Plan,Permits,Green Infra
+SLR Plan,Vulnerable,Collab
+Lobby,Info Platform,Existing Agency
+SLR Plan,Existing Agency,Collab
+,,
+SLR Plan,Permits,Vision
+Green Infra,Vision,
+Permits,Green Infra,Existing Agency
+Permits,Green Infra,
+Permits,Info Platform,Collab
+Lobby,Green Infra,Regional Authority
+Green Infra,Innov Design,Existing Agency
+DACs,Green Infra,Innov Design
+Vulnerable,Vision,Innov Design
+Vulnerable,DACs,Innov Design
+Permits,Info Platform,Collab
+,,
+SLR Plan,Vulnerable,Collab
+SLR Plan,Regional Authority,Existing Agency
+SLR Plan,Lobby,Collab
+DACs,Green Infra,Collab
+Permits,Innov Design,FirstOther
+SLR Plan,Vulnerable,Local Tax
+DACs,Innov Design,Existing Agency
+SLR Plan,Vulnerable,Vision
+Permits,Green Infra,Vision
+SLR Plan,Local Tax,DACs
+Vulnerable,Innov Design,Existing Agency
+,,
+,,
+SLR Plan,Local Tax,Permits
+SLR Plan,Info Platform,Collab
+SLR Plan,Vulnerable,DACs
+Lobby,DACs,Regional Authority
+SLR Plan,Permits,Green Infra
+SLR Plan,,
+SLR Plan,DACs,Collab
+,,
+Lobby,Info Platform,Collab
+FirstOther,,
+,,
+Permits,Existing Agency,Collab
+Local Tax,DACs,Collab
+SLR Plan,Info Platform,Collab
+SLR Plan,Permits,Existing Agency
+Lobby,Vision,Existing Agency
+SLR Plan,Lobby,Existing Agency
+Info Platform,Green Infra,Collab
+SLR Plan,Green Infra,Regional Authority
+,,
+Lobby,Permits,DACs
+SLR Plan,Permits,Collab
+SLR Plan,Info Platform,DACs
+DACs,Existing Agency,
+Lobby,Permits,Collab
+,,
+Permits,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+SLR Plan,DACs,Regional Authority
+,,
