@@ -1,6 +1,7 @@
 setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentData")
 library(igraph)
 library(netrankr)
+
 Top3Policies_Edgelist <- read.csv("Top3Policies_Edgelist.csv")
 Top3Policies_Edgelist <- as.matrix(Top3Policies_Edgelist)
 Top3PoliciesNetwork <- as.data.frame(rbind(Top3Policies_Edgelist [,1:2], Top3Policies_Edgelist[,2:3]))
