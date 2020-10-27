@@ -159,6 +159,28 @@ modularity(eb_concerns) #modularity
 membership(eb_concerns) #assignment of nodes to communities
 plot(eb_concerns, concernsnet)
 
+#Counting possible combinations that occur in each single network-------------------------
+
+#Trying to get at the number of times different direct connections occur between two nodes in policies edgelist to see which are commonly selected together
+
+unique(finpolicyedge$P1)
+unique(finpolicyedge$P2)
+
+library(dplyr)
+
+policycombos <- finpolicyedge %>% count(P1, P2)
+
+#do this for concerns and barriers too
+concerncombos <- finconcernedge %>% count(C1, C2)
+barriercombos <- finbarrieredge %>% count(B1, B2) 
+
+#output these to excel and will need to combine the identical reverse connections (water and transpo with transpo and water)
+
+library(writexl)
+write_xlsx(policycombos, "policycombos.xlsx")
+write_xlsx(concerncombos, "concerncombos.xlsx")
+write_xlsx(barriercombos, "barriercombos.xlsx")
+
 #Barriers network-------------------------------------------------------------------------
 
 
