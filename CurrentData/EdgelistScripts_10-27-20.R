@@ -1,6 +1,7 @@
 setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentData")
 library(igraph)
 library(netrankr)
+library(sna)
 
 #Concerns to concerns edgelist----------------------------------------------------
 Concerns_Raw <- read.csv("SLR_raw_concerns.csv")
@@ -83,10 +84,10 @@ nodenum_policies
 edgesnum_policies
 
 #calculate the density
-dyads_policies=(nodenum_policies*(nodenum_policies -1))/2
-density_policies=edgesnum_policies/dyads_policies
-density_policies
-#can also just use function
+#dyads_policies=(nodenum_policies*(nodenum_policies -1))/2
+#density_policies=edgesnum_policies/dyads_policies
+#density_policies
+#can also just use function which is easier
 edge_density(policiesnet)
 
 #plot the degree distribution (statistical distribution of node degrees in network) for policies
@@ -177,10 +178,18 @@ barriercombos <- finbarrieredge %>% count(B1, B2)
 #output these to excel and will need to combine the identical reverse connections (water and transpo with transpo and water)
 
 library(writexl)
-write_xlsx(policycombos, "policycombos.xlsx")
-write_xlsx(concerncombos, "concerncombos.xlsx")
-write_xlsx(barriercombos, "barriercombos.xlsx")
+#write_xlsx(policycombos, "policycombos.xlsx")
+#write_xlsx(concerncombos, "concerncombos.xlsx")
+#write_xlsx(barriercombos, "barriercombos.xlsx")
 
-#Barriers network-------------------------------------------------------------------------
-
+#Using sna package-------------------------------------------------------------------------
+snapolicyedge <- as.edgelist.sna(finpolicyedge)
+gplot(snapolicyedge)
+?gplot
+policynetwork <- network(finpolicyedge, directed=FALSE)
+gplot(policynetwork, usearrows=FALSE, edge.lwd = 0.2,
+      vertex.cex = degree(policynetwork)/100,
+      interactive = TRUE) # Modify and save the exact coordinates to reproduce
+#save to object coord to reproduce same graph 
+#gplot(net, displaylabels = F,usearrows= F,edge.col = edgeColors,edge.lwd = 0.2,coord = coords) # Modify and save
 
