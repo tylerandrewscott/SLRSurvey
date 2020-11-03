@@ -47,7 +47,6 @@ barrieredgelist <- barrieredgelist[rowSums(is.na(barrieredgelist))==0, ]
 finbarrieredge<-barrieredgelist[!(barrieredgelist$B1==""|barrieredgelist$B2==""), ]
 
 #Create weighted edgelists------------------------------
-install.packages("data.table")
 library(data.table)
 #create data table for policies from existing edge list
 policy.data.table <- data.table(finpolicyedge)
@@ -86,13 +85,13 @@ setnames(weightedbarriers, "barrier.data.table.1", "B2")
 set.seed(2)
 policiesnet=graph_from_data_frame(weightedpolicies, directed=FALSE)
 policiesnet
-plot(policiesnet, edge.width=E(policiesnet)$weight, layout=layout_with_fr)
 
-#create degree to size nodes and replot with new layout
+#create degree to size nodes 
 polde=igraph::degree(policiesnet)
-plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_graphopt)
-plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_dh)
-plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_fr)
+#replot with new layouts
+plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="darkseagreen")
+plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="darkseagreen")
+plot(policiesnet,vertex.size=polde, edge.width=E(policiesnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="darkseagreen")
 
 #create concerns network---------------------------
 set.seed(2)
@@ -100,8 +99,9 @@ concernsnet=graph_from_data_frame(weightedconcerns, directed=FALSE)
 
 #create degree to size nodes and replot with new layout
 conde=igraph::degree(concernsnet)
-plot(concernsnet,vertex.size=conde, edge.width=E(concernsnet)$weight/10, layout=layout_with_graphopt)
-plot(concernsnet,vertex.size=conde, edge.width=E(concernsnet)$weight/10, layout=layout_with_fr)
+plot(concernsnet,vertex.size=conde, edge.width=E(concernsnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="goldenrod1")
+plot(concernsnet,vertex.size=conde, edge.width=E(concernsnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="goldenrod1")
+plot(concernsnet,vertex.size=conde, edge.width=E(concernsnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="goldenrod1")
 
 #create barriers network---------------------------------------
 set.seed(2)
@@ -109,5 +109,6 @@ barriersnet=graph_from_data_frame(weightedbarriers, directed=FALSE)
 
 #create degree to size nodes and replot with new layout
 barde=igraph::degree(barriersnet)
-plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_graphopt)
-plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_dh)
+plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
