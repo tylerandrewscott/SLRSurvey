@@ -125,7 +125,7 @@ Stormwater,Ecosystem,Erosion
 Transpo,Erosion,Stormwater
 Transpo,Ecosystem,DACs
 Transpo,Commercial,Econ Growth
-Water,Haz Waste/Industry,DACs
+Water,FirstOther,DACs
 Stormwater,Housing,Ecosystem
 Water,DACs,Transpo
 Transpo,Public Health,DACs
@@ -161,7 +161,7 @@ Transpo,Ecosystem,Stormwater
 Transpo,Ecosystem,Public Health
 Ecosystem,DACs,Transpo
 Transpo,Housing,Stormwater
-DACs,Fiscal Cost,Transpo
+DACs,FirstOther,Transpo
 DACs,Public Health,Ecosystem
 ,,
 Transpo,Public Health,Stormwater
@@ -188,7 +188,7 @@ Ecosystem,DACs,Transpo
 Ecosystem,Erosion,DACs
 Ecosystem,Transpo,Stormwater
 Transpo,Housing,Stormwater
-Ecosystem,Other,DACs
+Ecosystem,FirstOther,DACs
 Stormwater,Ecosystem,Erosion
 Transpo,Stormwater,Ecosystem
 Ecosystem,DACs,Erosion
@@ -198,7 +198,7 @@ Transpo,Public Health,Stormwater
 Econ Growth,Property Value,Transpo
 Water,Ecosystem,Stormwater
 Transpo,Ecosystem,Stormwater
-DACs,Housing,Transpo
+DACs,FirstOther,Transpo
 Transpo,Erosion,Stormwater
 Stormwater,DACs,Transpo
 Stormwater,Public Health,Water
@@ -237,7 +237,7 @@ Transpo,DACs,Econ Growth
 Transpo,Water,DACs
 Stormwater,Housing,Transpo
 ,,
-DACs,Other,Transpo
+DACs,FirstOther,Transpo
 Water,Housing,Stormwater
 Water,Ecosystem,Stormwater
 Transpo,Public Health,Energy
@@ -260,7 +260,7 @@ Stormwater,Erosion,Transpo
 Transpo,Ecosystem,Stormwater
 Transpo,Erosion,DACs
 Transpo,Water,DACs
-Stormwater,Haz Waste/Industry,Erosion
+Stormwater,FirstOther,Erosion
 Stormwater,Housing,Ecosystem
 Transpo,DACs,Stormwater
 Water,Stormwater,Ecosystem
@@ -275,9 +275,9 @@ Transpo,DACs,Housing
 Water,Public Health,DACs
 Stormwater,Energy,Ecosystem
 Transpo,Stormwater,Housing
-Ecosystem,Fiscal Cost,Transpo
+Ecosystem,FirstOther,Transpo
 Transpo,DACs,Ecosystem
-Ecosystem,Other Infra,Property Value
+Ecosystem,FirstOther,Property Value
 DACs,Econ Growth,Transpo
 Water,Housing,Ecosystem
 Water,Stormwater,Public Health
@@ -310,7 +310,7 @@ Transpo,Stormwater,Commercial
 Transpo,Ecosystem,Stormwater
 Transpo,Erosion,Commercial
 Transpo,Public Health,DACs
-Transpo,DACs,
+Transpo,FirstOther,DACs
 Transpo,Water,Stormwater
 Transpo,DACs,Stormwater
 Transpo,DACs,Ecosystem
@@ -374,7 +374,7 @@ Water,Stormwater,Transpo
 Transpo,Stormwater,Erosion
 Stormwater,Commercial,Property Value
 Stormwater,Erosion,Energy
-Transpo,Econ Growth,Ecosystem
+Transpo,FirstOther,Ecosystem
 Erosion,Ecosystem,Stormwater
 Transpo,DACs,Stormwater
 Transpo,Water,Stormwater
@@ -393,10 +393,10 @@ Transpo,Stormwater,Econ Growth
 Stormwater,DACs,Erosion
 Water,Stormwater,
 Transpo,Stormwater,Econ Growth
-DACs,Other Infra,Public Health
+DACs,FirstOther,Public Health
 Transpo,Stormwater,DACs
 DACs,Housing,Public Health
-Transpo,Stormwater,DACs
+Transpo,FirstOther,DACs
 Stormwater,Econ Growth,Public Health
 Transpo,DACs,Stormwater
 Transpo,Public Health,Stormwater
@@ -415,7 +415,7 @@ Transpo,Ecosystem,Stormwater
 Ecosystem,Public Health,Housing
 Transpo,Property Value,Stormwater
 Transpo,Stormwater,DACs
-Water,Transpo,
+Water,FirstOther,Transpo
 Stormwater,DACs,Water
 Transpo,Erosion,Stormwater
 ,,
@@ -424,9 +424,9 @@ Stormwater,Econ Growth,Transpo
 Transpo,DACs,Ecosystem
 Stormwater,Erosion,DACs
 Erosion,Public Health,Ecosystem
-Transpo,Flooding,Stormwater
+Transpo,FirstOther,Stormwater
 Transpo,Ecosystem,Stormwater
-Stormwater,Other Infra,Ecosystem
+Stormwater,FirstOther,Ecosystem
 Stormwater,Ecosystem,Water
 Transpo,Ecosystem,Stormwater
 Water,Public Health,Housing
@@ -456,7 +456,7 @@ Transpo,,
 Water,Stormwater,DACs
 Transpo,Property Value,DACs
 Water,Property Value,Erosion
-Property Value,Ecosystem,DACs
+Property Value,FirstOther,DACs
 Erosion,DACs,Public Health
 Erosion,,
 Transpo,Public Health,Stormwater
@@ -470,7 +470,7 @@ Transpo,Ecosystem,Housing
 Transpo,DACs,Stormwater
 Ecosystem,DACs,Transpo
 DACs,Public Health,Housing
-Transpo,Housing,Stormwater
+Transpo,FirstOther,Stormwater
 Transpo,Ecosystem,Stormwater
 Transpo,Water,Erosion
 Transpo,Stormwater,DACs
@@ -478,7 +478,7 @@ Transpo,Commercial,Stormwater
 Commercial,Econ Growth,Transpo
 Transpo,Stormwater,DACs
 Transpo,Ecosystem,Erosion
-Water,Ecosystem,Commercial
+Water,Ecosystem,FirstOther
 Transpo,Ecosystem,Stormwater
 DACs,Public Health,Water
 Transpo,DACs,Water
@@ -496,7 +496,7 @@ Stormwater,Erosion,Housing
 Stormwater,Ecosystem,Transpo
 Transpo,DACs,Ecosystem
 Transpo,Stormwater,Energy
-Transpo,Public Health,Haz Waste/Industry
+Transpo,Public Health,FirstOther
 Transpo,Stormwater,DACs
 Water,Energy,Public Health
 Transpo,Econ Growth,DACs
@@ -504,12 +504,12 @@ Transpo,Ecosystem,Erosion
 Transpo,Erosion,DACs
 Transpo,Water,Energy
 Stormwater,Ecosystem,DACs
-Transpo,Ecosystem,Cultural Resources
+Transpo,Ecosystem,FirstOther
 Water,Stormwater,
 Transpo,Commercial,Water
 Water,Ecosystem,Stormwater
 Transpo,Water,Public Health
-Ecosystem,,
+FirstOther,,
 ,,
 Water,DACs,Erosion
 ,,
@@ -551,7 +551,7 @@ DACs,Econ Growth,Transpo
 Transpo,Stormwater,Energy
 Transpo,Stormwater,Water
 Transpo,Ecosystem,Erosion
-Transpo,DACs,Stormwater
+Transpo,FirstOther,Stormwater
 Transpo,Erosion,DACs
 Transpo,Erosion,Eco
 Ecosystem,Public Health,DACs
@@ -596,7 +596,7 @@ Ecosystem,DACs,Erosion
 Ecosystem,Public Health,DACs
 Transpo,Property Value,Stormwater
 Transpo,Ecosystem,Erosion
-Ecosystem,DACs,Haz Waste/Industry
+Ecosystem,DACs,
 DACs,Housing,Water
 Transpo,DACs,Stormwater
 Erosion,DACs,Housing
@@ -612,7 +612,7 @@ Transpo,DACs,Stormwater
 Transpo,DACs,Econ Growth
 Transpo,Ecosystem,Stormwater
 Stormwater,Property Value,Ecosystem
-Stormwater,Water,
+Stormwater,FirstOther,Water
 Water,Stormwater,Ecosystem
 Transpo,Stormwater,Econ Growth
 ,,
@@ -663,7 +663,7 @@ Water,Ecosystem,
 Transpo,Erosion,Stormwater
 Stormwater,Housing,Water
 Transpo,Housing,Stormwater
-Transpo,Ecosystem,Other Infra
+Transpo,Ecosystem,FirstOther
 Transpo,Stormwater,DACs
 Transpo,Stormwater,Erosion
 Stormwater,DACs,Transpo
@@ -671,7 +671,7 @@ Transpo,DACs,Stormwater
 Water,Housing,Ecosystem
 Transpo,DACs,Housing
 Transpo,Stormwater,DACs
-Flooding,,
+FirstOther,,
 Transpo,Public Health,DACs
 DACs,Housing,Energy
 Energy,DACs,Public Health
@@ -696,11 +696,11 @@ Transpo,DACs,Stormwater
 Stormwater,Ecosystem,DACs
 Transpo,Erosion,DACs
 Transpo,Ecosystem,DACs
-DACs,Other Infra,Public Health
+DACs,FirstOther,Public Health
 Transpo,Stormwater,DACs
-Ecosystem,Other,Water
+Ecosystem,FirstOther,Water
 ,,
-Stormwater,Commercial,Transpo
+Stormwater,FirstOther,Transpo
 Transpo,Stormwater,DACs
 Transpo,Energy,Water
 Transpo,Public Health,Econ Growth
@@ -727,7 +727,7 @@ Transpo,Public Health,DACs
 ,,
 Stormwater,DACs,Transpo
 Transpo,Ecosystem,Public Health
-Ecosystem,,
+Ecosystem,FirstOther,
 Energy,Housing,Erosion
 Transpo,Public Health,Energy
 Transpo,Water,Stormwater
@@ -745,7 +745,7 @@ Transpo,Public Health,Ecosystem
 ,,
 Stormwater,Erosion,Transpo
 Stormwater,Ecosystem,Transpo
-Stormwater,DACs,Cultural Resources
+Stormwater,DACs,FirstOther
 Transpo,Property Value,
 Stormwater,DACs,Ecosystem
 Transpo,Econ Growth,DACs
@@ -791,7 +791,7 @@ Transpo,Stormwater,DACs
 Econ Growth,Housing,Transpo
 Stormwater,Energy,DACs
 Water,DACs,Public Health
-Ecosystem,Other,DACs
+Ecosystem,FirstOther,DACs
 Stormwater,Ecosystem,Transpo
 ,,
 Transpo,Water,Stormwater
@@ -829,7 +829,7 @@ Transpo,Stormwater,Erosion
 ,,
 ,,
 ,,
-Erosion,Ecosystem,Transpo
+Erosion,FirstOther,Transpo
 ,,
 ,,
 ,,
