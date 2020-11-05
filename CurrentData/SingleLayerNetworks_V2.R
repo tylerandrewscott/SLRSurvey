@@ -109,6 +109,6 @@ barriersnet=graph_from_data_frame(weightedbarriers, directed=FALSE)
 
 #create degree to size nodes and replot with new layout
 barde=igraph::degree(barriersnet)
-plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
-plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
-plot(barriersnet,vertex.size=barde, edge.width=E(barriersnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")

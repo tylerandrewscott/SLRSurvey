@@ -553,7 +553,7 @@ SLR Plan,Permits,Collab
 SLR Plan,Innov Design,Collab
 SLR Plan,Vulnerable,Green Infra
 Lobby,Green Infra,Existing Agency
-Vulnerable,Green Infra,FirstOther
+Vulnerable,Green Infra,Other
 DACs,Innov Design,Existing Agency
 Local Tax,Lobby,Collab
 Info Platform,Vision,Collab
@@ -576,7 +576,7 @@ Lobby,Permits,
 SLR Plan,Innov Design,Regional Authority
 SLR Plan,Local Tax,Lobby
 Lobby,Innov Design,Local Response
-Lobby,FirstOther,Other
+Lobby,Other,
 SLR Plan,Vulnerable,Existing Agency
 Local Tax,Lobby,Collab
 SLR Plan,DACs,Collab
@@ -790,7 +790,7 @@ Vision,Innov Design,Educate Officials
 SLR Plan,Existing Agency,Collab
 Vision,Collab,Land Use
 Permits,Info Platform,Green Infra
-Vulnerable,DACs,FirstOther
+Vulnerable,DACs,Other
 Lobby,Local Response,
 Regional Authority,SLR Plan,
 ,,
