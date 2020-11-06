@@ -112,3 +112,58 @@ barde=igraph::degree(barriersnet)
 plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_graphopt, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
 plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_dh, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
 plot(barriersnet,vertex.size=barde/2, edge.width=E(barriersnet)$weight/10, layout=layout_with_fr, vertex.label.color="black", vertex.label.cex=0.8, vertex.color="tomato2")
+
+#Policy network characteristics------------------------------------------
+degree(policiesnet) #degree centrality
+betweenness(policiesnet) #betweenness centrality
+closeness(policiesnet) #number steps required to access every node from a given node
+edge_density(policiesnet)
+
+#paths for policies network- results are 1 or 2 for most since all policies tend to be picked once by at least one person
+paths_policies=distances(policiesnet, algorithm="unweighted")
+paths_policies
+
+#community detection
+eb_policies=edge.betweenness.community(policiesnet)
+eb_policies
+length(eb_policies) #number of communiteis
+modularity(eb_policies) #modularity
+membership(eb_policies) #assignment of nodes to communities
+plot(eb_policies, policiesnet)
+
+#Concerns Network characteristics-----------------------------------------
+degree(concernsnet) #degree centrality
+betweenness(concernsnet) #betweenness centrality
+closeness(concernsnet) #number steps required to access every node from a given node
+edge_density(concernsnet)
+
+#paths for concerns
+paths_concerns=distances(concernsnet, algorithm="unweighted")
+paths_concerns
+
+#community detection
+eb_concerns=edge.betweenness.community(concernsnet)
+eb_concerns
+length(eb_concerns) #number of communities
+modularity(eb_concerns) #modularity
+membership(eb_concerns) #assignment of nodes to communities
+plot(eb_concerns, concernsnet)
+
+#Barriers Network Characteristics -----------------------------------
+degree(barriersnet) #degree centrality
+betweenness(barriersnet) #betweenness centrality
+closeness(barriersnet) #number steps required to access every node from a given node
+edge_density(barriersnet)
+
+#paths for barriers
+paths_barriers=distances(barriersnet, algorithm="unweighted")
+paths_barriers
+
+#community detection
+eb_barriers=edge.betweenness.community(barriersnet)
+eb_barriers
+length(eb_barriers) #number of communities
+modularity(eb_barriers) #modularity
+membership(eb_barriers) #assignment of nodes to communities
+plot(eb_barriers, barriersnet)
+
