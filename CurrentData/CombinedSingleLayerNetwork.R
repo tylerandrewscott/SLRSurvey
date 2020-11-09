@@ -31,21 +31,10 @@ setnames(weightedcomboedge, "combined.data.table.1", "I2")
 #Load in vertex attribute
 attrib <- read.csv("SLR_Combined_VectorTypes.csv")
 
-#Match vector attributes
-
-weightedcomboedge$TypeI1=factor(attrib[match(weightedcomboedge$I1, attrib$Vector), "Type"])
-
-weightedcomboedge$TypeI2=factor(attrib[match(weightedcomboedge$I2, attrib$Vector), "Type"])
-
-weightedcomboedge <- weightedcomboedge[ , c("I1", "I2", "weight", "TypeI1", "TypeI2")]
-
-weightedcomboedge$colorI1=c("darkseagreen", "goldenrod", "slateblue")[as.numeric(weightedcomboedge$TypeI1)]
-
-weightedcomboedge$colorI2=c("darkseagreen", "goldenrod", "slateblue")[as.numeric(weightedcomboedge$TypeI2)]
 
 #create network
 set.seed(2)
 combinednet=graph_from_data_frame(weightedcomboedge, directed=FALSE)
 combode=igraph::degree(combinednet)
 
-plot(combinednet, layout=layout_with_graphopt, vertex.size=combode, edge.width=weightedcomboedge$weight, edge.color="black", )
+plot(combinednet, layout=layout_with_graphopt, vertex.size=combode/10, edge.width=weightedcomboedge$weight/10)
