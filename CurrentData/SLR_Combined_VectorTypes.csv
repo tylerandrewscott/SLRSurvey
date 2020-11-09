@@ -1,64 +1,64 @@
-Vector,Type
-SLR Plan,Policy
-Local Tax,Policy
-Regional Authority,Policy
-Permits,Policy
-Collab,Policy
-Lobby,Policy
-Vulnerable,Policy
-DACs,Policy
-Info Platform,Policy
-Green Infra,Policy
-Innov Design,Policy
-Vision,Policy
-Land Use,Policy
-Existing Agency,Policy
-Local Response,Policy
-OtherP,Policy
-Geographic Focus,Policy
-Climate Change,Policy
-Educate Officials,Policy
-Community Engagement,Policy
-Overall Plan,Barrier
-Financial,Barrier
-Org Leader,Barrier
-Human,Barrier
-CBO Relations,Barrier
-Political Leader,Barrier
-PermitsB,Barrier
-Stakeholder Opposition,Barrier
-Sci Info,Barrier
-Collab Experience,Barrier
-SLR Uncertainty,Barrier
-Public Support,Barrier
-Don't Know,Barrier
-OtherB,Barrier
-Info Share/Use,Barrier
-Openness,Barrier
-Partner Capacity,Barrier
-Outside Scope,Barrier
-Competition,Barrier
-Existing Policies,Barrier
-Urgency/Priority,Barrier
-Stakeholder Engage/Influence,Barrier
-Narrow Grey Focus,Barrier
-Reg Leader,Barrier
-PermitsB,Barrier
-Erosion,Concern
-DACsC,Concern
-Water,Concern
-Public Health,Concern
-Econ Growth,Concern
-Commercial,Concern
-Transpo,Concern
-Stormwater,Concern
-Ecosystem,Concern
-Housing,Concern
-Property Value,Concern
-Energy,Concern
-Haz Waste/Industry,Concern
-Fiscal Cost,Concern
-Cultural Resources,Concern
-Flooding,Concern
-Other Infra,Concern
-OtherC,Concern
+Vector,Type,Color
+SLR Plan,Policy,#8FBC8F
+Local Tax,Policy,#8FBC8F
+Regional Authority,Policy,#8FBC8F
+Permits,Policy,#8FBC8F
+Collab,Policy,#8FBC8F
+Lobby,Policy,#8FBC8F
+Vulnerable,Policy,#8FBC8F
+DACs,Policy,#8FBC8F
+Info Platform,Policy,#8FBC8F
+Green Infra,Policy,#8FBC8F
+Innov Design,Policy,#8FBC8F
+Vision,Policy,#8FBC8F
+Land Use,Policy,#8FBC8F
+Existing Agency,Policy,#8FBC8F
+Local Response,Policy,#8FBC8F
+OtherP,Policy,#8FBC8F
+Geographic Focus,Policy,#8FBC8F
+Climate Change,Policy,#8FBC8F
+Educate Officials,Policy,#8FBC8F
+Community Engagement,Policy,#8FBC8F
+Overall Plan,Barrier,#B22222
+Financial,Barrier,#B22222
+Org Leader,Barrier,#B22222
+Human,Barrier,#B22222
+CBO Relations,Barrier,#B22222
+Political Leader,Barrier,#B22222
+PermitsB,Barrier,#B22222
+Stakeholder Opposition,Barrier,#B22222
+Sci Info,Barrier,#B22222
+Collab Experience,Barrier,#B22222
+SLR Uncertainty,Barrier,#B22222
+Public Support,Barrier,#B22222
+Don't Know,Barrier,#B22222
+OtherB,Barrier,#B22222
+Info Share/Use,Barrier,#B22222
+Openness,Barrier,#B22222
+Partner Capacity,Barrier,#B22222
+Outside Scope,Barrier,#B22222
+Competition,Barrier,#B22222
+Existing Policies,Barrier,#B22222
+Urgency/Priority,Barrier,#B22222
+Stakeholder Engage/Influence,Barrier,#B22222
+Narrow Grey Focus,Barrier,#B22222
+Reg Leader,Barrier,#B22222
+PermitsB,Barrier,#B22222
+Erosion,Concern,#DAA520
+DACsC,Concern,#DAA520
+Water,Concern,#DAA520
+Public Health,Concern,#DAA520
+Econ Growth,Concern,#DAA520
+Commercial,Concern,#DAA520
+Transpo,Concern,#DAA520
+Stormwater,Concern,#DAA520
+Ecosystem,Concern,#DAA520
+Housing,Concern,#DAA520
+Property Value,Concern,#DAA520
+Energy,Concern,#DAA520
+Haz Waste/Industry,Concern,#DAA520
+Fiscal Cost,Concern,#DAA520
+Cultural Resources,Concern,#DAA520
+Flooding,Concern,#DAA520
+Other Infra,Concern,#DAA520
+OtherC,Concern,#DAA520
