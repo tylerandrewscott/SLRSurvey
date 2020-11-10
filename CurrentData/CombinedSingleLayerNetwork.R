@@ -30,7 +30,25 @@ setnames(weightedcomboedge, "combined.data.table.1", "I2")
 #Create Network--------------------------------------------------------------------
 #Load in vertex attribute
 attrib <- read.csv("SLR_Combined_VectorTypes.csv")
+#try to create edge attributes in weighted edgelist
+weightedcomboedge$Type1 <- attrib$Type[match(weightedcomboedge$I1, attrib$Vector)]
 
+weightedcomboedge$Type2 <- attrib$Type[match(weightedcomboedge$I2, attrib$Vector)]
+
+weightedcomboedge$edgetype <- "NA"
+
+  weightedcomboedge[weightedcomboedge$Type1=="Policy" & weightedcomboedge$Type2=="Policy"]$edgetype <- "Policy-Policy"
+  weightecomboedge[weightedcomboedge$Type1=="Concern" & weightedcomboedge$Type2=="Concern"]$edgetype <- "Concern-Concern"
+  weightedcomboedge[weightedcomboedge$Type1=="Barrier" & weightedcomboedge$Type2=="Barrier"]$edgetype <- "Barrier-Barrier"
+  weightedcomboedge[weightedcomboedge$Type1=="Policy"& weightedcomboedge$Type2=="Concern"]$edgetype <- "Policy-Concern"
+  weightedcomboedge[weightedcomboedge$Type1=="Policy"& weightedcomboedge$Type2=="Barrier"]$edgetype <- "Policy-Barrier"
+  weightedcomboedge[weightedcomboedge$Type1=="Barrier"& weightedcomboedge$Type2=="Concern"]$edgetype <- "Barrier-Concern"
+  weightedcomboedge[weightedcomboedge$Type1=="Barrier"& weightedcomboedge$Type2=="Policy"]$edgetype <- "Policy-Barrier"
+  weightedcomboedge[weightedcomboedge$Type1=="Concern"& weightedcomboedge$Type2=="Barrier"]$edgetype <- "Barrier-Concern"
+  weightedcomboedge[weightedcomboedge$Type1=="Concern"& weightedcomboedge$Type2=="Policy"]$edgetype <- "Policy-Concern"
+
+####START BACK HERE WITH CREATING EDGE COLOR-----------------------------------------
+  
 
 #create network
 set.seed(2)
@@ -48,18 +66,7 @@ get.vertex.attribute(combinednet)
 #plot with vertex color using type attribute
 plot(combinednet, layout=layout_with_graphopt, vertex.size=combode/4, edge.width=weightedcomboedge$weight/10, vertex.color=V(combinednet)$Color, vertex.label.cex=0.5)
 
-E(combinednet)
 
-edge_attr_names(combinednet)
 
-edge_attr(combinednet, "weight", index=E(combinednet))
 
-weightedcomboedge$Type1 <- attrib$Type[match(weightedcomboedge$I1, attrib$Vector)]
-
-weightedcomboedge$Type2 <- attrib$Type[match(weightedcomboedge$I2, attrib$Vector)]
-
-ev <- get.edges(combinednet, E(combinednet))
-ev
-
-list.edge.attributes(combinednet)
 
