@@ -37,6 +37,7 @@ set.seed(2)
 combinednet=graph_from_data_frame(weightedcomboedge, directed=FALSE)
 combode=igraph::degree(combinednet)
 
+#create vertex attributes
 combinednet <- set.vertex.attribute(combinednet, "Name", attrib$Vector, attrib$Vector)
 combinednet <- set.vertex.attribute(combinednet, "Type", index=attrib$Vector, attrib$Type)
 combinednet <- set.vertex.attribute(combinednet, "Color", index=attrib$Vector, value=attrib$Color)
@@ -44,5 +45,16 @@ combinednet <- set.vertex.attribute(combinednet, "Color", index=attrib$Vector, v
 list.vertex.attributes(combinednet)
 get.vertex.attribute(combinednet)
 
-plot(combinednet, layout=layout_with_graphopt, vertex.size=combode/4, edge.width=weightedcomboedge$weight/5, vertex.color=V(combinednet)$Color, vertex.label.cex=0.5)
+#plot with vertex color using type attribute
+plot(combinednet, layout=layout_with_graphopt, vertex.size=combode/4, edge.width=weightedcomboedge$weight/10, vertex.color=V(combinednet)$Color, vertex.label.cex=0.5)
+
+E(combinednet)
+
+edge_attr_names(combinednet)
+
+edge_attr(combinednet, "weight", index=E(combinednet))
+
+weightedcomboedge$Type1 <- attrib$Type[match(weightedcomboedge$I1, attrib$Vector)]
+
+weightedcomboedge$Type2 <- attrib$Type[match(weightedcomboedge$I2, attrib$Vector)]
 
