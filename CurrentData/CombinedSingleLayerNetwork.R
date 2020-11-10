@@ -58,3 +58,8 @@ weightedcomboedge$Type1 <- attrib$Type[match(weightedcomboedge$I1, attrib$Vector
 
 weightedcomboedge$Type2 <- attrib$Type[match(weightedcomboedge$I2, attrib$Vector)]
 
+ev <- get.edges(combinednet, E(combinednet))
+ev
+
+list.edge.attributes(combinednet)
+

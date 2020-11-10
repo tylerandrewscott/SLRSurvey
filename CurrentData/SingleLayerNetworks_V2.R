@@ -166,4 +166,3 @@ length(eb_barriers) #number of communities
 modularity(eb_barriers) #modularity
 membership(eb_barriers) #assignment of nodes to communities
 plot(eb_barriers, barriersnet)
-
