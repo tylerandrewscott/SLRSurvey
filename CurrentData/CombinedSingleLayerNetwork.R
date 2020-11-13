@@ -62,19 +62,18 @@ weightedcomboedge[weightedcomboedge$edgetype=="Barrier-Concern"]$edgecolor <- "#
   
 ####create network-----------------------------------------------------------
 set.seed(2)
-combinednet=graph_from_data_frame(weightedcomboedge, directed=FALSE)
+combinednet=igraph::graph_from_data_frame(weightedcomboedge, directed=FALSE)
 combode=igraph::degree(combinednet)
 
+
 ####create vertex attributes------------------------------------
-combinednet <- set.vertex.attribute(combinednet, "Name", attrib$Vector, attrib$Vector)
-combinednet <- set.vertex.attribute(combinednet, "Type", index=attrib$Vector, attrib$Type)
-combinednet <- set.vertex.attribute(combinednet, "Color", index=attrib$Vector, value=attrib$Color)
+combinednet <- igraph::set.vertex.attribute(combinednet, "Name", index=attrib$Vector, value=attrib$Vector)
+combinednet <- igraph::set.vertex.attribute(combinednet, "Type", index=attrib$Vector, attrib$Type)
+combinednet <- igraph::set.vertex.attribute(combinednet, "Color", index=attrib$Vector, value=attrib$Color)
 
-list.vertex.attributes(combinednet)
-get.vertex.attribute(combinednet)
+?set.vertex.attribute()
 
-list.edge.attributes(combinednet)
-
+igraph::list.vertex.attributes(combinednet)
 
 ####plot with vertex color using attributes-----------------------------------
 plot(combinednet, layout=layout_with_graphopt, vertex.size=combode/4, edge.width=weightedcomboedge$weight/10, vertex.color=V(combinednet)$Color, vertex.label.cex=0.5, edge.color=weightedcomboedge$edgecolor)
@@ -102,9 +101,26 @@ plot(combinednet, vertex.color=rainbow(3, alpha=0.6)[louvain_communities$members
 
 louvain_communities$membership
 
-#Newman's Modularity
-?fastgreedy.community
-simple_combinednet = simplify(combinednet)
-cluster_fast_greedy(simple_combinednet, weights=E(combinednet)$weight)
+louvain_communities
 
-#
+#Newman's Modularity
+simple_combinednet = simplify(combinednet)
+fastgreedycommunity <- cluster_fast_greedy(simple_combinednet, weights=E(combinednet)$weight)
+
+fastgreedycommunity
+sizes(fastgreedycommunity)
+membership(fastgreedycommunity)
+
+plot(fastgreedycommunity, simple_combinednet)
+
+#Edge Betweenness
+cluster_edge_betweenness(combinednet, weights=E(combinednet)$weight, directed=FALSE)
+#only gives one group with modularity 0 so not worth using this method
+
+#Info Map
+?cluster_infomap
+infomapcommunity <- cluster_infomap(combinednet, e.weights=E(combinednet)$weight)
+infomapcommunity
+membership(infomapcommunity)
+plot(infomapcommunity, simple_combinednet)
+
