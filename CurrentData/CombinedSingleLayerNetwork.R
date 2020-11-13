@@ -124,3 +124,13 @@ infomapcommunity
 membership(infomapcommunity)
 plot(infomapcommunity, simple_combinednet)
 
+#walktrap method
+?walktrap.community
+walktrapcommunity <- cluster_walktrap(combinednet, weights=E(combinednet)$weight)
+
+walktrapcommunity
+membership(walktrapcommunity)
+plot(walktrapcommunity, combinednet)
+
+####still havent tried latent space analysis----------------------
+
