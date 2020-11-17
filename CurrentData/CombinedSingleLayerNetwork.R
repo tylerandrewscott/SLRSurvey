@@ -68,7 +68,7 @@ combode
 igraph::betweenness(combinednet)
 igraph::closeness(combinednet)
 igraph::edge_density(combinednet)
-
+centr_degree(combinednet)
 ####create vertex attributes------------------------------------
 combinednet <- igraph::set.vertex.attribute(combinednet, "Name", index=attrib$Vector, value=attrib$Vector)
 combinednet <- igraph::set.vertex.attribute(combinednet, "Type", index=attrib$Vector, attrib$Type)
@@ -91,6 +91,7 @@ plot(combinednet, layout=layout_with_drl, vertex.size=combode/4, edge.width=weig
 tenedgethreshold <- combinednet
 tenedgethreshold<- delete.edges(tenedgethreshold, which(E(tenedgethreshold)$weight <10)-1)
 tende=igraph::degree(tenedgethreshold)
+tende
 tenedgethreshold <- delete.vertices(tenedgethreshold, V(tenedgethreshold)[degree(tenedgethreshold)==0])
 plot(tenedgethreshold, layout=layout_with_graphopt, vertex.size=tende/4, edge.width=E(tenedgethreshold)$weight/15, vertex.color=V(tenedgethreshold)$Color, vertex.label.cex=0.5, edge.color=E(tenedgethreshold)$edgecolor)
 
@@ -148,3 +149,12 @@ plot(combinednet, layout=layout_with_fr, vertex.color=rainbow(16, alpha=0.6)[wal
 
 ####still havent tried latent space analysis----------------------
 
+#### try to create tripartitite network- remove within vertex type connections policy-policy, barrier-barrier, concern-concern---------------------------------
+
+tripartite <- combinednet
+igraph::list.edge.attributes(tripartite)
+tripartite <- igraph::delete.edges(tripartite, which(E(tripartite)$edgecolor=="#dcdcdc"))
+tride=igraph::degree(tripartite)
+tride
+tripartite <- igraph::delete.vertices(tripartite, V(tripartite)[igraph::degree(tripartite)==0])
+plot(tripartite, layout=layout_with_fr, vertex.size=tride/4, edge.width=E(tripartite)$weight/5, vertex.color=V(tripartite)$Color, vertex.label.cex=0.5)
