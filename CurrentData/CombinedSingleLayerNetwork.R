@@ -97,11 +97,13 @@ louvain_communities <- igraph::cluster_louvain(combinednet, weights=E(combinedne
 combinednet$community <- louvain_communities$membership
 unique(combinednet$community)
 
-plot(combinednet, vertex.color=rainbow(3, alpha=0.6)[louvain_communities$membership], vertex.label.cex=0.25)
+plot(combinednet, layout=layout_with_fr, vertex.color=rainbow(3, alpha=0.6)[louvain_communities$membership], vertex.label.cex=0.25)
 
 louvain_communities$membership
 
 louvain_communities
+
+groups(louvain_communities)
 
 #Newman's Modularity
 simple_combinednet = simplify(combinednet)
@@ -110,8 +112,11 @@ fastgreedycommunity <- cluster_fast_greedy(simple_combinednet, weights=E(combine
 fastgreedycommunity
 sizes(fastgreedycommunity)
 membership(fastgreedycommunity)
+groups(fastgreedycommunity)
 
 plot(fastgreedycommunity, simple_combinednet)
+
+plot(combinednet, layout=layout_with_fr, vertex.color=rainbow(5, alpha=0.6)[fastgreedycommunity$membership], vertex.label.cex=0.25)
 
 #Edge Betweenness
 cluster_edge_betweenness(combinednet, weights=E(combinednet)$weight, directed=FALSE)
@@ -122,7 +127,10 @@ cluster_edge_betweenness(combinednet, weights=E(combinednet)$weight, directed=FA
 infomapcommunity <- cluster_infomap(combinednet, e.weights=E(combinednet)$weight)
 infomapcommunity
 membership(infomapcommunity)
+groups(infomapcommunity)
 plot(infomapcommunity, simple_combinednet)
+
+plot(combinednet, layout=layout_with_fr, vertex.color=rainbow(14, alpha=0.6)[infomapcommunity$membership], vertex.label.cex=0.25)
 
 #walktrap method
 ?walktrap.community
