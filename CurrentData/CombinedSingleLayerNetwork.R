@@ -64,7 +64,10 @@ weightedcomboedge[weightedcomboedge$edgetype=="Barrier-Concern"]$edgecolor <- "#
 set.seed(2)
 combinednet=igraph::graph_from_data_frame(weightedcomboedge, directed=FALSE)
 combode=igraph::degree(combinednet)
-
+combode
+igraph::betweenness(combinednet)
+igraph::closeness(combinednet)
+igraph::edge_density(combinednet)
 
 ####create vertex attributes------------------------------------
 combinednet <- igraph::set.vertex.attribute(combinednet, "Name", index=attrib$Vector, value=attrib$Vector)
@@ -138,7 +141,10 @@ walktrapcommunity <- cluster_walktrap(combinednet, weights=E(combinednet)$weight
 
 walktrapcommunity
 membership(walktrapcommunity)
+groups(walktrapcommunity)
 plot(walktrapcommunity, combinednet)
+
+plot(combinednet, layout=layout_with_fr, vertex.color=rainbow(16, alpha=0.6)[walktrapcommunity$membership], vertex.label.cex=0.25)
 
 ####still havent tried latent space analysis----------------------
 
