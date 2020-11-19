@@ -1,4 +1,4 @@
-setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentData")
+setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/Current Files/Data/Combined Network")
 library(igraph)
 library(netrankr)
 library(data.table)
@@ -158,3 +158,32 @@ tride=igraph::degree(tripartite)
 tride
 tripartite <- igraph::delete.vertices(tripartite, V(tripartite)[igraph::degree(tripartite)==0])
 plot(tripartite, layout=layout_with_fr, vertex.size=tride/4, edge.width=E(tripartite)$weight/5, vertex.color=V(tripartite)$Color, vertex.label.cex=0.5)
+
+####try community detection on tripartite network-------------------------
+#louvain 
+tripartite_louvain <- igraph::cluster_louvain(tripartite, weights=E(tripartite)$weight)
+tripartite_louvain
+groups(tripartite_louvain)
+
+#newman's
+
+simple_tripartite = simplify(tripartite)
+tripartite_fastgreedy <- cluster_fast_greedy(simple_tripartite, weights=E(simple_tripartite)$weight)
+
+tripartite_fastgreedy
+groups(tripartite_fastgreedy)
+
+#infomap
+
+tripartite_infomap <- cluster_infomap(tripartite, e.weights=E(tripartite)$weight)
+tripartite_infomap
+
+#walktrap
+
+tripartite_walktrap <- cluster_walktrap(tripartite, weights=E(tripartite)$weight)
+tripartite_walktrap
+
+#edge betweenness
+cluster_edge_betweenness(tripartite, weights=E(tripartite)$weight, directed=FALSE)
+
+
