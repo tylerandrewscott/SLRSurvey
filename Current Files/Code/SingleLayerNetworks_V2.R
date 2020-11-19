@@ -1,4 +1,4 @@
-setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentData")
+setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/Current Files/Data/Single Networks")
 library(igraph)
 library(netrankr)
 library(sna)
