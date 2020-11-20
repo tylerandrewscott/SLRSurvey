@@ -1,0 +1,869 @@
+Policy1,Policy2,Policy3,Concern 1,Concern2,Concern3,Barrier1,Barrier2,Barrier3
+SLR Plan,Lobby,Existing Agency,Water,DACsC,Transpo,Financial,Org Leader,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Green Infra,Collab,Transpo,DACsC,Ecosystem,Political Leader,Overall Plan,Public Support
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Info Platform,Innov Design,OtherP,Water,Ecosystem,Stormwater,Collab Experience,Stakeholder Opposition,OtherB
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Info Platform,Existing Agency,Transpo,Housing,DACsC,OtherB,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Vulnerable,Info Platform,Transpo,Housing,Econ Growth,Financial,Political Leader,Overall Plan
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Green Infra,Innov Design,,Stormwater,Housing,Property Value,SLR Uncertainty,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Permits,Existing Agency,Collab,Stormwater,Ecosystem,DACsC,Collab Experience,Political Leader,Overall Plan
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Permits,Green Infra,Innov Design,Transpo,Ecosystem,Stormwater,Overall Plan,Public Support,OtherB
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Vulnerable,Local Response,Regional Authority,Commercial,DACsC,Erosion,SLR Uncertainty,Org Leader,Overall Plan
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Permits,DACs,Collab,Transpo,DACsC,Water,SLR Uncertainty,Overall Plan,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Lobby,Permits,Collab,Transpo,Ecosystem,DACsC,DK,,
+,,,,,,,,
+Permits,Green Infra,Innov Design,Stormwater,Ecosystem,Erosion,SLR Uncertainty,PermitsB,
+Lobby,Innov Design,Collab,Transpo,Erosion,Stormwater,Financial,Collab Experience,Stakeholder Opposition
+DACs,Innov Design,Collab,Transpo,Ecosystem,DACsC,Stakeholder Opposition,Political Leader,Overall Plan
+SLR Plan,Permits,Green Infra,Transpo,Commercial,Econ Growth,PermitsB,,
+Green Infra,Innov Design,OtherP,Water,OtherC,DACsC,Political Leader,Public Support,Stakeholder Opposition
+Green Infra,Innov Design,Collab,Stormwater,Housing,Ecosystem,Financial,Stakeholder Opposition,Public Support
+DACs,Vision,Existing Agency,Water,DACsC,Transpo,Financial,Overall Plan,
+SLR Plan,Info Platform,DACs,Transpo,Public Health,DACsC,Political Leader,Overall Plan,Public Support
+SLR Plan,Green Infra,Existing Agency,Ecosystem,DACsC,Transpo,Overall Plan,,
+Lobby,DACs,Green Infra,DACsC,Public Health,Ecosystem,Political Leader,Overall Plan,Public Support
+Green Infra,Collab,Permits,Transpo,Erosion,Stormwater,Financial,Political Leader,Overall Plan
+SLR Plan,Existing Agency,Collab,Transpo,Stormwater,DACsC,Collab Experience,Political Leader,Public Support
+SLR Plan,Vulnerable,Green Infra,Transpo,DACsC,Stormwater,,,
+SLR Plan,Vulnerable,Collab,Ecosystem,Econ Growth,Erosion,Human,Financial,
+Lobby,Existing Agency,Collab,Transpo,DACsC,Housing,Financial,Overall Plan,OtherB
+Info Platform,Existing Agency,Collab,Transpo,Stormwater,Ecosystem,Political Leader,Overall Plan,Public Support
+SLR Plan,Info Platform,Collab,Transpo,DACsC,Stormwater,Stakeholder Opposition,Overall Plan,Public Support
+SLR Plan,Green Infra,Collab,Water,Stormwater,DACsC,DK,,
+SLR Plan,Lobby,Existing Agency,Transpo,Housing,DACsC,Overall Plan,CBO Relations,
+SLR Plan,DACs,Collab,Transpo,Stormwater,DACsC,Overall Plan,,
+Lobby,Vision,,,,,Financial,Political Leader,Public Support
+OtherP,,,Transpo,Stormwater,Property Value,Overall Plan,OtherB,
+DACs,Green Infra,Collab,Transpo,DACsC,Stormwater,Financial,Political Leader,
+Permits,Green Infra,Regional Authority,Transpo,Public Health,Water,Collab Experience,Overall Plan,Public Support
+SLR Plan,Info Platform,Collab,Stormwater,Erosion,,Human,Overall Plan,
+,,,,,,,,
+SLR Plan,Vulnerable,DACs,Water,DACsC,Stormwater,Financial,,
+Local Response,Existing Agency,Lobby,Transpo,Stormwater,Erosion,Human,Financial,
+Green Infra,Existing Agency,Collab,Stormwater,DACsC,Ecosystem,Political Leader,Overall Plan,Public Support
+SLR Plan,Regional Authority,Collab,Ecosystem,DACsC,Erosion,Political Leader,Overall Plan,
+,,,,,,Human,,
+SLR Plan,Vulnerable,Collab,Transpo,Commercial,Stormwater,Collab Experience,SLR Uncertainty,Overall Plan
+DACs,Green Infra,Vision,Transpo,DACsC,Ecosystem,DK,,
+SLR Plan,Vulnerable,Collab,Transpo,Ecosystem,Energy,Political Leader,PermitsB,Public Support
+SLR Plan,Permits,Collab,Transpo,DACsC,Housing,Political Leader,Overall Plan,
+Green Infra,Innov Design,Collab,Ecosystem,Erosion,Transpo,Financial,,
+SLR Plan,Innov Design,Local Response,Transpo,Ecosystem,Stormwater,Stakeholder Opposition,SLR Uncertainty,CBO Relations
+Lobby,Permits,Collab,Transpo,Ecosystem,Public Health,Financial,PermitsB,
+Vulnerable,Local Tax,Green Infra,Ecosystem,DACsC,Transpo,,,
+SLR Plan,Vulnerable,DACs,Transpo,Housing,Stormwater,Overall Plan,Public Support,
+Local Tax,Permits,DACs,DACsC,OtherC,Transpo,Financial,Public Support,Human
+Local Tax,Permits,Local Response,DACsC,Public Health,Ecosystem,Political Leader,SLR Uncertainty,PermitsB
+Info Platform,Green Infra,Collab,,,,Stakeholder Opposition,Political Leader,Public Support
+SLR Plan,Info Platform,Regional Authority,Transpo,Public Health,Stormwater,Financial,Stakeholder Opposition,Overall Plan
+DACs,Green Infra,Vision,Stormwater,Housing,Erosion,Political Leader,,
+SLR Plan,Innov Design,Collab,Transpo,Water,DACsC,CBO Relations,Human,
+,,,Transpo,Econ Growth,Erosion,,,
+Lobby,Permits,Collab,Transpo,Housing,DACsC,Political Leader,SLR Uncertainty,PermitsB
+Vulnerable,Regional Authority,Existing Agency,Stormwater,Erosion,Transpo,Sci Info,Overall Plan,PermitsB
+SLR Plan,DACs,Collab,Transpo,Water,Stormwater,Overall Plan,OtherB,
+SLR Plan,Local Tax,Existing Agency,Transpo,Stormwater,DACsC,Collab Experience,Political Leader,Overall Plan
+SLR Plan,Existing Agency,Collab,Transpo,Erosion,Stormwater,Human,Overall Plan,OtherB
+Permits,Local Response,Collab,Transpo,Erosion,DACsC,Human,Financial,PermitsB
+Permits,Green Infra,Existing Agency,Transpo,Ecosystem,DACsC,Financial,Political Leader,PermitsB
+Vulnerable,DACs,SLR Plan,Transpo,DACsC,Stormwater,Collab Experience,CBO Relations,
+Lobby,Local Response,OtherP,Stormwater,Ecosystem,Erosion,Financial,Stakeholder Opposition,Public Support
+Permits,Green Infra,Local Response,Water,DACsC,Stormwater,Financial,Overall Plan,DK
+Info Platform,Innov Design,Existing Agency,Stormwater,Public Health,DACsC,Financial,Overall Plan,OtherB
+DACs,Innov Design,Collab,Transpo,DACsC,Stormwater,Human,Org Leader,CBO Relations
+Green Infra,Existing Agency,Collab,Stormwater,Ecosystem,Erosion,Org Leader,,
+,,,,,,,,
+DACs,Green Infra,Existing Agency,Transpo,Public Health,DACsC,Human,Political Leader,Overall Plan
+SLR Plan,Vulnerable,Permits,Transpo,Stormwater,DACsC,Financial,CBO Relations,
+Lobby,Permits,DACs,Ecosystem,DACsC,Transpo,Financial,PermitsB,
+DACs,Existing Agency,Collab,Ecosystem,Erosion,DACsC,Human,Political Leader,Overall Plan
+Green Infra,Vision,Regional Authority,Ecosystem,Transpo,Stormwater,Political Leader,Overall Plan,CBO Relations
+SLR Plan,Local Tax,Vision,Transpo,Housing,Stormwater,Overall Plan,PermitsB,Public Support
+Permits,Innov Design,OtherP,Ecosystem,OtherC,DACsC,Stakeholder Opposition,Political Leader,PermitsB
+SLR Plan,Green Infra,Collab,Stormwater,Ecosystem,Erosion,Public Support,,
+Permits,Green Infra,Existing Agency,Transpo,Stormwater,Ecosystem,Political Leader,PermitsB,
+Green Infra,Vision,Collab,Ecosystem,DACsC,Erosion,Financial,Overall Plan,OtherB
+SLR Plan,Permits,Collab,Transpo,Water,Stormwater,Overall Plan,PermitsB,
+Local Tax,Regional Authority,Existing Agency,Transpo,Ecosystem,DACsC,CBO Relations,OtherB,
+Info Platform,Vision,Collab,Transpo,Public Health,Stormwater,DK,,
+SLR Plan,Innov Design,Regional Authority,Econ Growth,Property Value,Transpo,Financial,Overall Plan,Public Support
+Permits,Existing Agency,Collab,Water,Ecosystem,Stormwater,Stakeholder Opposition,PermitsB,
+SLR Plan,Green Infra,Existing Agency,Transpo,Ecosystem,Stormwater,Human,Financial,Overall Plan
+Vulnerable,Permits,Green Infra,DACsC,Housing,Transpo,Sci Info,Overall Plan,PermitsB
+Lobby,Info Platform,Collab,Transpo,Erosion,Stormwater,Financial,Political Leader,Overall Plan
+Permits,DACs,Vision,Stormwater,DACsC,Transpo,Human,Financial,
+Lobby,DACs,Green Infra,Stormwater,Public Health,Water,Stakeholder Opposition,Political Leader,Public Support
+Vulnerable,Permits,Green Infra,Transpo,Stormwater,DACsC,Public Support,,
+,,,,,,,,
+SLR Plan,Local Tax,Green Infra,Stormwater,Housing,Transpo,Financial,SLR Uncertainty,Overall Plan
+Vulnerable,Existing Agency,Lobby,Ecosystem,DACsC,Public Health,Human,Org Leader,Overall Plan
+SLR Plan,Info Platform,Green Infra,Transpo,DACsC,Stormwater,SLR Uncertainty,Financial,
+Green Infra,Regional Authority,,Transpo,Ecosystem,Stormwater,Human,Financial,OtherB
+Vulnerable,DACs,Green Infra,Transpo,Ecosystem,Stormwater,CBO Relations,,
+Info Platform,DACs,Green Infra,Stormwater,DACsC,Erosion,Human,SLR Uncertainty,Sci Info
+Green Infra,Innov Design,Existing Agency,Transpo,Erosion,Water,Political Leader,Overall Plan,OtherB
+Info Platform,Innov Design,Existing Agency,Transpo,Property Value,Commercial,SLR Uncertainty,Org Leader,
+Vulnerable,Local Tax,Green Infra,Erosion,DACsC,Transpo,DK,,
+DACs,Existing Agency,Collab,Transpo,Stormwater,Water,Human,Financial,CBO Relations
+Permits,Innov Design,Existing Agency,Ecosystem,DACsC,Erosion,Stakeholder Opposition,Overall Plan,Public Support
+SLR Plan,Permits,Innov Design,Transpo,Stormwater,Water,PermitsB,,
+SLR Plan,Vision,Collab,Transpo,Housing,DACsC,Human,Financial,CBO Relations
+Local Tax,Permits,Collab,Transpo,Stormwater,Erosion,Financial,Overall Plan,PermitsB
+DACs,Innov Design,Regional Authority,DACsC,Econ Growth,Housing,Human,CBO Relations,
+SLR Plan,Local Tax,Regional Authority,Ecosystem,Public Health,DACsC,Financial,Political Leader,Public Support
+Regional Authority,,,Transpo,DACsC,Stormwater,Political Leader,Overall Plan,Public Support
+SLR Plan,Local Tax,Regional Authority,Transpo,Water,Stormwater,OtherB,,
+Local Tax,Permits,Green Infra,Transpo,Erosion,Stormwater,Collab Experience,PermitsB,Public Support
+SLR Plan,Local Tax,Collab,Transpo,Ecosystem,Stormwater,SLR Uncertainty,Sci Info,Overall Plan
+Vulnerable,Local Tax,Green Infra,DACsC,Property Value,Transpo,,,
+Lobby,Info Platform,OtherP,Transpo,Public Health,Water,,,
+SLR Plan,Lobby,,Transpo,Energy,Erosion,SLR Uncertainty,Overall Plan,Public Support
+SLR Plan,Lobby,DACs,Energy,Public Health,Transpo,Human,,
+SLR Plan,Local Tax,Existing Agency,Transpo,Econ Growth,Stormwater,Overall Plan,,
+Vulnerable,Local Tax,Regional Authority,Water,Ecosystem,Property Value,Human,Collab Experience,Org Leader
+SLR Plan,Innov Design,Collab,Ecosystem,DACsC,Stormwater,Public Support,Financial,
+SLR Plan,Local Tax,Permits,Transpo,Water,Stormwater,Overall Plan,Public Support,
+SLR Plan,Vision,Existing Agency,Transpo,Public Health,DACsC,SLR Uncertainty,Overall Plan,DK
+SLR Plan,Lobby,Collab,Transpo,DACsC,Econ Growth,,,
+SLR Plan,Vulnerable,Collab,Transpo,Water,DACsC,Collab Experience,,
+Permits,DACs,OtherP,Stormwater,Housing,Transpo,Collab Experience,Political Leader,CBO Relations
+,,,,,,,,
+SLR Plan,Info Platform,Regional Authority,DACsC,OtherC,Transpo,,,
+Lobby,Green Infra,Local Response,Water,Housing,Stormwater,Human,SLR Uncertainty,Overall Plan
+SLR Plan,Info Platform,Green Infra,Water,Ecosystem,Stormwater,OtherB,,
+Vulnerable,Regional Authority,Collab,Transpo,Public Health,Energy,Human,Public Support,CBO Relations
+Green Infra,,,DACsC,Econ Growth,Public Health,Human,,
+Innov Design,Collab,SLR Plan,Transpo,DACsC,Stormwater,,,
+Permits,Innov Design,Local Response,Transpo,Stormwater,DACsC,PermitsB,Public Support,
+SLR Plan,Permits,Info Platform,Stormwater,Public Health,Erosion,Political Leader,,
+DACs,Green Infra,Collab,,,,Overall Plan,Public Support,CBO Relations
+Regional Authority,,,Transpo,Stormwater,DACsC,Financial,,
+SLR Plan,Info Platform,Innov Design,Transpo,Housing,Stormwater,Financial,,
+Lobby,Innov Design,Local Response,Stormwater,DACsC,Erosion,Collab Experience,CBO Relations,
+Vulnerable,Existing Agency,Collab,Transpo,DACsC,Stormwater,Human,Org Leader,Public Support
+SLR Plan,Vulnerable,Vision,Transpo,Erosion,Stormwater,CBO Relations,,
+Lobby,Permits,Green Infra,Transpo,DACsC,Stormwater,Human,Financial,Political Leader
+SLR Plan,Vulnerable,Collab,Transpo,DACsC,Erosion,Human,SLR Uncertainty,Overall Plan
+DACs,Existing Agency,OtherP,Stormwater,DACsC,Ecosystem,DK,,
+Permits,Existing Agency,Collab,Transpo,Housing,Erosion,Public Support,CBO Relations,
+SLR Plan,Existing Agency,,Transpo,DACsC,,Overall Plan,,
+Green Infra,Innov Design,Regional Authority,Stormwater,Erosion,Transpo,,,
+Permits,DACs,Vision,Transpo,Ecosystem,Stormwater,Political Leader,SLR Uncertainty,Public Support
+Innov Design,Collab,OtherP,Transpo,Erosion,DACsC,Human,Financial,CBO Relations
+Info Platform,Green Infra,Collab,Transpo,Water,DACsC,SLR Uncertainty,Overall Plan,OtherB
+Vulnerable,Permits,Collab,Stormwater,OtherC,Erosion,Political Leader,PermitsB,
+Green Infra,Vision,Regional Authority,Stormwater,Housing,Ecosystem,SLR Uncertainty,Overall Plan,
+Lobby,DACs,Local Response,Transpo,DACsC,Stormwater,Financial,Political Leader,
+SLR Plan,Vulnerable,Collab,Water,Stormwater,Ecosystem,Political Leader,Org Leader,Overall Plan
+Local Tax,Regional Authority,,Stormwater,Ecosystem,DACsC,Financial,,
+Lobby,Permits,Collab,DACsC,Public Health,Stormwater,CBO Relations,Collab Experience,
+Local Tax,Innov Design,Collab,Erosion,Public Health,Stormwater,Stakeholder Opposition,SLR Uncertainty,Overall Plan
+SLR Plan,Vision,,Stormwater,DACsC,Ecosystem,Sci Info,Overall Plan,PermitsB
+SLR Plan,Permits,Existing Agency,Stormwater,Ecosystem,Transpo,Political Leader,Overall Plan,PermitsB
+DACs,Existing Agency,,Water,Housing,DACsC,Political Leader,,
+SLR Plan,Vulnerable,Collab,Erosion,DACsC,Ecosystem,Human,Political Leader,Overall Plan
+SLR Plan,DACs,Green Infra,Transpo,DACsC,Housing,CBO Relations,,
+SLR Plan,Info Platform,Collab,Water,Public Health,DACsC,Human,Financial,Org Leader
+Vulnerable,Info Platform,Green Infra,Stormwater,Energy,Ecosystem,SLR Uncertainty,Overall Plan,Public Support
+Lobby,Permits,Local Response,Transpo,Stormwater,Housing,Financial,Overall Plan,
+SLR Plan,Green Infra,Vision,Ecosystem,OtherC,Transpo,DK,,
+SLR Plan,DACs,Vision,Transpo,DACsC,Ecosystem,Financial,,
+Lobby,Green Infra,Collab,Ecosystem,OtherC,Property Value,Financial,OtherB,
+SLR Plan,Info Platform,Collab,DACsC,Econ Growth,Transpo,Human,Financial,Overall Plan
+Vulnerable,Innov Design,Collab,Water,Housing,Ecosystem,Political Leader,PermitsB,Public Support
+SLR Plan,Lobby,DACs,Water,Stormwater,Public Health,Political Leader,Overall Plan,Public Support
+Lobby,Info Platform,Existing Agency,Stormwater,Erosion,DACsC,Financial,SLR Uncertainty,
+SLR Plan,Existing Agency,Collab,Transpo,Stormwater,Commercial,Political Leader,Overall Plan,Public Support
+Vulnerable,DACs,Local Response,Stormwater,DACsC,Ecosystem,Human,Overall Plan,
+Permits,DACs,Collab,Transpo,DACsC,Ecosystem,Human,Financial,Overall Plan
+Local Tax,Info Platform,Collab,Transpo,Water,Stormwater,DK,,
+Green Infra,Vision,Collab,Stormwater,DACsC,Housing,Financial,Collab Experience,CBO Relations
+DACs,Green Infra,OtherP,Transpo,DACsC,Ecosystem,Financial,Human,
+Vulnerable,Permits,Existing Agency,Water,Stormwater,Transpo,,,
+SLR Plan,Permits,Existing Agency,Water,Stormwater,Transpo,Financial,,
+SLR Plan,DACs,Existing Agency,Transpo,Public Health,DACsC,Political Leader,Overall Plan,
+Permits,Info Platform,Collab,Transpo,Stormwater,Water,Financial,Political Leader,Overall Plan
+Permits,Green Infra,Innov Design,Ecosystem,DACsC,Transpo,PermitsB,,
+SLR Plan,Vulnerable,Info Platform,Transpo,Water,Erosion,Human,SLR Uncertainty,Overall Plan
+Green Infra,Innov Design,Existing Agency,Energy,Ecosystem,Econ Growth,Political Leader,,
+Lobby,Permits,Existing Agency,Transpo,DACsC,Stormwater,Overall Plan,PermitsB,OtherB
+Permits,,,Water,Housing,Stormwater,Financial,Political Leader,Overall Plan
+DACs,Green Infra,Regional Authority,Water,DACsC,Stormwater,Financial,CBO Relations,OtherB
+Innov Design,Local Response,Permits,Transpo,Stormwater,Water,Financial,OtherB,
+Vulnerable,Permits,Existing Agency,DACsC,Housing,Stormwater,Overall Plan,PermitsB,
+SLR Plan,Vulnerable,Collab,Stormwater,Energy,Transpo,Financial,OtherB,
+,,,,,,,,
+SLR Plan,Vulnerable,Lobby,Transpo,Ecosystem,DACsC,Human,PermitsB,
+Lobby,Green Infra,Local Response,Stormwater,Housing,Transpo,Human,Financial,Political Leader
+Vulnerable,Lobby,Info Platform,Transpo,Ecosystem,Energy,Human,Stakeholder Opposition,Political Leader
+SLR Plan,Regional Authority,Collab,,,,Stakeholder Opposition,Political Leader,Public Support
+Vulnerable,Info Platform,Collab,Transpo,Stormwater,Commercial,Financial,SLR Uncertainty,Overall Plan
+Green Infra,Vision,Collab,Transpo,Ecosystem,Stormwater,Human,Financial,
+Vulnerable,Permits,Existing Agency,Transpo,Erosion,Commercial,Human,Financial,
+Lobby,Regional Authority,Existing Agency,Transpo,Public Health,DACsC,Financial,Political Leader,PermitsB
+Vulnerable,Regional Authority,Collab,Transpo,DACsC,,Collab Experience,Political Leader,PermitsB
+Vulnerable,Green Infra,Regional Authority,Transpo,Water,Stormwater,Political Leader,SLR Uncertainty,Overall Plan
+SLR Plan,Lobby,DACs,Transpo,DACsC,Stormwater,Human,Financial,Overall Plan
+DACs,Green Infra,Existing Agency,Transpo,DACsC,Ecosystem,Political Leader,Overall Plan,CBO Relations
+SLR Plan,Innov Design,Regional Authority,Transpo,DACsC,Ecosystem,Human,SLR Uncertainty,Org Leader
+SLR Plan,Info Platform,Collab,Transpo,Energy,Stormwater,Human,Overall Plan,PermitsB
+SLR Plan,Green Infra,Existing Agency,Ecosystem,Econ Growth,DACsC,DK,,
+Permits,Green Infra,Existing Agency,Stormwater,DACsC,Transpo,Human,Financial,PermitsB
+SLR Plan,Vulnerable,Existing Agency,Transpo,Water,Stormwater,Financial,Overall Plan,OtherB
+,,,,,,,,
+Permits,Local Response,Collab,Transpo,Erosion,Stormwater,Overall Plan,PermitsB,
+Local Tax,DACs,Collab,DACsC,Housing,Stormwater,OtherB,,
+Local Tax,Permits,Info Platform,Transpo,Water,Stormwater,Stakeholder Opposition,Political Leader,PermitsB
+SLR Plan,Local Tax,Lobby,Stormwater,Ecosystem,Water,Political Leader,Overall Plan,PermitsB
+SLR Plan,Local Tax,Permits,Econ Growth,Housing,Stormwater,DK,,
+SLR Plan,Lobby,Regional Authority,,,,Human,Overall Plan,
+SLR Plan,Vulnerable,Info Platform,Stormwater,Property Value,Commercial,Financial,SLR Uncertainty,Sci Info
+Lobby,Permits,Existing Agency,Transpo,Econ Growth,Ecosystem,Stakeholder Opposition,Overall Plan,Public Support
+Vulnerable,Existing Agency,,Stormwater,Erosion,Transpo,Political Leader,PermitsB,OtherB
+Lobby,Green Infra,Regional Authority,Stormwater,DACsC,Water,Human,Overall Plan,
+Lobby,DACs,Regional Authority,Water,Stormwater,Ecosystem,Collab Experience,Overall Plan,PermitsB
+SLR Plan,Info Platform,Vision,Water,Stormwater,Transpo,OtherB,,
+Lobby,Permits,Innov Design,Transpo,Stormwater,Property Value,Sci Info,Overall Plan,PermitsB
+Vulnerable,DACs,Green Infra,Stormwater,Ecosystem,DACsC,CBO Relations,,
+Vulnerable,Permits,Local Response,Water,Stormwater,Transpo,Collab Experience,PermitsB,
+Lobby,Vision,Existing Agency,Ecosystem,DACsC,Transpo,Collab Experience,Org Leader,Public Support
+Lobby,Local Response,Collab,Water,Ecosystem,DACsC,Political Leader,Public Support,
+SLR Plan,Lobby,Permits,Transpo,DACsC,Stormwater,Overall Plan,OtherB,
+Local Tax,DACs,Collab,DACsC,Public Health,Housing,SLR Uncertainty,,
+SLR Plan,Vulnerable,Collab,Stormwater,Property Value,Transpo,SLR Uncertainty,Overall Plan,Public Support
+Local Tax,Green Infra,Existing Agency,Transpo,Public Health,Water,Collab Experience,Stakeholder Opposition,Public Support
+SLR Plan,Vision,Collab,Water,Energy,Transpo,DK,,
+SLR Plan,DACs,Vision,Transpo,Public Health,Commercial,SLR Uncertainty,Public Support,CBO Relations
+SLR Plan,DACs,,Stormwater,Housing,DACsC,Overall Plan,,
+Info Platform,DACs,Green Infra,Water,Stormwater,DACsC,Org Leader,,
+Permits,Existing Agency,Collab,Transpo,Water,,SLR Uncertainty,Sci Info,PermitsB
+SLR Plan,Permits,Collab,Transpo,Stormwater,Erosion,Financial,Political Leader,PermitsB
+SLR Plan,Green Infra,Regional Authority,Ecosystem,DACsC,Transpo,Political Leader,Overall Plan,Public Support
+Permits,Collab,,Transpo,DACsC,Stormwater,Collab Experience,Overall Plan,
+Local Tax,Lobby,Existing Agency,Transpo,Stormwater,DACsC,Org Leader,,
+Lobby,Info Platform,DACs,Ecosystem,Public Health,DACsC,Human,Org Leader,CBO Relations
+Local Tax,Permits,Existing Agency,Transpo,Stormwater,DACsC,Financial,Stakeholder Opposition,OtherB
+Lobby,DACs,Collab,Stormwater,Ecosystem,Transpo,Human,Financial,Overall Plan
+SLR Plan,Vulnerable,Permits,Stormwater,Energy,Water,Financial,Public Support,
+Green Infra,Vision,,Transpo,Ecosystem,Stormwater,SLR Uncertainty,Overall Plan,Public Support
+Vulnerable,Permits,Vision,Transpo,Water,Stormwater,Human,Overall Plan,PermitsB
+Permits,Info Platform,Collab,Transpo,Stormwater,,Political Leader,Overall Plan,PermitsB
+Vulnerable,DACs,Collab,Stormwater,Public Health,DACsC,Org Leader,Public Support,
+SLR Plan,Lobby,Green Infra,Transpo,DACsC,Stormwater,Financial,,
+DACs,Green Infra,Innov Design,Transpo,DACsC,Stormwater,Human,,
+SLR Plan,Permits,Collab,Transpo,DACsC,Water,Political Leader,Overall Plan,Public Support
+Info Platform,Green Infra,Collab,Stormwater,Erosion,Transpo,Overall Plan,PermitsB,CBO Relations
+Vulnerable,Innov Design,Existing Agency,Stormwater,Housing,DACsC,SLR Uncertainty,Overall Plan,
+Permits,DACs,Collab,Transpo,Housing,DACsC,Human,Overall Plan,CBO Relations
+Vulnerable,Lobby,Collab,Transpo,Stormwater,Water,SLR Uncertainty,Overall Plan,Public Support
+Vulnerable,Lobby,Green Infra,Transpo,Stormwater,Ecosystem,Financial,Org Leader,Overall Plan
+Permits,,,Water,Property Value,Transpo,Collab Experience,,
+Vulnerable,Info Platform,DACs,Transpo,Water,DACsC,Financial,Org Leader,CBO Relations
+Permits,Info Platform,Collab,Transpo,Stormwater,Ecosystem,PermitsB,,
+SLR Plan,Permits,Existing Agency,Transpo,Housing,Stormwater,Overall Plan,PermitsB,
+Lobby,Regional Authority,Collab,Water,Stormwater,Transpo,Political Leader,Overall Plan,Public Support
+SLR Plan,Permits,Vision,Transpo,Stormwater,Erosion,Human,PermitsB,CBO Relations
+Vulnerable,Permits,OtherP,Stormwater,Commercial,Property Value,CBO Relations,,
+Info Platform,Innov Design,Collab,Stormwater,Erosion,Energy,Overall Plan,,
+SLR Plan,Permits,Green Infra,Transpo,Econ Growth,Ecosystem,Overall Plan,PermitsB,
+Vulnerable,Green Infra,Collab,Erosion,Ecosystem,Stormwater,Political Leader,SLR Uncertainty,Overall Plan
+Lobby,DACs,,Transpo,DACsC,Stormwater,Financial,,
+SLR Plan,Info Platform,Innov Design,Transpo,Water,Stormwater,Human,SLR Uncertainty,Org Leader
+SLR Plan,Innov Design,Collab,Water,Stormwater,Transpo,Financial,Overall Plan,
+SLR Plan,Green Infra,Collab,Ecosystem,,,OtherB,,
+DACs,Vision,Collab,Ecosystem,DACsC,Public Health,Human,Financial,
+Lobby,Info Platform,Collab,,,,Political Leader,Org Leader,Overall Plan
+SLR Plan,Info Platform,Green Infra,Stormwater,DACsC,Transpo,Overall Plan,,
+SLR Plan,Innov Design,Existing Agency,Transpo,DACsC,Stormwater,Political Leader,Overall Plan,Public Support
+SLR Plan,Green Infra,Innov Design,Transpo,Erosion,Ecosystem,PermitsB,Public Support,OtherB
+Lobby,DACs,Collab,Transpo,Ecosystem,DACsC,OtherB,,
+SLR Plan,Local Tax,Info Platform,DACsC,Housing,Stormwater,Political Leader,Org Leader,Overall Plan
+SLR Plan,Green Infra,Collab,DACsC,Econ Growth,Transpo,Political Leader,SLR Uncertainty,Overall Plan
+SLR Plan,Green Infra,Vision,Stormwater,Property Value,Transpo,Political Leader,Overall Plan,Public Support
+Collab,,,Transpo,Stormwater,Econ Growth,Stakeholder Opposition,Overall Plan,PermitsB
+SLR Plan,Vulnerable,Permits,Stormwater,DACsC,Erosion,Financial,,
+Permits,Green Infra,Collab,Water,Stormwater,,Political Leader,Overall Plan,PermitsB
+Vulnerable,Lobby,Collab,Transpo,Stormwater,Econ Growth,Human,Overall Plan,Public Support
+Permits,Green Infra,Innov Design,DACsC,OtherC,Public Health,Financial,PermitsB,
+Local Tax,Permits,Existing Agency,Transpo,Stormwater,DACsC,Collab Experience,Org Leader,CBO Relations
+DACs,Vision,,DACsC,Housing,Public Health,Human,Overall Plan,Public Support
+Lobby,DACs,Collab,Transpo,Stormwater,DACsC,Political Leader,,
+Local Tax,Lobby,Existing Agency,Stormwater,Econ Growth,Public Health,Political Leader,PermitsB,Public Support
+Green Infra,Regional Authority,DACs,Transpo,DACsC,Stormwater,OtherB,,
+SLR Plan,Lobby,Collab,Transpo,Public Health,Stormwater,Financial,Stakeholder Opposition,PermitsB
+Lobby,Existing Agency,Collab,Stormwater,Housing,Transpo,SLR Uncertainty,,
+Permits,Green Infra,Local Response,Transpo,Water,Ecosystem,Stakeholder Opposition,Political Leader,PermitsB
+,,,,,,,,
+SLR Plan,Lobby,Collab,Stormwater,Ecosystem,DACsC,Overall Plan,PermitsB,Public Support
+SLR Plan,Green Infra,Regional Authority,Stormwater,Energy,Ecosystem,Collab Experience,OtherB,
+Lobby,Vision,Collab,,,,Financial,Political Leader,Overall Plan
+Regional Authority,,,,,,OtherB,,
+SLR Plan,Local Tax,Regional Authority,Water,Econ Growth,DACsC,Human,Financial,CBO Relations
+Permits,Innov Design,Collab,Ecosystem,Public Health,Erosion,CBO Relations,,
+Local Tax,Innov Design,Existing Agency,Water,Stormwater,Transpo,SLR Uncertainty,Public Support,
+Vulnerable,Info Platform,Collab,Transpo,DACsC,Stormwater,Overall Plan,PermitsB,OtherB
+Lobby,Green Infra,Collab,Transpo,Ecosystem,Stormwater,Financial,SLR Uncertainty,
+Green Infra,Vision,Collab,Ecosystem,Public Health,Housing,Human,Overall Plan,
+Vulnerable,Permits,Collab,Transpo,Property Value,Stormwater,SLR Uncertainty,Overall Plan,Public Support
+Permits,Regional Authority,Collab,Transpo,Stormwater,DACsC,Human,Overall Plan,CBO Relations
+Vulnerable,Existing Agency,Lobby,Water,Transpo,,Financial,,
+SLR Plan,Info Platform,Existing Agency,Stormwater,DACsC,Water,OtherB,,
+SLR Plan,Vulnerable,Info Platform,Transpo,Erosion,Stormwater,SLR Uncertainty,Sci Info,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Vulnerable,Existing Agency,Stormwater,Econ Growth,Transpo,Political Leader,SLR Uncertainty,Overall Plan
+SLR Plan,Info Platform,Existing Agency,Transpo,DACsC,Ecosystem,Overall Plan,CBO Relations,
+Info Platform,DACs,Green Infra,Stormwater,Erosion,DACsC,SLR Uncertainty,CBO Relations,
+SLR Plan,Existing Agency,Collab,Erosion,Public Health,Ecosystem,Financial,DK,
+Lobby,Green Infra,Innov Design,Transpo,OtherC,Stormwater,Human,Financial,
+Lobby,Green Infra,Collab,Transpo,Ecosystem,Stormwater,SLR Uncertainty,Public Support,CBO Relations
+Vulnerable,Lobby,Existing Agency,Stormwater,OtherC,Ecosystem,Human,Sci Info,OtherB
+Vulnerable,Green Infra,Existing Agency,Stormwater,Ecosystem,Water,Collab Experience,Overall Plan,CBO Relations
+Lobby,Info Platform,Collab,Transpo,Ecosystem,Stormwater,Overall Plan,,
+Permits,Innov Design,Local Response,Water,Public Health,Housing,Public Support,,
+SLR Plan,Innov Design,Regional Authority,Transpo,Stormwater,Property Value,Stakeholder Opposition,Public Support,CBO Relations
+SLR Plan,Info Platform,Regional Authority,Econ Growth,Housing,Erosion,Financial,Collab Experience,Overall Plan
+Permits,Regional Authority,Collab,Transpo,Energy,DACsC,,,
+Permits,Green Infra,Collab,Stormwater,Erosion,Ecosystem,Financial,Human,
+Green Infra,Existing Agency,Collab,,,,Collab Experience,Political Leader,Overall Plan
+Lobby,DACs,Innov Design,Water,DACsC,Ecosystem,Political Leader,Overall Plan,Public Support
+Vulnerable,Info Platform,Collab,Stormwater,Erosion,Econ Growth,Political Leader,SLR Uncertainty,Overall Plan
+Local Tax,Permits,Innov Design,Erosion,Housing,Ecosystem,Human,Stakeholder Opposition,PermitsB
+Lobby,Green Infra,Regional Authority,Transpo,Erosion,Ecosystem,Human,Overall Plan,
+Vulnerable,Green Infra,Regional Authority,Transpo,DACsC,Stormwater,SLR Uncertainty,Overall Plan,PermitsB
+Vulnerable,Permits,,Transpo,Stormwater,Erosion,SLR Uncertainty,,
+SLR Plan,Existing Agency,Collab,Stormwater,DACsC,Water,SLR Uncertainty,Overall Plan,OtherB
+Vulnerable,Lobby,Collab,Stormwater,Ecosystem,DACsC,SLR Uncertainty,Overall Plan,
+SLR Plan,Info Platform,Existing Agency,Transpo,Water,Stormwater,Political Leader,,
+SLR Plan,Permits,Vision,Ecosystem,Water,Stormwater,Sci Info,Overall Plan,
+SLR Plan,Permits,Innov Design,Transpo,Stormwater,Housing,Financial,Political Leader,OtherB
+Green Infra,Vision,Innov Design,,,,Political Leader,Overall Plan,Public Support
+SLR Plan,Regional Authority,Collab,Transpo,DACsC,Ecosystem,Political Leader,PermitsB,Public Support
+,,,,,,,,
+Info Platform,DACs,Innov Design,,,,Public Support,CBO Relations,
+Regional Authority,,,Water,DACsC,Public Health,Human,Collab Experience,CBO Relations
+SLR Plan,Vulnerable,Local Tax,Water,DACsC,Econ Growth,Stakeholder Opposition,CBO Relations,
+SLR Plan,Info Platform,Existing Agency,Transpo,,,Financial,Overall Plan,
+SLR Plan,Innov Design,Local Response,Water,Stormwater,DACsC,Human,SLR Uncertainty,Sci Info
+SLR Plan,Info Platform,Regional Authority,Transpo,Property Value,DACsC,Political Leader,Overall Plan,OtherB
+SLR Plan,Vulnerable,Existing Agency,Water,Property Value,Erosion,Collab Experience,Political Leader,Overall Plan
+Permits,Local Response,OtherP,Property Value,Ecosystem,DACsC,Financial,Collab Experience,PermitsB
+DACs,Local Response,Collab,Erosion,DACsC,Public Health,Financial,Political Leader,Human
+Vulnerable,Lobby,Innov Design,Erosion,,,Stakeholder Opposition,Political Leader,CBO Relations
+Vulnerable,Permits,Innov Design,Transpo,Public Health,Stormwater,Financial,PermitsB,
+Permits,DACs,Existing Agency,Transpo,DACsC,Housing,Stakeholder Opposition,Overall Plan,PermitsB
+SLR Plan,DACs,Collab,Stormwater,Erosion,Public Health,Political Leader,Overall Plan,Public Support
+DACs,Green Infra,Collab,Stormwater,Ecosystem,DACsC,Financial,,
+SLR Plan,Collab,OtherP,Water,Energy,Stormwater,SLR Uncertainty,Overall Plan,Human
+Lobby,Collab,OtherP,Property Value,OtherC,Stormwater,Political Leader,Overall Plan,OtherB
+Lobby,Permits,Collab,Stormwater,Ecosystem,Water,SLR Uncertainty,Overall Plan,OtherB
+Lobby,Permits,DACs,Transpo,Ecosystem,Housing,SLR Uncertainty,PermitsB,
+Vulnerable,Info Platform,Existing Agency,Transpo,DACsC,Stormwater,SLR Uncertainty,Overall Plan,
+Local Tax,Permits,Regional Authority,Ecosystem,DACsC,Transpo,Political Leader,Overall Plan,Public Support
+Info Platform,DACs,Vulnerable,DACsC,Public Health,Housing,OtherB,,
+SLR Plan,Vulnerable,Green Infra,Transpo,Housing,Stormwater,Political Leader,Overall Plan,Public Support
+Lobby,Green Infra,Collab,Transpo,Ecosystem,Stormwater,Human,Financial,Public Support
+SLR Plan,Vulnerable,Green Infra,Transpo,Water,Erosion,Collab Experience,,
+SLR Plan,Lobby,Collab,Transpo,Stormwater,DACsC,Overall Plan,,
+Info Platform,Existing Agency,Collab,Transpo,Commercial,Stormwater,Overall Plan,,
+SLR Plan,,,Commercial,Econ Growth,Transpo,Financial,Sci Info,Overall Plan
+SLR Plan,Lobby,Existing Agency,Transpo,Stormwater,DACsC,Stakeholder Opposition,SLR Uncertainty,CBO Relations
+SLR Plan,Vulnerable,Green Infra,Transpo,Ecosystem,Erosion,DK,,
+Lobby,Green Infra,Collab,Water,Ecosystem,Commercial,Human,Political Leader,Overall Plan
+Vulnerable,Lobby,Info Platform,Transpo,Ecosystem,Stormwater,Public Support,,
+Vulnerable,Lobby,Collab,DACsC,Public Health,Water,Political Leader,,
+SLR Plan,Local Tax,Existing Agency,Transpo,DACsC,Water,SLR Uncertainty,Overall Plan,Public Support
+Vulnerable,DACs,Existing Agency,Transpo,Public Health,DACsC,,,
+SLR Plan,Permits,Green Infra,Transpo,Housing,DACsC,SLR Uncertainty,Overall Plan,PermitsB
+Vulnerable,Info Platform,Collab,Ecosystem,Property Value,Erosion,SLR Uncertainty,,
+SLR Plan,Vulnerable,Green Infra,Transpo,Erosion,Stormwater,Political Leader,SLR Uncertainty,Public Support
+Green Infra,Innov Design,Collab,Transpo,Stormwater,DACsC,DK,,
+Info Platform,DACs,Regional Authority,Transpo,Stormwater,DACsC,Human,Sci Info,
+Permits,Info Platform,Collab,Transpo,DACsC,,Org Leader,,
+SLR Plan,Permits,Collab,Transpo,Stormwater,Water,Stakeholder Opposition,,
+,,,,,,,,
+Green Infra,Existing Agency,Collab,Stormwater,DACsC,Transpo,Financial,,
+SLR Plan,Info Platform,,Stormwater,Erosion,Housing,DK,,
+Vulnerable,Green Infra,Local Response,Stormwater,Ecosystem,Transpo,Stakeholder Opposition,Overall Plan,CBO Relations
+DACs,Green Infra,Collab,Transpo,DACsC,Ecosystem,Financial,Political Leader,Overall Plan
+Permits,Vision,Regional Authority,Transpo,Stormwater,Energy,DK,,
+Vision,Regional Authority,Collab,Transpo,Public Health,OtherC,Human,Overall Plan,OtherB
+Vulnerable,Info Platform,DACs,Transpo,Stormwater,DACsC,Public Support,,
+SLR Plan,Permits,Regional Authority,Water,Energy,Public Health,SLR Uncertainty,Public Support,
+Vulnerable,Innov Design,Existing Agency,Transpo,Econ Growth,DACsC,Human,Collab Experience,Public Support
+Vulnerable,Green Infra,Local Response,Transpo,Ecosystem,Erosion,Financial,Org Leader,
+Vulnerable,DACs,Innov Design,Transpo,Erosion,DACsC,Financial,Sci Info,
+SLR Plan,Vision,Existing Agency,Transpo,Water,Energy,DK,,
+SLR Plan,Permits,Collab,Stormwater,Ecosystem,DACsC,Overall Plan,PermitsB,
+Vulnerable,Lobby,Collab,Transpo,Ecosystem,OtherC,Financial,Human,
+Local Tax,,,Water,Stormwater,,Overall Plan,,
+SLR Plan,Vulnerable,Collab,Transpo,Commercial,Water,Financial,Stakeholder Opposition,Overall Plan
+Vulnerable,Permits,Collab,Water,Ecosystem,Stormwater,Overall Plan,CBO Relations,
+Vulnerable,Local Response,,Transpo,Water,Public Health,DK,,
+Lobby,Green Infra,Existing Agency,Ecosystem,,,PermitsB,,
+Vulnerable,Info Platform,Collab,,,,Financial,,
+SLR Plan,DACs,Regional Authority,Water,DACsC,Erosion,Stakeholder Opposition,Overall Plan,Public Support
+,,,,,,,,
+DACs,,,DACsC,Housing,,Political Leader,,
+Lobby,Info Platform,Green Infra,Transpo,Housing,Stormwater,Political Leader,Overall Plan,
+Lobby,DACs,Regional Authority,DACsC,,,Financial,Political Leader,Overall Plan
+Permits,Green Infra,Vision,Transpo,Ecosystem,Stormwater,Collab Experience,SLR Uncertainty,Overall Plan
+Local Tax,Permits,Green Infra,Transpo,Erosion,Ecosystem,Sci Info,PermitsB,
+Lobby,Innov Design,Collab,Transpo,Ecosystem,Property Value,Financial,Overall Plan,Public Support
+SLR Plan,Vulnerable,Existing Agency,Transpo,Ecosystem,Stormwater,Political Leader,SLR Uncertainty,PermitsB
+Vulnerable,DACs,Green Infra,Ecosystem,DACsC,Erosion,Human,Financial,OtherB
+Lobby,Green Infra,Regional Authority,Stormwater,Ecosystem,Erosion,Political Leader,Sci Info,Org Leader
+SLR Plan,Info Platform,Regional Authority,Transpo,Public Health,Stormwater,Political Leader,Overall Plan,Public Support
+Vulnerable,Vision,Collab,Stormwater,DACsC,Water,Political Leader,SLR Uncertainty,Overall Plan
+Permits,Green Infra,Collab,Transpo,Ecosystem,Stormwater,Stakeholder Opposition,PermitsB,
+SLR Plan,Vulnerable,Collab,Ecosystem,Erosion,DACsC,,,
+Permits,OtherP,,Transpo,Property Value,Stormwater,Financial,SLR Uncertainty,Public Support
+Permits,DACs,Existing Agency,DACsC,Econ Growth,Transpo,Org Leader,Overall Plan,
+Permits,Info Platform,Collab,Erosion,Econ Growth,Stormwater,Financial,Sci Info,PermitsB
+SLR Plan,Local Tax,Regional Authority,Transpo,DACsC,Stormwater,Political Leader,Overall Plan,PermitsB
+SLR Plan,Regional Authority,OtherP,Ecosystem,DACsC,Housing,Overall Plan,,
+SLR Plan,Local Tax,DACs,Transpo,Erosion,Stormwater,Human,Financial,Overall Plan
+SLR Plan,Vision,Regional Authority,Transpo,DACsC,Stormwater,SLR Uncertainty,Overall Plan,
+Permits,DACs,Vision,Ecosystem,DACsC,Public Health,Org Leader,,
+Vulnerable,Vision,Collab,Transpo,Ecosystem,Stormwater,Political Leader,Overall Plan,Public Support
+Permits,Green Infra,,Ecosystem,Erosion,Transpo,PermitsB,,
+DACs,Regional Authority,Collab,Transpo,Stormwater,DACsC,Human,Financial,Overall Plan
+Local Tax,DACs,Innov Design,Erosion,DACsC,Stormwater,Political Leader,Overall Plan,Public Support
+SLR Plan,Vulnerable,Info Platform,Stormwater,Energy,Transpo,Human,Overall Plan,CBO Relations
+Lobby,Green Infra,Existing Agency,Transpo,Ecosystem,Housing,Financial,Stakeholder Opposition,DK
+Vulnerable,Permits,Green Infra,Transpo,DACsC,Stormwater,DK,,
+SLR Plan,Green Infra,Existing Agency,Transpo,Ecosystem,Erosion,Human,Org Leader,Overall Plan
+Permits,Green Infra,Regional Authority,Transpo,Housing,DACsC,Human,Stakeholder Opposition,
+Lobby,Permits,DACs,Ecosystem,DACsC,Stormwater,Stakeholder Opposition,Public Support,CBO Relations
+Vulnerable,Local Tax,Local Response,Stormwater,Public Health,DACsC,Human,Financial,OtherB
+Vulnerable,Vision,Innov Design,Water,Energy,Ecosystem,Financial,Overall Plan,
+DACs,Green Infra,OtherP,Transpo,Erosion,Stormwater,Stakeholder Opposition,Political Leader,Public Support
+SLR Plan,Lobby,Permits,DACsC,Econ Growth,Transpo,Political Leader,SLR Uncertainty,Overall Plan
+SLR Plan,Vulnerable,Green Infra,Transpo,Stormwater,Energy,Human,,
+SLR Plan,Permits,Collab,Transpo,Stormwater,Water,OtherB,,
+SLR Plan,Innov Design,Collab,Transpo,Ecosystem,Erosion,Overall Plan,,
+SLR Plan,Vulnerable,Green Infra,Transpo,DACsC,Stormwater,Political Leader,SLR Uncertainty,
+Lobby,Green Infra,Existing Agency,Transpo,Erosion,DACsC,Stakeholder Opposition,Overall Plan,DK
+Vulnerable,Green Infra,OtherP,Transpo,Erosion,Ecosystem,Stakeholder Opposition,Political Leader,Overall Plan
+DACs,Innov Design,Existing Agency,Ecosystem,Public Health,DACsC,Political Leader,Org Leader,
+Local Tax,Lobby,Collab,Stormwater,Ecosystem,Housing,Public Support,,
+Info Platform,Vision,Collab,Transpo,Stormwater,DACsC,Financial,,
+Vulnerable,Lobby,Local Response,Water,Stormwater,Property Value,Collab Experience,Political Leader,
+Vulnerable,Info Platform,OtherP,Transpo,Public Health,DACsC,Political Leader,CBO Relations,Org Leader
+Lobby,Info Platform,Green Infra,Water,Erosion,Ecosystem,SLR Uncertainty,Overall Plan,
+,,,,,,,,
+Green Infra,Collab,OtherP,Transpo,OtherC,DACsC,Financial,OtherB,
+Local Tax,,,Transpo,Erosion,Ecosystem,Financial,,
+Innov Design,Regional Authority,Collab,Transpo,Stormwater,Ecosystem,Financial,Collab Experience,
+Vulnerable,Green Infra,Existing Agency,Transpo,Stormwater,DACsC,DK,,
+DACs,Vision,Existing Agency,DACsC,Housing,Property Value,OtherB,,
+Vulnerable,Lobby,OtherP,Stormwater,DACsC,Housing,Financial,CBO Relations,OtherB
+Local Tax,Permits,Green Infra,Transpo,Stormwater,Ecosystem,Stakeholder Opposition,Political Leader,PermitsB
+SLR Plan,DACs,Green Infra,Transpo,Stormwater,Erosion,Human,Sci Info,PermitsB
+Vulnerable,DACs,Vision,,,,Collab Experience,Overall Plan,Public Support
+Lobby,DACs,Collab,Transpo,Water,,DK,,
+SLR Plan,Vulnerable,Collab,Transpo,DACsC,Stormwater,Human,Political Leader,Overall Plan
+Lobby,Permits,,Transpo,Erosion,Water,Financial,,
+SLR Plan,Innov Design,Regional Authority,Commercial,Housing,Transpo,SLR Uncertainty,Overall Plan,
+SLR Plan,Local Tax,Lobby,Stormwater,Energy,DACsC,Human,Financial,
+Lobby,Innov Design,Local Response,Transpo,Housing,DACsC,Financial,SLR Uncertainty,Public Support
+Lobby,OtherP,,Stormwater,Ecosystem,Erosion,Financial,Stakeholder Opposition,OtherB
+SLR Plan,Vulnerable,Existing Agency,Transpo,Commercial,DACsC,DK,,
+Local Tax,Lobby,Collab,Transpo,Water,Ecosystem,Financial,,
+SLR Plan,DACs,Collab,Stormwater,Econ Growth,DACsC,Human,SLR Uncertainty,Sci Info
+SLR Plan,Local Tax,Lobby,Transpo,Stormwater,Water,Human,,
+Lobby,DACs,Existing Agency,Transpo,DACsC,Stormwater,Political Leader,CBO Relations,Human
+Green Infra,Vision,Collab,Transpo,Ecosystem,DACsC,Collab Experience,,
+SLR Plan,Permits,Local Response,Transpo,Housing,DACsC,Collab Experience,Political Leader,Overall Plan
+Vulnerable,DACs,Vision,Stormwater,Econ Growth,DACsC,OtherB,,
+SLR Plan,Regional Authority,Existing Agency,Transpo,Public Health,Stormwater,Financial,SLR Uncertainty,
+SLR Plan,Green Infra,Vision,Water,Public Health,Stormwater,DK,,
+Local Tax,Green Infra,Existing Agency,DACsC,Housing,Transpo,OtherB,Human,
+OtherP,,,Ecosystem,Erosion,DACsC,Political Leader,Overall Plan,
+SLR Plan,Vulnerable,Existing Agency,Transpo,Energy,Stormwater,OtherB,,
+Lobby,Vision,Innov Design,Transpo,Econ Growth,Erosion,Human,Political Leader,Org Leader
+SLR Plan,Permits,Existing Agency,DACsC,Housing,Stormwater,Financial,Overall Plan,OtherB
+DACs,Green Infra,Existing Agency,Ecosystem,DACsC,Erosion,OtherB,,
+Green Infra,Vision,Collab,Ecosystem,Public Health,DACsC,Org Leader,,
+SLR Plan,Info Platform,Collab,Transpo,Property Value,Stormwater,Human,Financial,DK
+SLR Plan,Vulnerable,Lobby,Transpo,Ecosystem,Erosion,Financial,Collab Experience,Overall Plan
+Vulnerable,OtherP,,Ecosystem,DACsC,OtherC,Overall Plan,CBO Relations,
+Vision,Existing Agency,Collab,DACsC,Housing,Water,Political Leader,Public Support,CBO Relations
+Info Platform,Existing Agency,Collab,Transpo,DACsC,Stormwater,Collab Experience,CBO Relations,
+Lobby,DACs,Local Response,Erosion,DACsC,Housing,Financial,Political Leader,CBO Relations
+SLR Plan,Vulnerable,Existing Agency,Stormwater,Property Value,Transpo,Human,SLR Uncertainty,Overall Plan
+Vulnerable,Info Platform,Vision,Ecosystem,DACsC,Transpo,SLR Uncertainty,Public Support,CBO Relations
+Vulnerable,Innov Design,Collab,Transpo,Econ Growth,Stormwater,Financial,Overall Plan,PermitsB
+SLR Plan,Lobby,Existing Agency,Energy,Erosion,Stormwater,Political Leader,SLR Uncertainty,PermitsB
+Vulnerable,Lobby,Green Infra,Stormwater,Ecosystem,Transpo,Human,Financial,
+Collab,,,Stormwater,Erosion,Transpo,DK,,
+SLR Plan,Lobby,Collab,Transpo,Property Value,Water,Overall Plan,CBO Relations,
+Green Infra,Regional Authority,Collab,Ecosystem,Housing,DACsC,SLR Uncertainty,Overall Plan,
+Lobby,Permits,Regional Authority,Transpo,DACsC,Stormwater,Financial,Political Leader,Overall Plan
+Lobby,Vision,Innov Design,Transpo,DACsC,Econ Growth,Political Leader,Org Leader,Overall Plan
+SLR Plan,Existing Agency,Collab,Transpo,Ecosystem,Stormwater,,,
+SLR Plan,Innov Design,Existing Agency,Stormwater,Property Value,Ecosystem,SLR Uncertainty,Overall Plan,PermitsB
+SLR Plan,Green Infra,Collab,Stormwater,Water,,Human,CBO Relations,OtherB
+SLR Plan,Green Infra,Collab,Water,Stormwater,Ecosystem,Political Leader,Overall Plan,OtherB
+SLR Plan,Local Tax,Green Infra,Transpo,Stormwater,Econ Growth,Financial,Political Leader,SLR Uncertainty
+Info Platform,,,,,,Political Leader,,
+SLR Plan,Vulnerable,Collab,Stormwater,Ecosystem,Erosion,SLR Uncertainty,Overall Plan,
+Permits,,,Energy,Erosion,Transpo,PermitsB,,
+SLR Plan,Permits,Green Infra,Ecosystem,Housing,Transpo,Org Leader,Overall Plan,PermitsB
+Permits,Local Response,Collab,Stormwater,Energy,Transpo,Financial,Human,
+,,,,,,SLR Uncertainty,OtherB,
+SLR Plan,Vulnerable,Green Infra,Stormwater,Ecosystem,Transpo,Human,Political Leader,Org Leader
+Permits,Innov Design,Regional Authority,Water,DACsC,Property Value,Collab Experience,PermitsB,CBO Relations
+DACs,Regional Authority,,DACsC,Housing,Commercial,Overall Plan,OtherB,
+Lobby,Vision,Collab,Erosion,Public Health,Stormwater,Human,Political Leader,Overall Plan
+SLR Plan,Green Infra,Local Response,Stormwater,Property Value,Water,OtherB,,
+Vulnerable,Permits,Info Platform,,,,,,
+SLR Plan,Vulnerable,Existing Agency,Transpo,DACsC,Stormwater,DK,,
+Permits,Info Platform,Collab,Water,Energy,Ecosystem,Financial,,
+SLR Plan,Vulnerable,Vision,Stormwater,Ecosystem,DACsC,OtherB,,
+Vulnerable,Lobby,Info Platform,Transpo,Econ Growth,Stormwater,,,
+SLR Plan,Local Tax,Permits,Stormwater,Ecosystem,Transpo,Overall Plan,PermitsB,Public Support
+Green Infra,Innov Design,Regional Authority,Stormwater,Ecosystem,Transpo,Political Leader,OtherB,
+Vulnerable,Innov Design,Existing Agency,Erosion,DACsC,Stormwater,Political Leader,Overall Plan,
+Local Tax,Regional Authority,Collab,Stormwater,DACsC,Transpo,Human,Org Leader,CBO Relations
+Vulnerable,Existing Agency,Collab,Water,Energy,Transpo,Overall Plan,,
+SLR Plan,Vulnerable,Collab,Transpo,Erosion,Stormwater,SLR Uncertainty,Overall Plan,Public Support
+SLR Plan,Vulnerable,Existing Agency,Water,Ecosystem,Stormwater,SLR Uncertainty,Overall Plan,Public Support
+Vulnerable,Green Infra,OtherP,Transpo,DACsC,Stormwater,Stakeholder Opposition,CBO Relations,OtherB
+Permits,Innov Design,Existing Agency,Transpo,Stormwater,Erosion,Overall Plan,PermitsB,
+Lobby,Permits,Existing Agency,Transpo,Erosion,Stormwater,Human,,
+SLR Plan,Permits,Collab,Stormwater,Erosion,Ecosystem,Collab Experience,CBO Relations,
+Permits,Green Infra,Collab,Stormwater,Erosion,Ecosystem,Human,Overall Plan,PermitsB
+SLR Plan,Info Platform,Collab,Ecosystem,DACsC,Transpo,Financial,SLR Uncertainty,Overall Plan
+Lobby,Green Infra,Vision,Stormwater,Property Value,,Overall Plan,PermitsB,
+Lobby,Regional Authority,Collab,Transpo,Stormwater,Econ Growth,Collab Experience,Political Leader,Public Support
+SLR Plan,Green Infra,Collab,Transpo,DACsC,Ecosystem,Overall Plan,PermitsB,CBO Relations
+,,,,,,,,
+SLR Plan,Permits,Vision,Transpo,Stormwater,DACsC,Human,Financial,
+Permits,Vision,Collab,Transpo,Econ Growth,Stormwater,Human,Sci Info,PermitsB
+Local Tax,Green Infra,Collab,Ecosystem,DACsC,Transpo,DK,,
+SLR Plan,Local Tax,Collab,Stormwater,Public Health,Transpo,DK,,
+Green Infra,Local Response,Collab,Water,,,DK,,
+SLR Plan,Existing Agency,Collab,Stormwater,DACsC,Transpo,Financial,Political Leader,Overall Plan
+DACs,Existing Agency,,Stormwater,DACsC,,Financial,Overall Plan,
+Info Platform,DACs,Innov Design,Stormwater,Ecosystem,Erosion,Overall Plan,PermitsB,
+SLR Plan,Local Tax,Permits,Transpo,Property Value,Stormwater,Financial,Collab Experience,
+Vulnerable,Vision,,Stormwater,Econ Growth,Transpo,SLR Uncertainty,Sci Info,
+Green Infra,Regional Authority,Collab,Transpo,DACsC,Erosion,Financial,,
+SLR Plan,Local Tax,Regional Authority,Water,Ecosystem,,,,
+SLR Plan,Vision,Collab,Transpo,Erosion,Stormwater,Human,Overall Plan,PermitsB
+SLR Plan,Green Infra,Collab,Stormwater,Housing,Water,Financial,,
+SLR Plan,Info Platform,Existing Agency,Transpo,Housing,Stormwater,Overall Plan,Public Support,
+SLR Plan,Vulnerable,Green Infra,Transpo,Ecosystem,OtherC,Org Leader,Overall Plan,SLR Uncertainty
+SLR Plan,Vulnerable,Local Response,Transpo,Stormwater,DACsC,OtherB,,
+SLR Plan,Green Infra,Regional Authority,Transpo,Stormwater,Erosion,SLR Uncertainty,,
+SLR Plan,Green Infra,Regional Authority,Stormwater,DACsC,Transpo,Political Leader,Overall Plan,
+Green Infra,Innov Design,Collab,Transpo,DACsC,Stormwater,Financial,,
+Info Platform,Green Infra,Collab,Water,Housing,Ecosystem,Political Leader,SLR Uncertainty,Public Support
+Innov Design,Regional Authority,Collab,Transpo,DACsC,Housing,Human,Overall Plan,Public Support
+SLR Plan,DACs,Vision,Transpo,Stormwater,DACsC,Political Leader,Overall Plan,CBO Relations
+Lobby,,,OtherC,,,Financial,PermitsB,
+Info Platform,Existing Agency,Collab,Transpo,Public Health,DACsC,Human,Collab Experience,Org Leader
+DACs,Vision,Collab,DACsC,Housing,Energy,Financial,Collab Experience,CBO Relations
+Vulnerable,DACs,Collab,Energy,DACsC,Public Health,Human,Financial,OtherB
+Lobby,Permits,Existing Agency,Energy,Housing,Public Health,SLR Uncertainty,Overall Plan,PermitsB
+Info Platform,Green Infra,OtherP,Transpo,DACsC,Water,Human,Financial,Org Leader
+SLR Plan,Vulnerable,Existing Agency,Transpo,Econ Growth,Housing,Political Leader,Overall Plan,Public Support
+Info Platform,Green Infra,Innov Design,Ecosystem,Erosion,,Human,Overall Plan,CBO Relations
+,,,Energy,Ecosystem,Housing,,,
+Vulnerable,Lobby,DACs,DACsC,,,Sci Info,,
+Local Tax,Permits,Existing Agency,Stormwater,Erosion,Public Health,DK,,
+Permits,Green Infra,Regional Authority,,,,Human,Political Leader,Sci Info
+Vulnerable,Lobby,Collab,DACsC,Housing,Stormwater,SLR Uncertainty,Overall Plan,Public Support
+Local Tax,Lobby,Green Infra,Ecosystem,DACsC,Transpo,Financial,,
+SLR Plan,Local Tax,Existing Agency,Transpo,Public Health,DACsC,Political Leader,Public Support,CBO Relations
+SLR Plan,Green Infra,Innov Design,Transpo,Public Health,DACsC,,,
+Vulnerable,Local Tax,Green Infra,Ecosystem,DACsC,Transpo,Financial,Human,
+SLR Plan,DACs,Existing Agency,Stormwater,DACsC,Transpo,Human,SLR Uncertainty,Overall Plan
+SLR Plan,Vulnerable,Lobby,Stormwater,DACsC,Transpo,,,
+SLR Plan,Local Tax,Info Platform,Transpo,Ecosystem,Stormwater,Overall Plan,PermitsB,Public Support
+SLR Plan,Vision,Existing Agency,Water,Erosion,Transpo,Political Leader,Org Leader,Overall Plan
+Local Tax,Info Platform,Vision,Transpo,DACsC,Stormwater,Overall Plan,PermitsB,CBO Relations
+SLR Plan,Green Infra,Regional Authority,Stormwater,Ecosystem,DACsC,Financial,SLR Uncertainty,
+Lobby,Green Infra,Innov Design,Transpo,Erosion,DACsC,Human,Financial,Political Leader
+Lobby,Permits,Collab,Transpo,Ecosystem,DACsC,Political Leader,Overall Plan,Public Support
+Green Infra,Innov Design,Collab,DACsC,OtherC,Public Health,Political Leader,,
+DACs,Innov Design,Existing Agency,Transpo,Stormwater,DACsC,Political Leader,PermitsB,OtherB
+Local Tax,Green Infra,Existing Agency,Ecosystem,OtherC,Water,Human,Collab Experience,CBO Relations
+,,,,,,,,
+Permits,Vision,Collab,Stormwater,Commercial,Transpo,Human,Political Leader,Sci Info
+Permits,Vision,Collab,Transpo,Stormwater,DACsC,Human,Collab Experience,
+Green Infra,Local Response,Existing Agency,Transpo,Energy,Water,Collab Experience,Org Leader,Human
+Lobby,Permits,Existing Agency,Transpo,Public Health,Econ Growth,Human,Overall Plan,Public Support
+DACs,Existing Agency,Collab,DACsC,Housing,Econ Growth,Human,CBO Relations,
+Vulnerable,Innov Design,Existing Agency,Transpo,Commercial,Stormwater,Political Leader,Overall Plan,Public Support
+SLR Plan,Vulnerable,Collab,Stormwater,DACsC,Transpo,Human,Stakeholder Opposition,OtherB
+SLR Plan,Local Tax,DACs,Stormwater,Ecosystem,DACsC,Financial,PermitsB,Public Support
+Vulnerable,Info Platform,Collab,Econ Growth,Housing,Transpo,Human,,
+SLR Plan,Lobby,Permits,Transpo,Stormwater,DACsC,Human,Overall Plan,Public Support
+Vulnerable,Lobby,DACs,Stormwater,DACsC,Ecosystem,Human,Org Leader,Overall Plan
+SLR Plan,Info Platform,Innov Design,Stormwater,Ecosystem,Erosion,,,
+Permits,Green Infra,Vision,Transpo,DACsC,Ecosystem,,,
+Local Tax,DACs,,Water,Ecosystem,Stormwater,Financial,Political Leader,Overall Plan
+Collab,,,Transpo,Stormwater,Public Health,,,
+SLR Plan,Vision,Collab,Water,Public Health,Ecosystem,Org Leader,Overall Plan,CBO Relations
+Local Tax,Permits,Existing Agency,Transpo,Ecosystem,Stormwater,Financial,PermitsB,Public Support
+Innov Design,SLR Plan,Collab,Water,DACsC,Ecosystem,Political Leader,Overall Plan,CBO Relations
+Vulnerable,Lobby,Vision,Transpo,Water,Stormwater,SLR Uncertainty,DK,
+Vulnerable,Info Platform,Collab,Transpo,Stormwater,Water,Financial,Political Leader,Overall Plan
+SLR Plan,Collab,OtherP,Stormwater,Public Health,DACsC,OtherB,,
+Info Platform,OtherP,,Transpo,Housing,Stormwater,Political Leader,Org Leader,Public Support
+DACs,OtherP,,Water,Stormwater,DACsC,,,
+Local Tax,Vision,Existing Agency,Transpo,Public Health,DACsC,Political Leader,SLR Uncertainty,Overall Plan
+Permits,,,,,,,,
+SLR Plan,Innov Design,Collab,Stormwater,DACsC,Transpo,Political Leader,Overall Plan,CBO Relations
+Info Platform,,,Transpo,Ecosystem,Public Health,Political Leader,Sci Info,
+Collab,,,Ecosystem,,,Political Leader,Public Support,OtherB
+Lobby,Regional Authority,Existing Agency,Energy,Housing,Erosion,Stakeholder Opposition,Political Leader,Public Support
+SLR Plan,Info Platform,Green Infra,Transpo,Public Health,Energy,Political Leader,SLR Uncertainty,
+SLR Plan,Vulnerable,Green Infra,Transpo,Water,Stormwater,Human,Org Leader,Public Support
+SLR Plan,Permits,Info Platform,Stormwater,Econ Growth,Transpo,Political Leader,Overall Plan,OtherB
+Vulnerable,Lobby,DACs,,,,Human,SLR Uncertainty,Public Support
+SLR Plan,Existing Agency,Collab,Transpo,Stormwater,Ecosystem,Financial,Political Leader,PermitsB
+Info Platform,Regional Authority,OtherP,Water,Ecosystem,Public Health,Human,Financial,
+Vulnerable,Permits,Innov Design,Water,Stormwater,Ecosystem,,,
+SLR Plan,,,Stormwater,Energy,DACsC,,,
+SLR Plan,Lobby,Regional Authority,Transpo,DACsC,Stormwater,Financial,,
+SLR Plan,Green Infra,Regional Authority,Transpo,Water,Ecosystem,SLR Uncertainty,Sci Info,Collab Experience
+Permits,Green Infra,Collab,Transpo,Public Health,Ecosystem,Political Leader,Overall Plan,PermitsB
+,,,,,,,,
+DACs,Vision,Local Response,,,,Collab Experience,Overall Plan,PermitsB
+Permits,Existing Agency,Collab,,,,SLR Uncertainty,DK,
+Vulnerable,,,Stormwater,Erosion,Transpo,Human,Public Support,CBO Relations
+Lobby,Permits,OtherP,Stormwater,Ecosystem,Transpo,OtherB,,
+Permits,Info Platform,Existing Agency,Stormwater,DACsC,OtherC,Financial,Overall Plan,OtherB
+Info Platform,,,Transpo,Property Value,,Public Support,,
+Vulnerable,Info Platform,Existing Agency,Stormwater,DACsC,Ecosystem,DK,,
+Vulnerable,Lobby,Info Platform,Transpo,Econ Growth,DACsC,Financial,SLR Uncertainty,Public Support
+SLR Plan,Regional Authority,Collab,Transpo,Commercial,DACsC,Overall Plan,,
+SLR Plan,Info Platform,Vision,Transpo,Ecosystem,DACsC,Overall Plan,,
+,,,,,,,,
+Permits,Info Platform,Collab,,,,Overall Plan,,
+Permits,Innov Design,Existing Agency,DACsC,Econ Growth,Transpo,Public Support,,
+SLR Plan,Permits,Green Infra,Transpo,Public Health,Water,,,
+,,,,,,,,
+SLR Plan,Innov Design,Collab,Transpo,DACsC,Erosion,Public Support,,
+Vulnerable,Green Infra,Existing Agency,Stormwater,Energy,DACsC,Overall Plan,,
+Vulnerable,Info Platform,Existing Agency,Stormwater,DACsC,Transpo,Human,Overall Plan,
+Lobby,Innov Design,Local Response,Transpo,Energy,DACsC,Public Support,,
+SLR Plan,Green Infra,Regional Authority,Stormwater,DACsC,Transpo,Financial,Collab Experience,Public Support
+SLR Plan,Permits,Collab,Ecosystem,Erosion,Stormwater,Overall Plan,PermitsB,
+SLR Plan,Lobby,DACs,Transpo,Public Health,DACsC,Financial,SLR Uncertainty,Overall Plan
+Vulnerable,Lobby,Local Response,Erosion,Econ Growth,Property Value,Human,Sci Info,PermitsB
+SLR Plan,Green Infra,Innov Design,Stormwater,Commercial,DACsC,Sci Info,Overall Plan,CBO Relations
+Info Platform,Innov Design,Collab,Stormwater,Commercial,Erosion,Financial,Public Support,SLR Uncertainty
+SLR Plan,Vulnerable,Info Platform,Stormwater,Erosion,Transpo,Overall Plan,,
+SLR Plan,Permits,Green Infra,Transpo,DACsC,Stormwater,Financial,,
+SLR Plan,Vulnerable,Info Platform,Water,Public Health,DACsC,Overall Plan,Public Support,CBO Relations
+Vision,Regional Authority,Collab,Stormwater,Commercial,,DK,,
+Vision,Local Response,Existing Agency,Stormwater,DACsC,Ecosystem,Political Leader,Overall Plan,
+Green Infra,Vision,Collab,Transpo,Erosion,Ecosystem,Overall Plan,,
+Info Platform,Green Infra,Collab,Stormwater,Ecosystem,Erosion,Human,Financial,
+DACs,Green Infra,Vision,Transpo,DACsC,Property Value,Org Leader,Overall Plan,PermitsB
+SLR Plan,Lobby,Permits,Transpo,Stormwater,,,,
+SLR Plan,Info Platform,Existing Agency,Transpo,Housing,Stormwater,Collab Experience,SLR Uncertainty,Overall Plan
+SLR Plan,,,Transpo,Ecosystem,DACsC,Political Leader,OtherB,
+SLR Plan,Vision,Collab,Water,Public Health,DACsC,DK,,
+Local Tax,Permits,Collab,Stormwater,DACsC,Housing,Political Leader,Public Support,
+,,,,,,,,
+Vulnerable,Lobby,Collab,Transpo,DACsC,Econ Growth,,,
+,,,Transpo,DACsC,,,,
+Existing Agency,,,Transpo,Stormwater,,,,
+Vulnerable,DACs,Green Infra,DACsC,Public Health,Water,Political Leader,,
+Vulnerable,DACs,Green Infra,Stormwater,DACsC,Transpo,SLR Uncertainty,Overall Plan,
+Green Infra,Regional Authority,,Transpo,Ecosystem,Stormwater,Org Leader,,
+Vision,Innov Design,OtherP,Transpo,Stormwater,DACsC,Human,Financial,
+SLR Plan,Existing Agency,Collab,,,,Political Leader,SLR Uncertainty,Overall Plan
+Vision,Collab,OtherP,Econ Growth,Housing,Transpo,Human,SLR Uncertainty,Org Leader
+Permits,Info Platform,Green Infra,Stormwater,Energy,DACsC,Human,Collab Experience,OtherB
+Vulnerable,DACs,OtherP,Water,DACsC,Public Health,SLR Uncertainty,PermitsB,CBO Relations
+Lobby,Local Response,,Ecosystem,OtherC,DACsC,OtherB,,
+Regional Authority,SLR Plan,,Stormwater,Ecosystem,Transpo,OtherB,,
+,,,,,,,,
+Vulnerable,Info Platform,Green Infra,Transpo,Water,Stormwater,,,
+SLR Plan,Vulnerable,Info Platform,Transpo,Ecosystem,Stormwater,,,
+SLR Plan,Green Infra,Innov Design,Stormwater,Ecosystem,Water,Political Leader,Overall Plan,Public Support
+Lobby,Permits,Collab,Stormwater,Ecosystem,Transpo,PermitsB,,
+Green Infra,Innov Design,Existing Agency,Transpo,Housing,Stormwater,Overall Plan,,
+SLR Plan,Info Platform,Existing Agency,Transpo,Housing,Stormwater,Political Leader,Overall Plan,
+Info Platform,Collab,,Stormwater,Ecosystem,,,,
+Collab,,,Transpo,Energy,Stormwater,Political Leader,Org Leader,Overall Plan
+Local Tax,DACs,Regional Authority,Stormwater,Ecosystem,DACsC,Human,Overall Plan,PermitsB
+,,,,,,,,
+SLR Plan,Permits,Collab,Stormwater,DACsC,,Overall Plan,Public Support,CBO Relations
+Lobby,Info Platform,Collab,Transpo,Econ Growth,Ecosystem,,,
+,,,,,,,,
+SLR Plan,Info Platform,Vision,Transpo,Stormwater,DACsC,Human,Financial,
+SLR Plan,Green Infra,Regional Authority,Ecosystem,Housing,DACsC,,,
+Permits,Existing Agency,Collab,Ecosystem,Erosion,Stormwater,Financial,Stakeholder Opposition,Political Leader
+Vision,Innov Design,Collab,Transpo,Stormwater,DACsC,,,
+SLR Plan,DACs,Regional Authority,Stormwater,DACsC,Transpo,Overall Plan,DK,
+Vulnerable,Green Infra,Innov Design,Ecosystem,Econ Growth,Stormwater,,,
+Collab,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Vulnerable,Local Tax,Lobby,Transpo,Stormwater,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Info Platform,Green Infra,Ecosystem,Property Value,Transpo,Sci Info,Overall Plan,Public Support
+Info Platform,DACs,Collab,DACsC,Public Health,Housing,Human,Financial,CBO Relations
+Vulnerable,Permits,Green Infra,Transpo,Stormwater,Erosion,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Green Infra,Vision,Erosion,Ecosystem,Transpo,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Local Tax,Green Infra,Local Response,Stormwater,Housing,Transpo,Human,Financial,SLR Uncertainty
+Info Platform,DACs,Collab,Stormwater,Energy,,Org Leader,Overall Plan,CBO Relations
+,,,,,,,,
+Vulnerable,DACs,Innov Design,Stormwater,DACsC,Ecosystem,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Regional Authority,Existing Agency,Transpo,Commercial,Stormwater,DK,,
+Existing Agency,,,Transpo,DACsC,Ecosystem,Financial,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Green Infra,Existing Agency,Transpo,Stormwater,DACsC,Human,,
+Vulnerable,Local Tax,Regional Authority,Ecosystem,Erosion,DACsC,,,
+SLR Plan,Green Infra,Innov Design,Water,Stormwater,Ecosystem,Stakeholder Opposition,Overall Plan,Public Support
+SLR Plan,Local Tax,Lobby,Transpo,Erosion,Water,Org Leader,PermitsB,Financial
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+Local Tax,Green Infra,Innov Design,Stormwater,Ecosystem,Transpo,Political Leader,SLR Uncertainty,Overall Plan
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+SLR Plan,Green Infra,,Water,Stormwater,Ecosystem,Human,Stakeholder Opposition,Political Leader
