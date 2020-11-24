@@ -17,4 +17,9 @@ sumols_LOI <- summary(ols_LOI)
 
 sumols_LOI
 
-#
+#Ordinal Logistic Regression -------------------
+survey$Q1_fact <- as.factor(survey$Q1_Num)
+polr_LOI <- polr(formula=survey$Q1_fact~survey$Q2_Personal+survey$Q2_MultiOrg+survey$Q5_F+survey$Q32_Sum+survey$Q11_LTAware+survey$Q11_STAware+survey$Q12_LTConcern+survey$Q12_STConcern+survey$WhenSLR+survey$ActionAgree+survey$RiskAgree+survey$Q20_Sum, Hess=TRUE, data=survey)
+sumpolr_LOI <- summary(polr_LOI)
+sumpolr_LOI
+
