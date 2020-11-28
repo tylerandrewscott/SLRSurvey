@@ -4,29 +4,55 @@ library(netrankr)
 library(data.table)
 library(tidyverse)
 
-#edges = data.table(numbers = 1:26,letters = letters)
-#as.matrix(table(edges$numbers,edges$numbers))
-#as.data.table(table(edges$numbers,edges$numbers))
-
-
 #Load and Format Incidence Matrix-----------------------------
-incidence <- read_csv("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentFiles/Data/AdjMatrix_MinOtherRecode.csv")
+adjacency <- read_csv("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentFiles/Data/AdjMatrix_MinOtherRecode.csv")
 
-incidencedf <- incidence[ , -c(1, 43)]
-rownames(incidencedf)<-incidence$ResponseId
-str(incidencedf)
-incidencedf <- as.data.frame(incidencedf)
-str(incidencedf)
-incidencedf$rowsum <- rowSums(incidencedf)
+adjacencydf <- adjacency[ , -c(1, 43)]
+str(adjacencydf)
+adjacencydf <- as.data.frame(adjacencydf)
+str(adjacencydf)
+adjacencydf$rowsum <- rowSums(adjacencydf[ , 1:41])
+rownames(adjacencydf) <- adjacency$ResponseId
 
-incidencedf<- incidencedf[incidencedf$rowsum>0, ]
-incidencedf <- incidencedf[ , -c(42)]
-incidencemat <- as.matrix(incidencedf)
 
-#need to figure out if this is actually an incidence matrix or how to make it that... incidence matrix would be saying that each concept is actually an edge and the vertices were people...
+adjacencydf<- adjacencydf[adjacencydf$rowsum>0, ]
+adjacencydf <- adjacencydf[ , -c(42)]
+adjmat <- as.matrix(adjacencydf)
+
 
 #Create Network--------------
-network <- graph_from_incidence_matrix(incidencemat, directed=FALSE, mode='out', weighted=TRUE)
+?graph.incidence
+  
+net <- graph.incidence(adjmat, add.names=TRUE)
+igraph::list.vertex.attributes(net)
 
+vertex_attr(net, index=V(net))
 
+#Louvain Clustering Algorithm------------------------------------
+louvain_communities <- igraph::cluster_louvain(net)
+igraph::groups(louvain_communities)
+louvain_communities
+#8 groups with modularity 0.15
 
+#FastGreedy (Newmans) Clustering Algorithm------------------------
+fastgreedycommunity <- cluster_fast_greedy(net)
+fastgreedycommunity
+igraph::groups(fastgreedycommunity)
+#6 groups with mod 0.18
+
+#InfoMap Clustering Algorithm--------------
+#some articles say can't Use InfoMap on Bipartite network (the random walk is periodic)
+infomapcommunity <- cluster_infomap(net)
+infomapcommunity
+#when run it get one single group with 0 modularity
+
+#Walk Trap Clustering Algorithm-------------------
+walktrapcommunity <- cluster_walktrap(net)
+walktrapcommunity
+#739 groups with modularity 0 (all single vertex communities)
+
+#Edge Betweenness---------------
+edgebetween <- cluster_edge_betweenness(net, directed=FALSE)
+edgebetween
+class(edgebetween)
+#gives one single group with 0 modularity 
