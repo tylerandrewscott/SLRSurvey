@@ -28,6 +28,10 @@ igraph::list.vertex.attributes(net)
 
 vertex_attr(net, index=V(net))
 
+#list of attribute names to match to their number for group ID
+attributes <- get.vertex.attribute(net, "TRUE", index=V(net))
+attributes
+
 #Louvain Clustering Algorithm------------------------------------
 louvain_communities <- igraph::cluster_louvain(net)
 igraph::groups(louvain_communities)
