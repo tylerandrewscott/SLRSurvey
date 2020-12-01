@@ -1,4 +1,4 @@
-setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/Current Files/Data")
+setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentFiles/Data/Regressions")
 library(tidyverse)
 library(MASS)
 #install.packages("AER")
@@ -13,14 +13,7 @@ survey <- read_csv("Survey_Regressions.csv")
 
 #OLS regression on level of involvement------------------
 
-unique(survey$Q1_Num)
-
 #lm(formula= survey_LOIcomplete$LOI_Numeric~VARIABLES, data=survey_LOIcomplete)
-
-
-survey$Q1_Num <- as.numeric(survey$Q1_Num)
-unique(survey$Q1_Num)
-#NEED TO FIX FACTORS ASSIGNMENT TO Q1 BEFORE DOING THESE REGRESSIONS
 
 ols_LOI <- lm(formula=survey$Q1_Num~survey$Q2_Personal+survey$Q2_MultiOrg+survey$Q5_F+survey$Q32_Sum+survey$Q11_LTAware+survey$Q11_STAware+survey$Q12_LTConcern+survey$Q12_STConcern+survey$WhenSLR+survey$ActionAgree+survey$RiskAgree+survey$Q20_Sum, data=survey)
 
