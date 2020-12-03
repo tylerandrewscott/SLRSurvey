@@ -8,6 +8,7 @@ library(pscl)
 #install.packages("VGAM")
 library(VGAM)
 library(dplyr)
+library(nlme)
 
 #load data
 survey <- read_csv("Survey_Regressions.csv")
@@ -37,3 +38,7 @@ pR2(polr_LOI)
 #relaxes the proportional odds assumption 
 gologit_LOI <- vglm(formula=survey$Q1_Num ~ survey$Q2_Personal+survey$Q2_MultiOrg+survey$Q5_F+survey$Q32_Sum+survey$Q11_LTAware+survey$Q11_STAware+survey$Q12_LTConcern+survey$Q12_STConcern+survey$WhenSLR+survey$ActionAgree+survey$RiskAgree+survey$Q20_Sum, data=survey, Hess=TRUE, parallel=FALSE, family=cumulative)
 
+#Generalized Least Squares Regression----------
+GLS_LOI <- gls(Q1_Num~ Q2_Personal+ Q2_MultiOrg+ Q5_F+ Q32_Sum+ Q11_LTAware+ Q11_STAware+ Q12_LTConcern+ Q12_STConcern+ WhenSLR+ ActionAgree+ RiskAgree+ Q20_Sum, data=survey)
+sumgls_LOI <- summary(GLS_LOI)
+sumgls_LOI
