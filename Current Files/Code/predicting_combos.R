@@ -1,12 +1,12 @@
 
-packs =c('tidyverse','purrr','data.table','statnet','latentnet')
+packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite')
 need = packs[!sapply(packs,require,character.only=T)]
 sapply(need,install.packages,type= 'source')
 sapply(packs[need],require,character.only=T)
 
 
 library(readxl)
-orig = readxl::read_excel('SLRSurvey_Full.xlsx')
+orig = readxl::read_excel('Current Files/RawExcel/SLRSurvey_Full.xlsx')
 orig[,grepl('^Q4',colnames(orig))]
 orig$Q4[is.na(orig$Q4)]<-'Other'
 #recode anything with fewer than 10 respondents as other
@@ -14,7 +14,7 @@ orig$Q4[is.na(orig$Q4)]<-'Other'
 as.data.table(table(orig$Q4))[order(-N),][N<10,]
 orig$Q4[orig$Q4 %in% as.data.table(table(orig$Q4))[order(-N),][N<10,]$V1] <- 'Other'
 
-incidence_dt = fread('Current Files/Data/AdjacencyMatrix.csv')
+incidence_dt = fread('Current Files/Data/NewAdjacencyMatrix_ColumnRenames.csv')
 incidence_mat = as.matrix(incidence_dt[,-c('ResponseId','ResponseId_number','DK')])
 rownames(incidence_mat)<-incidence_dt$ResponseId
 #drop isolates
@@ -25,17 +25,81 @@ bip_net = as.network(incidence_mat,matrix.type = 'incidence',bipartite = T,direc
 #code actor types
 bip_net %v% 'Actor_Type' <- orig$Q4[match(network.vertex.names(bip_net),orig$ResponseId)]
 #code concept types
+concept_types = fread('Current Files/Data/CombinedNetwork/Combined_VectorTypes_NoNewOther.csv')
+bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
+set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
 
-concept_types = fread('Current Files/Data/')
-concept_types$Vector <- gsub('\\s','',concept_types$Vector)
-network.vertex.names(bip_net)[bi] %in% concept_types$Vector
+
+require(parallel)
+seed = 24
+ccores = 6#detectCores()
+control_custom = control.ergmm(threads = 1,sample.size = ccores * 100,interval = 10,mle.maxit = 10)
+require(bipartite)
+test=computeModules(as.sociomatrix(bip_net))
+class(test)
+test@moduleWeb
+bipartite::plotPAC(test@moduleWeb)
+test@modules
+
+
+, method="Beckett", deep = FALSE, deleteOriginalFiles = TRUE,
+               tolerance = 1e-10, experimental = FALSE)
+
+
+plot(test)
+bip_net
+str(test)
+tt[1:10,1:10]
+as.sociomatrix(bip_net)[1:10,1:10]
+
+og = test@originalWeb
+mw = test@moduleWeb
+
+getModuleCoordinates(test)
+devtools::install_github('biometry/bipartite/bipartite')
+
+plotModuleWeb
+plotModuleWeb(moduleWebObject = test,displayAlabels = F,displayBlabels = F,weighted = F,plotModules = T)
+dim(test@modules)
+test@modules[1:26,1:10]
+class(test@modules)
+
+test@modules
+
+plotModuleWeb
+ergmm(bip_net~ b1deg)
+
+ergmm(bip_net~euclidean(d=2, G =2),control = control_custom,verbose = T)
+
+ergmm(davis~)
+b2factor('Concept_Type')
+data(davis)
+
+davis %v% 'factor' <- sample(letters[1:3],network.size(davis),replace = T)
+
+# Fit a 2D 2-cluster fit and plot.
+davis.fit<-ergmm(davis~euclidean(d=2,G=2)+b1factor('factor'))
+plot(davis.fit,pie=TRUE,rand.eff="sociality")
+
+
+require(pbapply)
+d2fits<-pblapply(1:4,function(g){print(g);ergmm(bip_net~euclidean(d=2,G=g),control = control_custom,verbose = T)},cl = 4)
+
+
+ergmm(bip_net~euclidean(d=2,G=2),control = control_custom),
+ergmm(bip_net~euclidean(d=2,G=3),control = control_custom),
+ergmm(bip_net~euclidean(d=2,G=4),control = control_custom),
+ergmm(bip_net~euclidean(d=2,G=5),control = control_custom),
+
+
+
+
+
 
 #mod = ergmm(bip_net~euclidean(d=3, 4),tofit = c('mle'),control = control.ergmm(threads = 4))
 #mod = readRDS('scratch/test_ergmm.rds')
 #summary(mod,point.est = 'mle')
-require(parallel)
-seed = 24
-ccores = 4#detectCores()
+
 network.vertex.names(bip_net)
 
 attrib <- read.csv("Current Files/Data/Combined Network/SLR_Combined_VectorTypes.csv")
