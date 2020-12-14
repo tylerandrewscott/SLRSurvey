@@ -4,7 +4,6 @@ need = packs[!sapply(packs,require,character.only=T)]
 sapply(need,install.packages,type= 'source')
 sapply(packs[need],require,character.only=T)
 
-
 library(readxl)
 orig = readxl::read_excel('Current Files/RawExcel/SLRSurvey_Full.xlsx')
 orig[,grepl('^Q4',colnames(orig))]
@@ -30,10 +29,105 @@ bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_
 set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
 
 
+install.packages('lvm4net')
+library(lvm4net)
 require(parallel)
+
 seed = 24
-ccores = 6#detectCores()
-control_custom = control.ergmm(threads = 1,sample.size = ccores * 100,interval = 10,mle.maxit = 10)
+#ccores = floor(detectCores()/1.25)
+ccores = 50
+control_custom = control.ergmm(threads = ccores,sample.size = ccores * 100,mle.maxit = 10,kl.threads = ccores)
+
+d2fits<-lapply(0:6,function(g){print(g);ergmm(bip_net~euclidean(d=2,G=g),control = control_custom,verbose = T,tofit = c('mcmc'))})
+
+Y = as.sociomatrix(bip_net)
+lt2 = lta(Y,D = 2)
+lt3 = lta(Y,D = 3)
+
+mlttest = mlta(X = Y,G = 2,D = 2)
+
+
+mlt_list = lapply(1:4,function(g) mlta(X = Y,G = g,D = 2))
+plotY(Y)
+goflsm(lt3)
+mltd2g = mlta(Y,G = 2,D = 2)
+
+round(mlttest$z,2)
+
+mlttest$eta
+
+plot(test2,Y)
+
+test3$w
+
+bip_net %v% 'Concept_Type' 
+
+test3 = lta(as.sociomatrix(bip_net),D = 3)
+
+library(plotly)
+dim(mlttest$mu)
+
+wh = round(mlttest$z)==1
+
+tt = rbind(mlttest$mu[wh[,1],,1],
+mlttest$mu[wh[,2],,2])
+
+
+lt_for_plotly = data.table(tt)
+
+ggplot()
+#plot_ly(data = lt,x = ~ V1,y = ~V2, z = ~V3)
+
+plot_ly(data = lt,x = ~ V1,y = ~V2)
+
+head(lt)
+
+test3$C
+test3$b
+test3$w
+
+
+str(test2)
+test2$BIC
+test3$BIC
+
+
+plot(test2)
+
+
+summary(test)
+
+
+sample.size = ccores * 100
+threads = ccores
+burnin = 7500
+interval = 100
+
+
+75 * 75
+(sample.size%%threads || (burnin/interval)%%threads)
+
+
+(burnin/interval)%%threads
+
+(burnin/interval)%%threads
+
+burnin/interval / threads
+
+burnin/interval
+threads
+
+ sample.size%%threads
+(burnin/interval)%%threads
+
+control_custom
+
+ergmm(bip_net~euclidean(d=2,G=g),control = control_custom)
+
+
+
+
+computeModules(as.sociomatrix(bip_net))
 require(bipartite)
 test=computeModules(as.sociomatrix(bip_net))
 class(test)
@@ -80,16 +174,6 @@ davis %v% 'factor' <- sample(letters[1:3],network.size(davis),replace = T)
 # Fit a 2D 2-cluster fit and plot.
 davis.fit<-ergmm(davis~euclidean(d=2,G=2)+b1factor('factor'))
 plot(davis.fit,pie=TRUE,rand.eff="sociality")
-
-
-require(pbapply)
-d2fits<-pblapply(1:4,function(g){print(g);ergmm(bip_net~euclidean(d=2,G=g),control = control_custom,verbose = T)},cl = 4)
-
-
-ergmm(bip_net~euclidean(d=2,G=2),control = control_custom),
-ergmm(bip_net~euclidean(d=2,G=3),control = control_custom),
-ergmm(bip_net~euclidean(d=2,G=4),control = control_custom),
-ergmm(bip_net~euclidean(d=2,G=5),control = control_custom),
 
 
 
