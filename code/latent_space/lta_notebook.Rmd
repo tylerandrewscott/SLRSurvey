@@ -19,14 +19,14 @@ sapply(need,function(x) suppressMessages(install.packages(x,,type= 'source')))
 sapply(packs[need],function(x) suppressMessages(require(x,character.only=T)))
 
 library(readxl)
-orig = readxl::read_excel('Current Files/RawExcel/SLRSurvey_Full.xlsx')
+orig = readxl::read_excel('input/SLRSurvey_Full.xlsx')
 orig$Q4[is.na(orig$Q4)]<-'Other'
 #recode anything with fewer than 10 respondents as other
 # see what wed recode
 #as.data.table(table(orig$Q4))[order(-N),][N<10,]
 orig$Q4[orig$Q4 %in% as.data.table(table(orig$Q4))[order(-N),][N<10,]$V1] <- 'Other'
 orig$Q4[grepl('Other',orig$Q4)]<-'Other'
-incidence_dt = fread('Current Files/Data/NewAdjacencyMatrix_ColumnRenames.csv')
+incidence_dt = fread('input/NewAdjacencyMatrix_ColumnRenames.csv')
 incidence_mat = as.matrix(incidence_dt[,-c('ResponseId','ResponseId_number','DK')])
 rownames(incidence_mat)<-incidence_dt$ResponseId
 #drop isolates
@@ -37,7 +37,7 @@ bip_net = as.network(incidence_mat,matrix.type = 'incidence',bipartite = T,direc
 #code actor types
 bip_net %v% 'Actor_Type' <- orig$Q4[match(network.vertex.names(bip_net),orig$ResponseId)]
 #code concept types
-concept_types = fread('Current Files/Data/CombinedNetwork/Combined_VectorTypes_NoNewOther.csv')
+concept_types = fread('input/Combined_VectorTypes_NoNewOther.csv')
 bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
 set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
 ```
