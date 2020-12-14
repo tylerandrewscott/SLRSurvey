@@ -1,0 +1,139 @@
+---
+title: "Latent trait analysis"
+output:
+  html_document:
+    df_print: paged
+---
+
+Memo to Kyra and Mark
+
+I was searching around for tools that do latent network space modeling more quickly, and found the lvm4net package (https://cran.r-project.org/web/packages/lvm4net/lvm4net.pdf). It's more standalone than latentnet, which integrates nicely with statnet and ergm capabilities. But on the upside, it is _very_ fast and turns out it has some really cool tools. 
+
+Firstly, it performs latent trait analysis (see https://arxiv.org/abs/1301.2167 and https://arxiv.org/abs/1905.02659, same author as lvm4net package). The basic idea in this case is that the concepts survey respondents selected are essentially categorical traits. There's a lot of stats talk and monkey business behind that, but here's the upshot...
+
+#ignore this chunk, ut just loads and builds network object
+```{r startup_code}
+packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','ggthemes')
+need = packs[!sapply(packs,function(x) suppressMessages(require(x,character.only=T)))]
+sapply(need,function(x) suppressMessages(install.packages(x,,type= 'source')))
+sapply(packs[need],function(x) suppressMessages(require(x,character.only=T)))
+
+library(readxl)
+orig = readxl::read_excel('input/SLRSurvey_Full.xlsx')
+orig$Q4[is.na(orig$Q4)]<-'Other'
+#recode anything with fewer than 10 respondents as other
+# see what wed recode
+#as.data.table(table(orig$Q4))[order(-N),][N<10,]
+orig$Q4[orig$Q4 %in% as.data.table(table(orig$Q4))[order(-N),][N<10,]$V1] <- 'Other'
+orig$Q4[grepl('Other',orig$Q4)]<-'Other'
+incidence_dt = fread('input/NewAdjacencyMatrix_ColumnRenames.csv')
+incidence_mat = as.matrix(incidence_dt[,-c('ResponseId','ResponseId_number','DK')])
+rownames(incidence_mat)<-incidence_dt$ResponseId
+#drop isolates
+incidence_mat = incidence_mat[rowSums(incidence_mat)!=0,]
+
+#create network object
+bip_net = as.network(incidence_mat,matrix.type = 'incidence',bipartite = T,directed = F,loops = F)
+#code actor types
+bip_net %v% 'Actor_Type' <- orig$Q4[match(network.vertex.names(bip_net),orig$ResponseId)]
+#code concept types
+concept_types = fread('input/Combined_VectorTypes_NoNewOther.csv')
+bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
+set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
+```
+
+
+```{r latent_traits}
+#convert to incidence matrix
+Y = as.sociomatrix(bip_net)
+#run lta with 1 to 4 dimensions
+dims = 1:4
+d_list = lapply(dims,function(d) lta(Y,D = d))
+names(d_list) <- paste0('D',dims)
+print(sapply(d_list,function(x) x$BIC))
+```
+
+Comparing BIC scores shows that 2-d is a lot better than 1 dimension or 3-4 dimensions. Thus, the results that follow assume that the categorical 0/1 responses to the concepts are underlain by a 2-D continuous latent variable. The first thing we can get out of this model is a set of intercepts and slopes for logistic response functions that connect the probability of choosing "1" for a particular concept as a function of each respondents' position within the 2-d space.
+
+```{r evaluate_lta}
+mod = d_list[[2]]
+#intercepts
+print(mod$b)
+#slopes
+print(mod$w)
+```
+
+```{r}
+
+unique( (bip_net %v% 'Actor_Type')[{bip_net %v% 'Concept_Type'}=='Person'])
+```
+
+```{r evaluate_latent_space,fig.width = 12}
+trait_space = data.table(mod$mu)
+trait_space$org_type = (bip_net %v% 'Actor_Type')[{bip_net %v% 'Concept_Type'}=='Person']
+ggplot(trait_space) + geom_point(aes(x = V1,y = V2,col = org_type),pch = 19,alpha = 0.6) + xlab('1st dimension') + 
+  ylab("2nd dimension") + ggtitle('Latent trait space') + theme_bw() + 
+  scale_color_tableau(palette ='Tableau 20')+   scale_fill_tableau(palette ='Tableau 20')+ 
+  theme(legend.text = element_text(size = 8))
+```
+Doesn't seem to be a stark pattern at this point between actor type and location. But it's tough to see acrsoss 10+ types anyways, so a simplied lens likely sheds more light.
+
+The next thing that is feasible is a 'mixture of latent trait analyzers' (MLTA) model; real talk, I need to reread the arxiv paper again, because I can't explain this very well. But the tl;dr is that it incorporates a group structure (like the clusters we've been discussing). To keep it simple, I'll just use the 2-d model. The code also allows for different slopes by group (for logistic response function) but I turned that off.
+
+```{r mlta}
+groups = 1:4
+g_list = lapply(groups,function(g) mlta(X = Y,D = 2,G = g,wfix = T))
+names(g_list) <- paste0('G', groups)
+print(sapply(g_list,function(x) x$BIC))
+```
+
+What is not particularly promising here is that BIC scores prefer the G = 1 option... so not that fun. The G = 2 option is pretty close GOF wise, so we'll continue with that. When there are multiple groups fit, there are cool results like the probability of membership in each group for each node:
+
+```{r p_group}
+head(round(g_list[[2]]$z,2),20)
+```
+
+Since G = 2, 1 - p(g1) = p(g2). We can compare across org types:
+
+```{r p_group_type}
+p_org_dt = data.table(g_list[[2]]$z,org_type = trait_space$org_type)
+ggplot(p_org_dt) + geom_boxplot(aes(y = V1,x = org_type)) + coord_flip() + theme_bw() + ggtitle('p(group 1) by org. type')
+```
+
+Just for kicks, here's G = 3...
+
+```{r group3}
+p_3group = data.table(g_list[[3]]$z,org_type = trait_space$org_type)
+p3 = melt(p_3group)
+p3$variable <- gsub('V','G',p3$variable)
+ggplot(p3) + facet_wrap(~variable,ncol = 3) + geom_boxplot(aes(y = value,x = org_type)) + 
+  coord_flip() + theme_bw() + ggtitle('p(group) by org. type') + theme(axis.text = element_text(size = 6))
+```
+Instead of the latent trait analysis above, can also fit latent class analysis on the bipartite network. First example, 2 groups:
+```{r lca}
+m_lca = lca(X = Y,G = 2)
+```
+
+lca() outputs p-values for the conditional probability of observed a link between a concept and an actor if the concept is in group X. 
+```{r}
+m_lca$p
+```
+
+and lca() outputs p-values for the probability that each _actor_ is part of group G: 
+```{r}
+head(round(m_lca$z,2),10)
+```
+
+```{r}
+lca_compare_G = lca(X = Y,G = 2:5)
+lca_compare_G$BIC
+```
+
+Again, G = 2 is best; G = 3 pretty close. What none of this accommodates is the incorporation of predictive covariates as inputs. But could be treated in relation to the _outputs_ (e.g., association between covariate x and p-value of membership in one group or another).
+
+
+
+
+
+
+
