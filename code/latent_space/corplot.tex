@@ -1,0 +1,998 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Latent trait analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Latent trait analysis}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+FOR EVERYTHING BELOW, I DROPPED OUT THE THREE ``OTHER'' RESPONSE OPTIONS
+FROM THE INCIDENCE MATRICES
+
+\#ignore this chunk, it just loads and builds network object
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{packs =}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}tidyverse\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}purrr\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}data.table\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}statnet\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}latentnet\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}bipartite\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}lvm4net\textquotesingle{}}\NormalTok{,}
+         \StringTok{\textquotesingle{}ggthemes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}here\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}ggnetwork\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}gridExtra\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}ggrepel\textquotesingle{}}\NormalTok{)}
+\NormalTok{need =}\StringTok{ }\NormalTok{packs[}\OperatorTok{!}\KeywordTok{sapply}\NormalTok{(packs,}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{require}\NormalTok{(x,}\DataTypeTok{character.only=}\NormalTok{T)))]}
+\KeywordTok{sapply}\NormalTok{(need,}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{install.packages}\NormalTok{(x,,}\DataTypeTok{type=} \StringTok{\textquotesingle{}source\textquotesingle{}}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(packs[need],}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{require}\NormalTok{(x,}\DataTypeTok{character.only=}\NormalTok{T)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readxl)}
+\NormalTok{orig =}\StringTok{ }\NormalTok{readxl}\OperatorTok{::}\KeywordTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}input/SLRSurvey\_Full.xlsx\textquotesingle{}}\NormalTok{)}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{is.na}\NormalTok{(orig}\OperatorTok{$}\NormalTok{Q4)]\textless{}{-}}\StringTok{\textquotesingle{}Other\textquotesingle{}}
+\CommentTok{\#recode anything with fewer than 10 respondents as other}
+\CommentTok{\# see what wed recode}
+\CommentTok{\#as.data.table(table(orig$Q4))[order({-}N),][N\textless{}10,]}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[orig}\OperatorTok{$}\NormalTok{Q4 }\OperatorTok{\%in\%}\StringTok{ }\KeywordTok{as.data.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(orig}\OperatorTok{$}\NormalTok{Q4))[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{N),][N}\OperatorTok{\textless{}}\DecValTok{10}\NormalTok{,]}\OperatorTok{$}\NormalTok{V1] \textless{}{-}}\StringTok{ \textquotesingle{}Other\textquotesingle{}}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Other\textquotesingle{}}\NormalTok{,orig}\OperatorTok{$}\NormalTok{Q4)]\textless{}{-}}\StringTok{\textquotesingle{}Other\textquotesingle{}}
+\NormalTok{incidence\_dt =}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{"CurrentFiles/Data/AdjMatrix\_MinOtherRecode.csv"}\NormalTok{)}
+
+\NormalTok{incidence\_mat =}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(incidence\_dt[,}\OperatorTok{{-}}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}ResponseId\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}DK\textquotesingle{}}\NormalTok{)])}
+\KeywordTok{rownames}\NormalTok{(incidence\_mat)\textless{}{-}incidence\_dt}\OperatorTok{$}\NormalTok{ResponseId}
+\CommentTok{\#drop isolates}
+\NormalTok{incidence\_mat =}\StringTok{ }\NormalTok{incidence\_mat[}\KeywordTok{rowSums}\NormalTok{(incidence\_mat)}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
+\NormalTok{incidence\_mat =}\StringTok{ }\NormalTok{incidence\_mat[,}\OperatorTok{!}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Other\textquotesingle{}}\NormalTok{,}\KeywordTok{colnames}\NormalTok{(incidence\_mat))]}
+
+
+
+\CommentTok{\#create network object}
+\NormalTok{bip\_net =}\StringTok{ }\KeywordTok{as.network}\NormalTok{(incidence\_mat,}\DataTypeTok{matrix.type =} \StringTok{\textquotesingle{}incidence\textquotesingle{}}\NormalTok{,}\DataTypeTok{bipartite =}\NormalTok{ T,}\DataTypeTok{directed =}\NormalTok{ F,}\DataTypeTok{loops =}\NormalTok{ F)}
+\CommentTok{\#code actor types}
+\NormalTok{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Actor\_Type\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{match}\NormalTok{(}\KeywordTok{network.vertex.names}\NormalTok{(bip\_net),orig}\OperatorTok{$}\NormalTok{ResponseId)]}
+\CommentTok{\#code concept types}
+\NormalTok{concept\_types =}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{\textquotesingle{}input/Combined\_VectorTypes\_NoNewOther.csv\textquotesingle{}}\NormalTok{)}
+\NormalTok{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{concept\_types}\OperatorTok{$}\NormalTok{Type[}\KeywordTok{match}\NormalTok{(}\KeywordTok{network.vertex.names}\NormalTok{(bip\_net), concept\_types}\OperatorTok{$}\NormalTok{Vector)]}
+\KeywordTok{set.vertex.attribute}\NormalTok{(bip\_net,}\StringTok{\textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{,}\DataTypeTok{value =} \StringTok{\textquotesingle{}Person\textquotesingle{}}\NormalTok{,}\DataTypeTok{v =} \KeywordTok{which}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{)))}
+
+\NormalTok{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}id\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{network.vertex.names}\NormalTok{(bip\_net)}
+\NormalTok{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}id\_concept\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(\{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{\} }\OperatorTok{==}\StringTok{ \textquotesingle{}Person\textquotesingle{}}\NormalTok{,}\KeywordTok{network.vertex.names}\NormalTok{(bip\_net),bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}b1\_dummy\_b2\_names\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(\{bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Concept\_Type\textquotesingle{}}\NormalTok{\} }\OperatorTok{==}\StringTok{ \textquotesingle{}Person\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Person\textquotesingle{}}\NormalTok{,bip\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}vertex.names\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: corrplot
+\end{verbatim}
+
+\begin{verbatim}
+## corrplot 0.84 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#convert to incidence matrix}
+\NormalTok{Y =}\StringTok{ }\KeywordTok{as.sociomatrix}\NormalTok{(bip\_net)}
+\NormalTok{Y =}\StringTok{ }\NormalTok{Y[,}\OperatorTok{!}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Other\textquotesingle{}}\NormalTok{,}\KeywordTok{colnames}\NormalTok{(Y))]}
+\KeywordTok{data.table}\NormalTok{(Y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      SLR Plan Vulnerable Local Tax Lobby Permits Info Platform DACs Green Infra
+##   1:        1          0         0     1       0             0    0           0
+##   2:        1          0         0     0       0             0    0           1
+##   3:        0          0         0     0       0             1    0           0
+##   4:        1          0         0     0       0             1    0           0
+##   5:        1          1         0     0       0             1    0           0
+##  ---                                                                           
+## 694:        0          1         1     0       0             0    0           0
+## 695:        1          0         0     0       0             0    0           1
+## 696:        1          0         1     1       0             0    0           0
+## 697:        0          0         1     0       0             0    0           1
+## 698:        1          0         0     0       0             0    0           1
+##      Vision Innov Design Local Response Regional Authority Existing Agency
+##   1:      0            0              0                  0               1
+##   2:      0            0              0                  0               0
+##   3:      0            1              0                  0               0
+##   4:      0            0              0                  0               1
+##   5:      0            0              0                  0               0
+##  ---                                                                      
+## 694:      0            0              0                  1               0
+## 695:      0            1              0                  0               0
+## 696:      0            0              0                  0               0
+## 697:      0            1              0                  0               0
+## 698:      0            0              0                  0               0
+##      Collab Transpo Water Stormwater Energy Ecosystem Erosion Commercial DACsC
+##   1:      0       1     1          0      0         0       0          0     1
+##   2:      1       1     0          0      0         1       0          0     1
+##   3:      0       0     1          1      0         1       0          0     0
+##   4:      0       1     0          0      0         0       0          0     1
+##   5:      0       1     0          0      0         0       0          0     0
+##  ---                                                                          
+## 694:      0       0     0          0      0         1       1          0     1
+## 695:      0       0     1          1      0         1       0          0     0
+## 696:      0       1     1          0      0         0       1          0     0
+## 697:      0       1     0          1      0         1       0          0     0
+## 698:      0       0     1          1      0         1       0          0     0
+##      Econ Growth Property Value Housing Public Health Human Financial
+##   1:           0              0       0             0     0         1
+##   2:           0              0       0             0     0         0
+##   3:           0              0       0             0     0         0
+##   4:           0              0       1             0     0         0
+##   5:           1              0       1             0     0         1
+##  ---                                                                 
+## 694:           0              0       0             0     0         0
+## 695:           0              0       0             0     0         0
+## 696:           0              0       0             0     0         1
+## 697:           0              0       0             0     0         0
+## 698:           0              0       0             0     1         0
+##      Collab Experience Stakeholder Opposition Political Leader SLR Uncertainty
+##   1:                 0                      0                0               0
+##   2:                 0                      0                1               0
+##   3:                 1                      1                0               0
+##   4:                 0                      0                0               0
+##   5:                 0                      0                1               0
+##  ---                                                                          
+## 694:                 0                      0                0               0
+## 695:                 0                      1                0               0
+## 696:                 0                      0                0               0
+## 697:                 0                      0                1               1
+## 698:                 0                      1                1               0
+##      Sci Info Org Leader Overall Plan PermitsB Public Support CBO Relations
+##   1:        0          1            0        0              0             0
+##   2:        0          0            1        0              1             0
+##   3:        0          0            0        0              0             0
+##   4:        0          0            0        0              0             0
+##   5:        0          0            1        0              0             0
+##  ---                                                                       
+## 694:        0          0            0        0              0             0
+## 695:        0          0            1        0              1             0
+## 696:        0          1            0        1              0             0
+## 697:        0          0            1        0              0             0
+## 698:        0          0            0        0              0             0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(Y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "SLR Plan"               "Vulnerable"             "Local Tax"             
+##  [4] "Lobby"                  "Permits"                "Info Platform"         
+##  [7] "DACs"                   "Green Infra"            "Vision"                
+## [10] "Innov Design"           "Local Response"         "Regional Authority"    
+## [13] "Existing Agency"        "Collab"                 "Transpo"               
+## [16] "Water"                  "Stormwater"             "Energy"                
+## [19] "Ecosystem"              "Erosion"                "Commercial"            
+## [22] "DACsC"                  "Econ Growth"            "Property Value"        
+## [25] "Housing"                "Public Health"          "Human"                 
+## [28] "Financial"              "Collab Experience"      "Stakeholder Opposition"
+## [31] "Political Leader"       "SLR Uncertainty"        "Sci Info"              
+## [34] "Org Leader"             "Overall Plan"           "PermitsB"              
+## [37] "Public Support"         "CBO Relations"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y\textless{}{-}Y[,}\KeywordTok{sort}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(Y))]}
+
+\NormalTok{combos =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(}\KeywordTok{melt}\NormalTok{(}\KeywordTok{crossprod}\NormalTok{(Y)))[Var1}\OperatorTok{!=}\NormalTok{Var2,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in melt(crossprod(Y)): The melt generic in data.table has been passed a
+## matrix and will attempt to redirect to the relevant reshape2 method; please note
+## that reshape2 is deprecated, and this redirection is now deprecated as well.
+## To continue using melt methods from reshape2 while both libraries are attached,
+## e.g. melt.list, you can prepend the namespace like reshape2::melt(crossprod(Y)).
+## In the next version, this warning will become an error.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{combos}\OperatorTok{$}\NormalTok{Var1 \textless{}{-}}\StringTok{ }\KeywordTok{paste0}\NormalTok{(combos}\OperatorTok{$}\NormalTok{Var1,}\StringTok{\textquotesingle{} (\textquotesingle{}}\NormalTok{,concept\_types}\OperatorTok{$}\NormalTok{Type[}\KeywordTok{match}\NormalTok{(combos}\OperatorTok{$}\NormalTok{Var1,concept\_types}\OperatorTok{$}\NormalTok{Vector)],}\StringTok{\textquotesingle{})\textquotesingle{}}\NormalTok{)}
+\NormalTok{combos}\OperatorTok{$}\NormalTok{Var2 \textless{}{-}}\StringTok{ }\KeywordTok{paste0}\NormalTok{(combos}\OperatorTok{$}\NormalTok{Var2,}\StringTok{\textquotesingle{} (\textquotesingle{}}\NormalTok{,concept\_types}\OperatorTok{$}\NormalTok{Type[}\KeywordTok{match}\NormalTok{(combos}\OperatorTok{$}\NormalTok{Var2,concept\_types}\OperatorTok{$}\NormalTok{Vector)],}\StringTok{\textquotesingle{})\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{htmlTable}\OperatorTok{::}\KeywordTok{htmlTable}\NormalTok{(combos[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{value),][}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,],}\DataTypeTok{caption =}\StringTok{\textquotesingle{}top 10 combos\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+top 10 combos
+
+Var1
+
+Var2
+
+value
+
+1
+
+Transpo (Concern)
+
+Stormwater (Concern)
+
+251
+
+2
+
+Stormwater (Concern)
+
+Transpo (Concern)
+
+251
+
+3
+
+Transpo (Concern)
+
+DACsC (Concern)
+
+188
+
+4
+
+DACsC (Concern)
+
+Transpo (Concern)
+
+188
+
+5
+
+Transpo (Concern)
+
+SLR Plan (Policy)
+
+184
+
+6
+
+SLR Plan (Policy)
+
+Transpo (Concern)
+
+184
+
+7
+
+Transpo (Concern)
+
+Overall Plan (Barrier)
+
+176
+
+8
+
+Overall Plan (Barrier)
+
+Transpo (Concern)
+
+176
+
+9
+
+Stormwater (Concern)
+
+Overall Plan (Barrier)
+
+166
+
+10
+
+Overall Plan (Barrier)
+
+Stormwater (Concern)
+
+166
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(htmlTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: htmlTable
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{concept\_unipartite =}\StringTok{ }\NormalTok{(}\KeywordTok{crossprod}\NormalTok{(Y))}
+
+\NormalTok{uni\_net =}\StringTok{ }\KeywordTok{as.network}\NormalTok{(concept\_unipartite,}\DataTypeTok{matrix.type =} \StringTok{\textquotesingle{}adjacency\textquotesingle{}}\NormalTok{,}\DataTypeTok{directed =}\NormalTok{ F,}\DataTypeTok{ignore.eval =}\NormalTok{ F,}\DataTypeTok{names.eval =} \StringTok{\textquotesingle{}cooccurence\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{uni\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Frequency\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{diag}\NormalTok{(concept\_unipartite)}
+
+\NormalTok{uni\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Type\textquotesingle{}}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{concept\_types}\OperatorTok{$}\NormalTok{Type[}\KeywordTok{match}\NormalTok{(}\KeywordTok{network.vertex.names}\NormalTok{(uni\_net),concept\_types}\OperatorTok{$}\NormalTok{Vector)]}
+
+
+\NormalTok{glist =}\StringTok{ }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Policy\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Barrier\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Concern\textquotesingle{}}\NormalTok{),}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{get.inducedSubgraph}\NormalTok{(uni\_net,}\DataTypeTok{v =} \KeywordTok{which}\NormalTok{(uni\_net }\OperatorTok{\%v\%}\StringTok{ \textquotesingle{}Type\textquotesingle{}} \OperatorTok{==}\StringTok{ }\NormalTok{x)) }\OperatorTok{\%\textgreater{}\%}\StringTok{ }\KeywordTok{ggnetwork}\NormalTok{() }\OperatorTok{\%\textgreater{}\%}\StringTok{ }
+\StringTok{         }\KeywordTok{ggplot}\NormalTok{(.,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x,}\DataTypeTok{xend =}\NormalTok{ xend,}\DataTypeTok{y =}\NormalTok{ y,}\DataTypeTok{yend =}\NormalTok{ yend,}\DataTypeTok{label =}\NormalTok{ vertex.names))}\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_edges}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ cooccurence}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(Y),}\DataTypeTok{alpha =}\NormalTok{ cooccurence)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ Frequency}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(Y))) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\KeywordTok{paste}\NormalTok{(x,}\StringTok{\textquotesingle{}co{-}occurence\textquotesingle{}}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_nodelabel\_repel}\NormalTok{(}\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_map}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{alpha =}\NormalTok{ F,}\DataTypeTok{size =}\NormalTok{ F) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale\_size\_continuous}\NormalTok{(}\DataTypeTok{range =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\DecValTok{4}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{,}\FloatTok{0.2}\NormalTok{))}
+\NormalTok{         )}
+
+\KeywordTok{grid.arrange}\NormalTok{(glist[[}\DecValTok{1}\NormalTok{]],glist[[}\DecValTok{2}\NormalTok{]],glist[[}\DecValTok{3}\NormalTok{]],}\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/correlation_between_responses-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{soc =}\StringTok{ }\KeywordTok{as.sociomatrix}\NormalTok{(uni\_net,}\DataTypeTok{attrname =} \StringTok{\textquotesingle{}cooccurence\textquotesingle{}}\NormalTok{)}
+\NormalTok{gov\_types =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Regional Authority\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Existing Agency\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Collab\textquotesingle{}}\NormalTok{)}
+\KeywordTok{htmlTable}\NormalTok{(}\KeywordTok{do.call}\NormalTok{(cbind,}\KeywordTok{lapply}\NormalTok{(gov\_types,}\ControlFlowTok{function}\NormalTok{(x) }
+\KeywordTok{as.data.table}\NormalTok{(soc[x,],}\DataTypeTok{keep.rownames =}\NormalTok{ T)[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{V2),][}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,][,}\DataTypeTok{V2:=}\KeywordTok{paste0}\NormalTok{(V1,}\StringTok{\textquotesingle{} (\textquotesingle{}}\NormalTok{,}\KeywordTok{round}\NormalTok{(V2}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(Y[,x]),}\DecValTok{2}\NormalTok{),}\StringTok{\textquotesingle{})\textquotesingle{}}\NormalTok{)][,}\StringTok{\textquotesingle{}V2\textquotesingle{}}\NormalTok{])),}
+\DataTypeTok{header =}\NormalTok{ gov\_types,}\DataTypeTok{caption  =} \StringTok{\textquotesingle{}Top 10 choices by respondents who choose each governance preference\textquotesingle{}}\NormalTok{,}
+\DataTypeTok{tfoot =} \StringTok{\textquotesingle{}\# = proportion of respondents by governance strategy who also choose item\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Top 10 choices by respondents who choose each governance preference
+
+Regional Authority
+
+Existing Agency
+
+Collab
+
+1
+
+Transpo (0.62)
+
+Transpo (0.69)
+
+Transpo (0.59)
+
+2
+
+DACsC (0.54)
+
+Stormwater (0.56)
+
+Stormwater (0.57)
+
+3
+
+Stormwater (0.49)
+
+DACsC (0.51)
+
+Overall Plan (0.45)
+
+4
+
+Overall Plan (0.43)
+
+Overall Plan (0.47)
+
+DACsC (0.42)
+
+5
+
+SLR Plan (0.4)
+
+SLR Plan (0.36)
+
+Ecosystem (0.35)
+
+6
+
+Ecosystem (0.33)
+
+Political Leader (0.29)
+
+SLR Plan (0.33)
+
+7
+
+Green Infra (0.29)
+
+Ecosystem (0.27)
+
+Financial (0.27)
+
+8
+
+Political Leader (0.26)
+
+Collab (0.21)
+
+Political Leader (0.27)
+
+9
+
+Financial (0.22)
+
+Permits (0.21)
+
+Human (0.22)
+
+10
+
+Human (0.22)
+
+Vulnerable (0.21)
+
+Permits (0.22)
+
+\# = proportion of respondents by governance strategy who also choose
+item
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{htmlTable}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(}\KeywordTok{as.data.table}\NormalTok{(soc[}\StringTok{\textquotesingle{}Regional Authority\textquotesingle{}}\NormalTok{,],}\DataTypeTok{keep.rownames =}\NormalTok{ T)[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{V2),][}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+\KeywordTok{as.data.table}\NormalTok{(soc[}\StringTok{\textquotesingle{}Existing Agency\textquotesingle{}}\NormalTok{,],}\DataTypeTok{keep.rownames =}\NormalTok{ T)[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{V2),][}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{],}
+\KeywordTok{as.data.table}\NormalTok{(soc[}\StringTok{\textquotesingle{}Collab\textquotesingle{}}\NormalTok{,],}\DataTypeTok{keep.rownames =}\NormalTok{ T)[}\KeywordTok{order}\NormalTok{(}\OperatorTok{{-}}\NormalTok{V2),][}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+V1
+
+V1
+
+V1
+
+1
+
+Transpo
+
+Transpo
+
+Transpo
+
+2
+
+DACsC
+
+Stormwater
+
+Stormwater
+
+3
+
+Stormwater
+
+DACsC
+
+Overall Plan
+
+4
+
+Overall Plan
+
+Overall Plan
+
+DACsC
+
+5
+
+SLR Plan
+
+SLR Plan
+
+Ecosystem
+
+6
+
+Ecosystem
+
+Political Leader
+
+SLR Plan
+
+7
+
+Green Infra
+
+Ecosystem
+
+Financial
+
+8
+
+Political Leader
+
+Collab
+
+Political Leader
+
+9
+
+Financial
+
+Permits
+
+Human
+
+10
+
+Human
+
+Vulnerable
+
+Permits
+
+Latent class analysis (LCA) and latent trait analysis (LTA) are similar
+in principle. Both can be fit to binary incidence matrices X\_nm where N
+= \# of respondents and M = \# of response items. A given X\_nm value is
+respondent n's 0 or 1 choice for item m. The difference between LCA and
+LTA is that LCA assumes that there is a latent categorical variable
+representing groups of N's (respondents), and response items are
+independent conditional on group membership. In other words, the
+estimated probability of choosing a given response item is conditional
+on group membership. LTA essentially works in reverse -- this model
+assumes that response variables (e.g., policy concepts in our case) are
+represented by a D-dimensional continuous latent variable (with D
+specified prior to fitting). In other words, whereas LCA groups
+respondents, LTA groups responses. There's a lot of fancy approximation
+math under the hood that is beyond the scope here.
+
+``Mixture of latent trait analyzers'' (MLTA) (Gollini 2021) are sort of
+a combination of LCA and LTA. Observations are assumed to come from
+groups (of respondents) and response variables
+(policies/concerns/barriers) are dependent upon group AND a
+group-specific D-dimensional continuous latent trait variable. The
+upshot is that now, respondents are conditional on group membership AND
+dependence between traits (whereas an LTA assumes responses are
+independent conditional on group)
+
+The code chunk below fits an MLTAs for combinations--0 to 4 trait
+dimensions and 1 to 5 respondent groups. When D = 0, the model is just
+an LCA model where p(concept\textbar group). When G = 1, that means that
+there are no subgroups and the best-fit model does not fit
+subgroup-specific probabilities, i.e., p(concept\textbar group) =
+p(concept).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\#\#\# note {-}{-} mlta takes vectors instead of single D and G values {-}{-} but pblapply is used to parallelize \#\#\#\#\#}
+\NormalTok{opts =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(}\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{D =} \DecValTok{0}\OperatorTok{:}\DecValTok{4}\NormalTok{,}\DataTypeTok{G =} \DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{,}\DataTypeTok{fix =} \KeywordTok{c}\NormalTok{(F,T)))}
+\NormalTok{opts =}\StringTok{ }\NormalTok{opts[D}\OperatorTok{\textgreater{}}\DecValTok{0}\OperatorTok{|!}\NormalTok{fix,]}
+\CommentTok{\#\#\#\# this part takes a while, so I commented out and upload an RDS at the end }\AlertTok{\#\#\#}
+\CommentTok{\# require(doParallel)}
+\CommentTok{\# cluster = makeCluster(4)}
+\CommentTok{\# registerDoParallel(cluster)}
+\CommentTok{\# clusterExport(cl = cluster,varlist = list(\textquotesingle{}opts\textquotesingle{},\textquotesingle{}Y\textquotesingle{}))}
+\CommentTok{\# clusterEvalQ(cl = cluster,require(lvm4net))}
+\CommentTok{\# mlta\_tests = foreach(i = 1:nrow(opts)) \%dopar\% \{mlta(X = Y, D = opts$D[i], G = opts$G[i],wfix = opts$fix[i],nstarts = 5,maxiter = 1e3)\}}
+\CommentTok{\# saveRDS(mlta\_tests,\textquotesingle{}scratch/mlta\_results.rds\textquotesingle{})}
+
+\NormalTok{mlta\_tests =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{\textquotesingle{}scratch/mlta\_results.rds\textquotesingle{}}\NormalTok{)}
+\NormalTok{mlta\_results =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(opts,}\DataTypeTok{BIC =} \KeywordTok{sapply}\NormalTok{(mlta\_tests,}\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{$}\NormalTok{BIC))}
+\NormalTok{mlta\_results}\OperatorTok{$}\NormalTok{G\_fix =}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{\textquotesingle{}G = \textquotesingle{}}\NormalTok{,mlta\_results}\OperatorTok{$}\NormalTok{G,}\StringTok{\textquotesingle{} (fixed slope = \textquotesingle{}}\NormalTok{,mlta\_results}\OperatorTok{$}\NormalTok{fix,}\StringTok{\textquotesingle{})\textquotesingle{}}\NormalTok{)}
+\NormalTok{mlta\_results}\OperatorTok{$}\NormalTok{BIC \textless{}{-}}\StringTok{ }\KeywordTok{round}\NormalTok{(mlta\_results}\OperatorTok{$}\NormalTok{BIC)}
+\NormalTok{mlta\_cast =}\StringTok{ }\KeywordTok{dcast}\NormalTok{(mlta\_results[}\KeywordTok{order}\NormalTok{(BIC)],G\_fix }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{D,}\DataTypeTok{value.var =} \StringTok{\textquotesingle{}BIC\textquotesingle{}}\NormalTok{)}
+
+
+\KeywordTok{htmlTable}\NormalTok{(mlta\_cast[,}\OperatorTok{{-}}\DecValTok{1}\NormalTok{],}\DataTypeTok{caption =} \StringTok{\textquotesingle{}BIC scores by MLTA specification\textquotesingle{}}\NormalTok{,}\DataTypeTok{rnames =}\NormalTok{ mlta\_cast}\OperatorTok{$}\NormalTok{G\_fix,}\DataTypeTok{header =} \KeywordTok{paste0}\NormalTok{(}\StringTok{\textquotesingle{}D = \textquotesingle{}}\NormalTok{,}\DecValTok{0}\OperatorTok{:}\DecValTok{4}\NormalTok{),}
+          \DataTypeTok{tfoot =} \StringTok{\textquotesingle{}*fixed slope refers to whether slope is constant across all groups are group{-}specific\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+BIC scores by MLTA specification
+
+D = 0
+
+D = 1
+
+D = 2
+
+D = 3
+
+D = 4
+
+G = 1 (fixed slope = FALSE)
+
+23729
+
+23776
+
+23884
+
+24058
+
+24327
+
+G = 1 (fixed slope = TRUE)
+
+23777
+
+23883
+
+24059
+
+24320
+
+G = 2 (fixed slope = FALSE)
+
+23745
+
+23966
+
+24266
+
+24685
+
+25211
+
+G = 2 (fixed slope = TRUE)
+
+23847
+
+23980
+
+24152
+
+24433
+
+G = 3 (fixed slope = FALSE)
+
+23836
+
+24259
+
+24757
+
+25381
+
+26174
+
+G = 3 (fixed slope = TRUE)
+
+23939
+
+24086
+
+24289
+
+24567
+
+G = 4 (fixed slope = FALSE)
+
+23947
+
+24565
+
+25264
+
+26073
+
+27152
+
+G = 4 (fixed slope = TRUE)
+
+24065
+
+24220
+
+24465
+
+24717
+
+G = 5 (fixed slope = FALSE)
+
+24078
+
+24908
+
+25788
+
+26886
+
+28059
+
+G = 5 (fixed slope = TRUE)
+
+24215
+
+24398
+
+24614
+
+24891
+
+*fixed slope refers to whether slope is constant across all groups are
+group-specific
+
+So, the lamest thing here is that apparently the model with 1 group and
+0 latent dimensions is the best\ldots. i.e., a LCA model with no
+subgroups. SAD! The fact that G = 1, D = 0 is the best fitting model
+doesn't mean there are no distinctions, is just means they aren't super
+strong.
+
+That said, the 2-group, 1 dimensional model with fixed slopes (i.e., a
+single item-specific slope parameter across all groups) is pretty close
+though in terms of BIC, so we can play with that a bit and see what
+distinctions arise. To briefly elaborate on what the intercepts and
+slopes mean -- each response item is a logistic function. That function
+then varies by group. Intercepts reflect the basic propensity for group
+members to choose an item, in addictive log odds. A higher intercept
+means group members are more likely to choose an item, and vice versa.
+Slopes represent heterogeneity amongst actors who choose a given
+concept. Heterogeneity is measured in terms of the latent trait
+variable. In other words, heterogeneity refers to the dependenence
+structure amongst items chosen by members of a given group. That said,
+we are going to ignore the slopes for now.
+
+The first thing we can look at is the posterior probability of
+respondents falling into each of the two groups (latent classes)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index =}\StringTok{ }\KeywordTok{which}\NormalTok{(opts}\OperatorTok{$}\NormalTok{D}\OperatorTok{==}\DecValTok{1}\OperatorTok{\&}\NormalTok{opts}\OperatorTok{$}\NormalTok{G}\OperatorTok{==}\DecValTok{2}\OperatorTok{\&}\NormalTok{opts}\OperatorTok{$}\NormalTok{fix}\OperatorTok{==}\NormalTok{T)}
+\NormalTok{betas =}\StringTok{ }\NormalTok{mlta\_tests[[index]]}\OperatorTok{$}\NormalTok{b}
+\NormalTok{wus =}\StringTok{ }\NormalTok{mlta\_tests[[index]]}\OperatorTok{$}\NormalTok{w}
+\NormalTok{group\_probs =}\StringTok{ }\NormalTok{mlta\_tests[[index]]}\OperatorTok{$}\NormalTok{z}
+\KeywordTok{colnames}\NormalTok{(betas) \textless{}{-}}\StringTok{ }\KeywordTok{colnames}\NormalTok{(wus) \textless{}{-}}\StringTok{ }\KeywordTok{colnames}\NormalTok{(Y)}
+
+\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_histogram}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{group\_probs[,}\DecValTok{1}\NormalTok{]),}\DataTypeTok{binwidth =} \FloatTok{0.02}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}p(G = g) by respondent, D = 1, G = 2, w = fixed\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}\# respondents\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}p(G=1)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+By way of comparison, here's how that shakes out when G = 3. Quite a few
+respondents in each corner, but also many living in the 0.40-0.60 range
+between groups. Nobody in the center.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index2 =}\StringTok{ }\KeywordTok{which}\NormalTok{(opts}\OperatorTok{$}\NormalTok{D}\OperatorTok{==}\DecValTok{1}\OperatorTok{\&}\NormalTok{opts}\OperatorTok{$}\NormalTok{G}\OperatorTok{==}\DecValTok{3}\OperatorTok{\&}\NormalTok{opts}\OperatorTok{$}\NormalTok{fix}\OperatorTok{==}\NormalTok{T)}
+\NormalTok{group\_probs =}\StringTok{ }\NormalTok{mlta\_tests[[index2]]}\OperatorTok{$}\NormalTok{z}
+
+\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ group\_probs[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{y =}\NormalTok{ group\_probs[,}\DecValTok{2}\NormalTok{]),}\DataTypeTok{pch =} \DecValTok{21}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}P(G = 1)\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}P(G = 2)\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}p(G = g) by respondent, D = 1, G = 3, w = fixed\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Anyways, we can then evaluate the intercept terms in each logistic
+response function to identify which items load heavily by group.
+Ignoring the model slope parameters. Here, it's clear that some items
+are identified by both groups (e.g., stormwater, transportation) while
+others are more excluvisely related to one and not the other (e.g.,
+concern about DACs). Some are rare in both, like ``commercial'' and
+``property value''. This also begins to reveal why increased
+dimensionality doens't seem to help model fit very much, many items are
+about as likely to be selected by one group as the other. Heuristically,
+items below the dashed line are more strongly associated with Group 1,
+and above are more strongly associated with Group 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta\_dt =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(}\KeywordTok{t}\NormalTok{(betas),}\DataTypeTok{keep.rownames =}\NormalTok{ T)}
+\KeywordTok{ggplot}\NormalTok{(beta\_dt,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{\textasciigrave{}}\DataTypeTok{Group 1}\StringTok{\textasciigrave{}}\NormalTok{,}\DataTypeTok{y =} \StringTok{\textasciigrave{}}\DataTypeTok{Group 2}\StringTok{\textasciigrave{}}\NormalTok{,}\DataTypeTok{label =}\NormalTok{ rn)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_abline}\NormalTok{(}\DataTypeTok{lty =} \DecValTok{2}\NormalTok{,}\DataTypeTok{col =} \StringTok{\textquotesingle{}grey40\textquotesingle{}}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\DataTypeTok{pch =} \DecValTok{21}\NormalTok{,}\DataTypeTok{col =} \StringTok{\textquotesingle{}grey50\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_text\_repel}\NormalTok{(}\DataTypeTok{size =} \FloatTok{2.5}\NormalTok{,}\DataTypeTok{max.overlaps =} \DecValTok{100}\NormalTok{,}\DataTypeTok{min.segment.length =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}intercept, group 1\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}intercept, group 2\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Intercept estimates for item{-}response by group\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}p = 1 / exp({-}beta)\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+There are all sorts of (or at least a few) other things we could do with
+the intercepts and slopes, and evaluate the same measures fit to other
+combinations of G (group) and D (latent trait) values. But for now,
+let's check out the correspondence between particular items within
+groups. This can be measured using ``lift''. Lift refers to the
+dependence between ties, in this case measured by group. So, focusing
+first on group 1, we can compute and plot the lift between each pair of
+response items. Independent positive responses have a lift value of 1.
+Values greater than 1 imply positive dependence, and \textless{} 1
+negative dependence. In other words, this is similar to fitting matching
+terms in an ERGM --\textgreater{} ``how does a tie to one particular
+concept affect the probability of a tie to another concept?''. Lift
+values are then logged so that log-lift values \textless{} 0 imply a
+negative association and \textgreater{} 0 a positive association.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{loglift \textless{}{-}}\StringTok{ }\KeywordTok{log}\NormalTok{(}\KeywordTok{lift}\NormalTok{(mlta\_tests[[index]], }\DataTypeTok{pdGH =} \DecValTok{21}\NormalTok{))}
+\KeywordTok{colnames}\NormalTok{(loglift) \textless{}{-}}\StringTok{ }\KeywordTok{colnames}\NormalTok{(Y)[}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(loglift))]}
+\KeywordTok{rownames}\NormalTok{(loglift) \textless{}{-}}\StringTok{ }\KeywordTok{colnames}\NormalTok{(Y)[}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(loglift))]}
+
+\NormalTok{lift\_dt =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(}\KeywordTok{melt}\NormalTok{(loglift))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in melt(loglift): The melt generic in data.table has been passed a
+## array and will attempt to redirect to the relevant reshape2 method; please note
+## that reshape2 is deprecated, and this redirection is now deprecated as well.
+## To continue using melt methods from reshape2 while both libraries are attached,
+## e.g. melt.list, you can prepend the namespace like reshape2::melt(loglift). In
+## the next version, this warning will become an error.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ lift\_dt[Var3}\OperatorTok{==}\StringTok{\textquotesingle{}g = 1\textquotesingle{}}\NormalTok{,],}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Var2,}\DataTypeTok{y =}\NormalTok{ Var1,}\DataTypeTok{fill =}\NormalTok{ value,}\DataTypeTok{group =}\NormalTok{ Var3)) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet\_wrap}\NormalTok{(}\OperatorTok{\textasciitilde{}}\NormalTok{Var3) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_tile}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Log{-}lift scores for group 1\textquotesingle{}}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_fill\_gradient2\_tableau}\NormalTok{(}\DataTypeTok{palette =} \StringTok{\textquotesingle{}Orange{-}Blue Diverging\textquotesingle{}}\NormalTok{,}\DataTypeTok{na.value =} \StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{45}\NormalTok{,}\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ lift\_dt[Var3}\OperatorTok{==}\StringTok{\textquotesingle{}g = 2\textquotesingle{}}\NormalTok{,],}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Var2,}\DataTypeTok{y =}\NormalTok{ Var1,}\DataTypeTok{fill =}\NormalTok{ value,}\DataTypeTok{group =}\NormalTok{ Var3)) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet\_wrap}\NormalTok{(}\OperatorTok{\textasciitilde{}}\NormalTok{Var3) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_tile}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Log{-}lift scores for group 2\textquotesingle{}}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale\_fill\_gradient2\_tableau}\NormalTok{(}\DataTypeTok{palette =} \StringTok{\textquotesingle{}Orange{-}Blue Diverging\textquotesingle{}}\NormalTok{,}\DataTypeTok{na.value =} \StringTok{\textquotesingle{}white\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element\_text}\NormalTok{(}\DataTypeTok{angle =} \DecValTok{45}\NormalTok{,}\DataTypeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-5-1.pdf} Group
+2 looks relatively similar.
+
+Finally, I didn't include the code in this rmarkdown document becuase
+the models take a long time to fit, but we can back out similar results
+from bipartite ERGMs. I developed a specification that constraints each
+respondent to choosing no more than 3 options from each type of
+category, and then we can fit matching combo terms that reflect the
+probability of observing particular combos (i.e., how likely is a
+two-star where a respondent chooses ``Permits'' and ``CBO relations''?).
+In any case, these results are pretty noisy, and we don't see any
+significant associations between a particular governance-type preference
+and choosing these other concepts. I want to keep running some more
+ERGMs on background to make sure I'm doing this right, but this works as
+proof of concept for constraining ties and such.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{\textquotesingle{}scratch/start\_mod.rds\textquotesingle{}}\NormalTok{)}
+\NormalTok{sm =}\StringTok{ }\KeywordTok{summary}\NormalTok{(mod)}
+\NormalTok{cofs =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(sm}\OperatorTok{$}\NormalTok{coefficients)}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs =}\StringTok{ }\KeywordTok{names}\NormalTok{(mod}\OperatorTok{$}\NormalTok{coef)}
+\NormalTok{cofs =}\StringTok{ }\NormalTok{cofs[}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}twostar\textquotesingle{}}\NormalTok{,cofs}\OperatorTok{$}\NormalTok{coefs),]}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs \textless{}{-}}\StringTok{ }\KeywordTok{str\_remove}\NormalTok{(cofs}\OperatorTok{$}\NormalTok{coefs,}\StringTok{\textquotesingle{}.*names}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.\textquotesingle{}}\NormalTok{)}
+\NormalTok{cofs =}\StringTok{ }\NormalTok{cofs[}\OperatorTok{!}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Collab Experience\textquotesingle{}}\NormalTok{,coefs),]}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{group =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Existing\textquotesingle{}}\NormalTok{,cofs}\OperatorTok{$}\NormalTok{coefs),}\StringTok{\textquotesingle{}Existing Agency\textquotesingle{}}\NormalTok{,}\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{\textquotesingle{}Regional Authority\textquotesingle{}}\NormalTok{,cofs}\OperatorTok{$}\NormalTok{coefs),}\StringTok{\textquotesingle{}Regional Authority\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Collab.\textquotesingle{}}\NormalTok{))}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs \textless{}{-}}\StringTok{ }\KeywordTok{str\_remove}\NormalTok{(cofs}\OperatorTok{$}\NormalTok{coefs,}\StringTok{\textquotesingle{}Regional Authority}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.|}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.Regional Authority\textquotesingle{}}\NormalTok{)}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs \textless{}{-}}\StringTok{ }\KeywordTok{str\_remove}\NormalTok{(cofs}\OperatorTok{$}\NormalTok{coefs,}\StringTok{\textquotesingle{}Existing Agency}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.|}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.Existing Agency\textquotesingle{}}\NormalTok{)}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs \textless{}{-}}\StringTok{ }\KeywordTok{str\_remove}\NormalTok{(cofs}\OperatorTok{$}\NormalTok{coefs,}\StringTok{\textquotesingle{}\^{}Collab}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{.|.Collab$\textquotesingle{}}\NormalTok{)}
+\NormalTok{cofs =}\StringTok{ }\NormalTok{cofs[}\KeywordTok{order}\NormalTok{(Estimate),]}
+\NormalTok{cofs}\OperatorTok{$}\NormalTok{coefs \textless{}{-}}\StringTok{ }\KeywordTok{fct\_inorder}\NormalTok{(cofs}\OperatorTok{$}\NormalTok{coefs)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ cofs) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_vline}\NormalTok{(}\DataTypeTok{xintercept=}\DecValTok{0}\NormalTok{,}\DataTypeTok{lty =} \DecValTok{2}\NormalTok{,}\DataTypeTok{col =} \StringTok{\textquotesingle{}grey50\textquotesingle{}}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom\_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Estimate}\FloatTok{{-}1.96}\OperatorTok{*}\StringTok{\textasciigrave{}}\DataTypeTok{Std. Error}\StringTok{\textasciigrave{}}\NormalTok{,}\DataTypeTok{xend =}\NormalTok{ Estimate}\FloatTok{+1.96}\OperatorTok{*}\StringTok{\textasciigrave{}}\DataTypeTok{Std. Error}\StringTok{\textasciigrave{}}\NormalTok{,}\DataTypeTok{y =}\NormalTok{ coefs,}\DataTypeTok{yend =}\NormalTok{ coefs)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Estimate,}\DataTypeTok{y =}\NormalTok{ coefs))  }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet\_wrap}\NormalTok{(}\OperatorTok{\textasciitilde{}}\NormalTok{group) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme\_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Mean estimates, two{-}star pairings betwen gov. type and other concepts\textquotesingle{}}\NormalTok{)}\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.y =} \KeywordTok{element\_blank}\NormalTok{(),}\DataTypeTok{axis.ticks =} \KeywordTok{element\_blank}\NormalTok{()) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Parameter estimate (95\% confidence interval\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{corplot_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\end{document}

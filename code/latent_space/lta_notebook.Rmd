@@ -6,55 +6,82 @@ output:
     df_print: paged
 ---
 
-Memo to Kyra and Mark
+<!-- Memo to Kyra and Mark -->
 
-I was searching around for tools that do latent network space modeling more quickly, and found the lvm4net package (https://cran.r-project.org/web/packages/lvm4net/lvm4net.pdf). It's more standalone than latentnet, which integrates nicely with statnet and ergm capabilities. But on the upside, it is _very_ fast and turns out it has some really cool tools. 
+<!-- I was searching around for tools that do latent network space modeling more quickly, and found the lvm4net package (https://cran.r-project.org/web/packages/lvm4net/lvm4net.pdf). It's more standalone than latentnet, which integrates nicely with statnet and ergm capabilities. But on the upside, it is _very_ fast and turns out it has some really cool tools.  -->
 
-Firstly, it performs latent trait analysis (see https://arxiv.org/abs/1301.2167 and https://arxiv.org/abs/1905.02659, same author as lvm4net package). The basic idea in this case is that the concepts survey respondents selected are essentially categorical traits. There's a lot of stats talk and monkey business behind that, but here's the upshot...
+<!-- Firstly, it performs latent trait analysis (see https://arxiv.org/abs/1301.2167 and https://arxiv.org/abs/1905.02659, same author as lvm4net package). The basic idea in this case is that the concepts survey respondents selected are essentially categorical traits. There's a lot of stats talk and monkey business behind that, but here's the upshot... -->
+
+FOR EVERYTHING BELOW, I DROPPED OUT THE THREE "OTHER" RESPONSE OPTIONS FROM THE INCIDENCE MATRICES
 
 #ignore this chunk, ut just loads and builds network object
 ```{r startup_code}
+
 packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','ggthemes')
 need = packs[!sapply(packs,function(x) suppressMessages(require(x,character.only=T)))]
 sapply(need,function(x) suppressMessages(install.packages(x,,type= 'source')))
 sapply(packs[need],function(x) suppressMessages(require(x,character.only=T)))
 
 library(readxl)
-orig = readxl::read_excel('input/SLRSurvey_Full.xlsx')
+orig = readxl::read_excel('../../input/SLRSurvey_Full.xlsx')
 orig$Q4[is.na(orig$Q4)]<-'Other'
 #recode anything with fewer than 10 respondents as other
 # see what wed recode
 #as.data.table(table(orig$Q4))[order(-N),][N<10,]
 orig$Q4[orig$Q4 %in% as.data.table(table(orig$Q4))[order(-N),][N<10,]$V1] <- 'Other'
 orig$Q4[grepl('Other',orig$Q4)]<-'Other'
-incidence_dt = fread('input/NewAdjacencyMatrix_ColumnRenames.csv')
+incidence_dt = fread('../../input/NewAdjacencyMatrix_ColumnRenames.csv')
 incidence_mat = as.matrix(incidence_dt[,-c('ResponseId','ResponseId_number','DK')])
 rownames(incidence_mat)<-incidence_dt$ResponseId
 #drop isolates
 incidence_mat = incidence_mat[rowSums(incidence_mat)!=0,]
+
+colnames(incidence_dt)[colnames(incidence_dt)=='DACsC']<-c('DACs','DACsC')
 
 #create network object
 bip_net = as.network(incidence_mat,matrix.type = 'incidence',bipartite = T,directed = F,loops = F)
 #code actor types
 bip_net %v% 'Actor_Type' <- orig$Q4[match(network.vertex.names(bip_net),orig$ResponseId)]
 #code concept types
-concept_types = fread('input/Combined_VectorTypes_NoNewOther.csv')
+concept_types = fread('../../input/Combined_VectorTypes_NoNewOther.csv')
 bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
 set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
+
+
+concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
+concept_types[grepl('DAC',Vector),]
+```
+
+
+```{r correlation_between_responses}
+require(corrplot)
+#convert to incidence matrix
+Y = as.sociomatrix(bip_net)
+Y = Y[,!grepl('Other',colnames(Y))]
+
+data.table(Y)
+colnames(Y)
+Y<-Y[,sort(colnames(Y))]
+cors = round(cor(Y,method = 'kendall'),2)
+ggcorrplot::ggcorrplot(cors,show.diag = F,type = 'lower')
 ```
 
 
 ```{r latent_traits}
-#convert to incidence matrix
-Y = as.sociomatrix(bip_net)
+require(pbapply)
+
 #run lta with 1 to 4 dimensions
-dims = 1:4
-d_list = lapply(dims,function(d) lta(Y,D = d))
+dims = 1:6
+
+d_list = pblapply(dims,function(d) lta(Y,D = d),cl = 3)
 names(d_list) <- paste0('D',dims)
 print(sapply(d_list,function(x) x$BIC))
+ggplot() + geom_point(aes(x = dims,y = sapply(d_list,function(x) x$BIC))) + 
+  xlab('# latent trait dimensions')+ theme_bw() + scale_x_continuous(breaks=dims)+
+  ylab('BIC score for LTA model') + ggtitle("Single dimension is best fit for LTA",'Lower BIC score = better fit to data')
 ```
 
-Comparing BIC scores shows that 2-d is a lot better than 1 dimension or 3-4 dimensions. Thus, the results that follow assume that the categorical 0/1 responses to the concepts are underlain by a 2-D continuous latent variable. The first thing we can get out of this model is a set of intercepts and slopes for logistic response functions that connect the probability of choosing "1" for a particular concept as a function of each respondents' position within the 2-d space.
+Comparing BIC scores shows that 1-d bests everything else Thus, the results that follow assume that the categorical 0/1 responses to the concepts are underlain by a 2-D continuous latent variable. The first thing we can get out of this model is a set of intercepts and slopes for logistic response functions that connect the probability of choosing "1" for a particular concept as a function of each respondents' position within the 2-d space.
 
 ```{r evaluate_lta}
 mod = d_list[[2]]
