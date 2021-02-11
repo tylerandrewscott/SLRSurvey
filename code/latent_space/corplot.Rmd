@@ -1,0 +1,215 @@
+---
+title: "Latent trait analysis"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+FOR EVERYTHING BELOW, I DROPPED OUT THE THREE "OTHER" RESPONSE OPTIONS FROM THE INCIDENCE MATRICES
+
+A bunch of code is hiddend under the hood here to get this all set up....
+```{r startup_code, echo = F,message=F,warning=F,results = 'hide'}
+
+packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net',
+         'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot')
+need = packs[!sapply(packs,function(x) suppressMessages(require(x,character.only=T)))]
+sapply(need,function(x) suppressMessages(install.packages(x,,type= 'source')))
+sapply(packs[need],function(x) suppressMessages(require(x,character.only=T)))
+
+library(readxl)
+orig = readxl::read_excel('input/SLRSurvey_Full.xlsx')
+orig$Q4[is.na(orig$Q4)]<-'Other'
+#recode anything with fewer than 10 respondents as other
+# see what wed recode
+#as.data.table(table(orig$Q4))[order(-N),][N<10,]
+orig$Q4[orig$Q4 %in% as.data.table(table(orig$Q4))[order(-N),][N<10,]$V1] <- 'Other'
+orig$Q4[grepl('Other',orig$Q4)]<-'Other'
+incidence_dt = fread("CurrentFiles/Data/AdjMatrix_MinOtherRecode.csv")
+
+incidence_mat = as.matrix(incidence_dt[,-c('ResponseId','DK')])
+rownames(incidence_mat)<-incidence_dt$ResponseId
+#drop isolates
+incidence_mat = incidence_mat[rowSums(incidence_mat)!=0,]
+incidence_mat = incidence_mat[,!grepl('Other',colnames(incidence_mat))]
+
+#create network object
+bip_net = as.network(incidence_mat,matrix.type = 'incidence',bipartite = T,directed = F,loops = F)
+#code actor types
+bip_net %v% 'Actor_Type' <- orig$Q4[match(network.vertex.names(bip_net),orig$ResponseId)]
+#code concept types
+concept_types = fread('input/Combined_VectorTypes_NoNewOther.csv')
+bip_net %v% 'Concept_Type' <- concept_types$Type[match(network.vertex.names(bip_net), concept_types$Vector)]
+set.vertex.attribute(bip_net,'Concept_Type',value = 'Person',v = which(is.na(bip_net %v% 'Concept_Type')))
+
+bip_net %v% 'id' <- network.vertex.names(bip_net)
+bip_net %v% 'id_concept' <- ifelse({bip_net %v% 'Concept_Type'} == 'Person',network.vertex.names(bip_net),bip_net %v% 'Concept_Type')
+
+bip_net %v% 'b1_dummy_b2_names' <- ifelse({bip_net %v% 'Concept_Type'} == 'Person','Person',bip_net %v% 'vertex.names')
+#convert to incidence matrix
+Y = as.sociomatrix(bip_net)
+Y = Y[,!grepl('Other',colnames(Y))]
+Y<-Y[,sort(colnames(Y))]
+```
+
+
+```{r correlation_between_responses,message=F,warning=F}
+
+combos = data.table(melt(crossprod(Y)))[Var1!=Var2,]
+combos = combos[as.numeric(combos$Var1) <= as.numeric(combos$Var2),]
+combos$Var1 <- paste0(combos$Var1,' (',concept_types$Type[match(combos$Var1,concept_types$Vector)],')')
+combos$Var2 <- paste0(combos$Var2,' (',concept_types$Type[match(combos$Var2,concept_types$Vector)],')')
+
+htmlTable::htmlTable(combos[order(-value),][1:10,],caption ='top 10 combos')
+
+
+require(htmlTable)
+concept_unipartite = (crossprod(Y))
+
+uni_net = as.network(concept_unipartite,matrix.type = 'adjacency',directed = F,ignore.eval = F,names.eval = 'cooccurence')
+
+uni_net %v% 'Frequency' <- diag(concept_unipartite)
+
+uni_net %v% 'Type' <- concept_types$Type[match(network.vertex.names(uni_net),concept_types$Vector)]
+glist = lapply(c('Policy','Barrier','Concern'),function(x) get.inducedSubgraph(uni_net,v = which(uni_net %v% 'Type' == x)) %>% ggnetwork() %>% 
+         ggplot(.,aes(x = x,xend = xend,y = y,yend = yend,label = vertex.names))+ 
+  geom_edges(aes(size = cooccurence/nrow(Y),alpha = cooccurence)) +
+  geom_point(aes(size = Frequency/nrow(Y))) + 
+    ggtitle(paste(x,'co-occurence')) + 
+  geom_nodelabel_repel(size = 2) + theme_map() + guides(alpha = F,size = F) + 
+  scale_size_continuous(range = c(0.1,4))+
+  theme(legend.position = c(0.8,0.2))
+         )
+
+grid.arrange(glist[[1]],glist[[2]],glist[[3]],ncol = 2)
+```
+
+```{r gov_preferences,message=F,warning=F}
+soc = as.sociomatrix(uni_net,attrname = 'cooccurence')
+gov_types = c('Regional Authority','Existing Agency','Collab')
+htmlTable(do.call(cbind,lapply(gov_types,function(x) 
+as.data.table(soc[x,],keep.rownames = T)[order(-V2),][1:10,][,V2:=paste0(V1,' (',round(V2/sum(Y[,x]),2),')')][,'V2'])),
+header = gov_types,caption  = 'Top 10 choices by respondents who choose each governance preference',
+tfoot = '# = proportion of respondents by governance strategy who also choose item')
+
+htmlTable(cbind(as.data.table(soc['Regional Authority',],keep.rownames = T)[order(-V2),][1:10,1],
+as.data.table(soc['Existing Agency',],keep.rownames = T)[order(-V2),][1:10,1],
+as.data.table(soc['Collab',],keep.rownames = T)[order(-V2),][1:10,1]))
+```
+
+Latent class analysis (LCA) and latent trait analysis (LTA) are similar in principle. Both can be fit to binary incidence matrices X_nm where N = # of respondents and M = # of response items. A given X_nm value is respondent n's 0 or 1 choice for item m. The difference between LCA and LTA is that LCA assumes that there is a latent categorical variable representing groups of N's (respondents), and response items are independent conditional on group membership. In other words, the estimated probability of choosing a given response item is conditional on group membership. LTA essentially works in reverse -- this model assumes that response variables (e.g., policy concepts in our case) are represented by a D-dimensional continuous latent variable (with D specified prior to fitting). In other words, whereas LCA groups respondents, LTA groups responses. There's a lot of fancy approximation math under the hood that is beyond the scope here.
+
+"Mixture of latent trait analyzers" (MLTA) (Gollini 2021) are sort of a combination of LCA and LTA. Observations are assumed to come from groups (of respondents) and response variables (policies/concerns/barriers) are dependent upon group AND a group-specific D-dimensional continuous latent trait variable. The upshot is that now, respondents are conditional on group membership AND dependence between traits (whereas an  LTA assumes responses are independent conditional on group)
+
+The code chunk below fits an MLTAs for combinations--0 to 4 trait dimensions and 1 to 5 respondent groups. When D = 0, the model is just an LCA model where p(concept|group). When G = 1, that means that there are no subgroups and the best-fit model does not fit subgroup-specific probabilities, i.e., p(concept|group) = p(concept).
+
+```{r mlta_analysis,message=F,warning=F}
+#### note -- mlta takes vectors instead of single D and G values -- but pblapply is used to parallelize #####
+opts = data.table(expand.grid(D = 0:4,G = 1:5,fix = c(F,T)))
+opts = opts[D>0|!fix,]
+#### this part takes a while, so I commented out and upload an RDS at the end ###
+# require(doParallel)
+# cluster = makeCluster(4)
+# registerDoParallel(cluster)
+# clusterExport(cl = cluster,varlist = list('opts','Y'))
+# clusterEvalQ(cl = cluster,require(lvm4net))
+# mlta_tests = foreach(i = 1:nrow(opts)) %dopar% {mlta(X = Y, D = opts$D[i], G = opts$G[i],wfix = opts$fix[i],nstarts = 5,maxiter = 1e3)}
+# saveRDS(mlta_tests,'scratch/mlta_results.rds')
+
+mlta_tests = readRDS('scratch/mlta_results.rds')
+mlta_results = data.table(opts,BIC = sapply(mlta_tests,function(x) x$BIC))
+mlta_results$G_fix = paste0('G = ',mlta_results$G,' (fixed slope = ',mlta_results$fix,')')
+mlta_results$BIC <- round(mlta_results$BIC)
+mlta_cast = dcast(mlta_results[order(BIC)],G_fix ~ D,value.var = 'BIC')
+
+
+htmlTable(mlta_cast[,-1],caption = 'BIC scores by MLTA specification',rnames = mlta_cast$G_fix,header = paste0('D = ',0:4),
+          tfoot = '*fixed slope refers to whether slope is constant across all groups are group-specific')
+```
+
+So, the lamest thing here is that apparently the model with 1 group and 0 latent dimensions is the best.... i.e., a LCA model with no subgroups. SAD! The fact that G = 1, D = 0 is the best fitting model doesn't mean there are no distinctions, is just means they aren't super strong. 
+
+That said, the 2-group, 1 dimensional model with fixed slopes (i.e., a single item-specific slope parameter across all groups) is pretty close though in terms of BIC, so we can play with that a bit and see what distinctions arise. To briefly elaborate on what the intercepts and slopes mean -- each response item is a logistic function. That function then varies by group. Intercepts reflect the basic propensity for group members to choose an item, in addictive log odds. A higher intercept means group members are more likely to choose an item, and vice versa. Slopes represent heterogeneity amongst actors who choose a given concept. Heterogeneity is measured in terms of the latent trait variable. In other words, heterogeneity refers to the dependenence structure amongst items chosen by members of a given group. That said, we are going to ignore the slopes for now.
+
+The first thing we can look at is the posterior probability of respondents falling into each of the two groups (latent classes)
+```{r, message=F,warning=F}
+index = which(opts$D==1&opts$G==2&opts$fix==T)
+betas = mlta_tests[[index]]$b
+wus = mlta_tests[[index]]$w
+group_probs = mlta_tests[[index]]$z
+colnames(betas) <- colnames(wus) <- colnames(Y)
+
+ggplot() + geom_histogram(aes(x =group_probs[,1]),binwidth = 0.02) + theme_bw() + ggtitle('p(G = g) by respondent, D = 1, G = 2, w = fixed') + 
+  ylab('# respondents') + xlab('p(G=1)')
+
+```
+
+By way of comparison, here's how that shakes out when G = 3. Quite a few respondents in each corner, but also many living in the 0.40-0.60 range between groups. Nobody in the center.
+```{r, message=F,warning=F}
+index2 = which(opts$D==1&opts$G==3&opts$fix==T)
+group_probs = mlta_tests[[index2]]$z
+
+ggplot() + geom_point(aes(x = group_probs[,1],y = group_probs[,2]),pch = 21) + theme_bw() + xlab('P(G = 1)') + ylab('P(G = 2)') +
+  ggtitle('p(G = g) by respondent, D = 1, G = 3, w = fixed')
+```
+
+
+Anyways, we can then evaluate the intercept terms in each logistic response function to identify which items load heavily by group. Ignoring the model slope parameters. Here, it's clear that some items are identified by both groups (e.g., stormwater, transportation) while others are more excluvisely related to one and not the other (e.g., concern about DACs). Some are rare in both, like "commercial" and "property value". This also begins to reveal why increased dimensionality doens't seem to help model fit very much, many items are about as likely to be selected by one group as the other. Heuristically, items below the dashed line are more strongly associated with Group 1, and above are more strongly associated with Group 2.
+
+```{r, message=F,warning=F}
+beta_dt = data.table(t(betas),keep.rownames = T)
+ggplot(beta_dt,aes(x = `Group 1`,y = `Group 2`,label = rn)) + geom_abline(lty = 2,col = 'grey40') +
+  geom_point(pch = 21,col = 'grey50') + geom_text_repel(size = 2.5,max.overlaps = 100,min.segment.length = 0.2) +
+  xlab('intercept, group 1') + ylab('intercept, group 2') + theme_bw() + ggtitle('Intercept estimates for item-response by group','p = 1 / exp(-beta)')
+```
+
+
+There are all sorts of (or at least a few) other things we could do with the intercepts and slopes, and evaluate the same measures fit to other combinations of G (group) and D (latent trait) values. But for now, let's check out the correspondence between particular items within groups. This can be measured using "lift". Lift refers to the dependence between ties, in this case measured by group. So, focusing first on group 1, we can compute and plot the lift between each pair of response items. Independent positive responses have a lift value of 1. Values greater than 1 imply positive dependence, and < 1 negative dependence. In other words, this is similar to fitting matching terms in an ERGM --> "how does a tie to one particular concept affect the probability of a tie to another concept?". Lift values are then logged so that log-lift values < 0 imply a negative association and > 0 a positive association.
+
+
+```{r, message=F,warning=F}
+loglift <- log(lift(mlta_tests[[index]], pdGH = 21))
+colnames(loglift) <- colnames(Y)[as.numeric(colnames(loglift))]
+rownames(loglift) <- colnames(Y)[as.numeric(rownames(loglift))]
+
+lift_dt = data.table(melt(loglift))
+ggplot(data = lift_dt[Var3=='g = 1',],aes(x = Var2,y = Var1,fill = value,group = Var3)) + facet_wrap(~Var3) + geom_tile() + theme_bw() + 
+    ggtitle('Log-lift scores for group 1')+
+  scale_fill_gradient2_tableau(palette = 'Orange-Blue Diverging',na.value = 'white') + theme(axis.text.x = element_text(angle = 45,hjust = 1))
+```
+
+```{r}
+ggplot(data = lift_dt[Var3=='g = 2',],aes(x = Var2,y = Var1,fill = value,group = Var3)) + facet_wrap(~Var3) + geom_tile() + theme_bw() + 
+  ggtitle('Log-lift scores for group 2')+
+  scale_fill_gradient2_tableau(palette = 'Orange-Blue Diverging',na.value = 'white') + theme(axis.text.x = element_text(angle = 45,hjust = 1))
+```
+Group 2 looks relatively similar.
+
+Finally, I didn't include the code in this rmarkdown document becuase the models take a long time to fit, but we can back out similar results from bipartite ERGMs. I developed a specification that constraints each respondent to choosing no more than 3 options from each type of category, and then we can fit matching combo terms that reflect the probability of observing particular combos (i.e., how likely is a two-star where a respondent chooses "Permits" and "CBO relations"?). In any case, these results are pretty noisy, and we don't see any significant associations between a particular governance-type preference and choosing these other concepts. I want to keep running some more ERGMs on background to make sure I'm doing this right, but this works as proof of concept for constraining ties and such.
+
+```{r, message=F,warning=F}
+mod = readRDS('scratch/start_mod.rds')
+sm = summary(mod)
+cofs = data.table(sm$coefficients)
+cofs$coefs = names(mod$coef)
+cofs = cofs[grepl('twostar',cofs$coefs),]
+cofs$coefs <- str_remove(cofs$coefs,'.*names\\.')
+cofs = cofs[!grepl('Collab Experience',coefs),]
+cofs$group = ifelse(grepl('Existing',cofs$coefs),'Existing Agency',ifelse(grepl('Regional Authority',cofs$coefs),'Regional Authority','Collab.'))
+cofs$coefs <- str_remove(cofs$coefs,'Regional Authority\\.|\\.Regional Authority')
+cofs$coefs <- str_remove(cofs$coefs,'Existing Agency\\.|\\.Existing Agency')
+cofs$coefs <- str_remove(cofs$coefs,'^Collab\\.|.Collab$')
+cofs = cofs[order(Estimate),]
+cofs$coefs <- fct_inorder(cofs$coefs)
+
+ggplot(data = cofs) + 
+  geom_vline(xintercept=0,lty = 2,col = 'grey50') + 
+  geom_segment(aes(x = Estimate-1.96*`Std. Error`,xend = Estimate+1.96*`Std. Error`,y = coefs,yend = coefs)) +
+  geom_point(aes(x = Estimate,y = coefs))  +
+  facet_wrap(~group) + theme_bw() + 
+  ggtitle('Mean estimates, two-star pairings betwen gov. type and other concepts')+ theme(axis.title.y = element_blank(),axis.ticks = element_blank()) +
+  xlab('Parameter estimate (95% confidence interval')
+```
+
+
+
