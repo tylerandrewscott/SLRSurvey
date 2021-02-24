@@ -1,8 +1,5 @@
 
 #Put in all the setup code from Tyler's R markdown-------------------
-
-packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net',
-         'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot')
 library(tidyverse)
 library(purrr)
 library(data.table)
@@ -26,6 +23,7 @@ library(ggrepel)
 library(corrplot)
 
 library(readxl)
+
 orig = readxl::read_excel('input/SLRSurvey_Full.xlsx')
 orig$Q4[is.na(orig$Q4)]<-'Other'
 #recode anything with fewer than 10 respondents as other
@@ -168,8 +166,84 @@ merged_survey <- left_join(RespGroups, survey_orig, by='respondentID')
 
 #Use merged_survey to find connections between groups and survey attributes--------------
 
-#Ideas: correlations between probabilities and different properties, assign group by probability and correlate group membership with properties
-#Potential attributes/properties: org type, time in position, SLR concern, info types used, SLR awareness
+#create additional variable assigning to G1 or G2 based on which has higher probability
+merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2, 1, 2)
+table(merged_survey$Group)
+
+#Crosstabs of group assignments with other variables
+table(merged_survey$Group, merged_survey$Q1_Num)
+
+table(merged_survey$Group, merged_survey$Q2_Personal)
+table(merged_survey$Group, merged_survey$Q2_OneOrg)
+table(merged_survey$Group, merged_survey$Q2_MultiOrg)
+
+table(merged_survey$Group, merged_survey$Q4)
+
+table(merged_survey$Group, merged_survey$Q5)
+
+table(merged_survey$Group, merged_survey$Q8_Sum)
+
+table(merged_survey$Group, merged_survey$Q8_Exec)
+table(merged_survey$Group, merged_survey$Q8_Policy)
+table(merged_survey$Group, merged_survey$Q8_Planning)
+table(merged_survey$Group, merged_survey$Q8_Science)
+table(merged_survey$Group, merged_survey$Q8_Gov)
+table(merged_survey$Group, merged_survey$Q8_PM)
+table(merged_survey$Group, merged_survey$Q8_Advocacy)
+table(merged_survey$Group, merged_survey$Q8_Outreach)
+table(merged_survey$Group, merged_survey$Q8_Other)
+
+table(merged_survey$Group, merged_survey$Q32_Sum)
+
+table(merged_survey$Group, merged_survey$Q11_STAware)
+table(merged_survey$Group, merged_survey$Q11_LTAware)
+
+table(merged_survey$Group, merged_survey$Q12_STConcern)
+table(merged_survey$Group, merged_survey$Q12_LTConcern)
+
+table(merged_survey$Group, merged_survey$WhenSLR)
+
+table(merged_survey$Group, merged_survey$RiskAgree)
+table(merged_survey$Group, merged_survey$ActionAgree)
+
+#Correlations between group probailities and other variables
+library(devtools)
+
+correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD'))
+
+correlations[is.na(correlations)]=0
+
+correlationmatrix <- cor(correlations, method="pearson")
+
+library("corrplot")
+
+data.rcorr <- rcorr(as.matrix(correlations))
+
+data.coeff <- data.rcorr$r
+data.p <- data.rcorr$P
+
+significantp <- data.p[,1:2]
+twocolumncorr <- data.coeff[,1:2]
+
+significantp <- as.data.frame(significantp)
+twocolumncorr <- as.data.frame(twocolumncorr)
+
+significantp$PG1_p <- significantp$P_G1
+significantp$PG2_p <- significantp$P_G2
+
+twocolumncorr$PG1_r <- twocolumncorr$P_G1
+twocolumncorr$PG2_r <- twocolumncorr$P_G2
+
+significantp <- significantp[,3:4]
+twocolumncorr <- twocolumncorr[,3:4]
+
+twocolumncorr$names <- rownames(twocolumncorr)
+
+corrmatrix <- as.data.frame(twocolumncorr$names)
+corrmatrix$PG1_r <- twocolumncorr$PG1_r
+corrmatrix$PG1_p <- significantp$PG1_p
+corrmatrix$PG2_r <- twocolumncorr$PG2_r
+corrmatrix$PG2_p <- significantp$PG2_p
 
 
 #Ignore this section -----------------------------------------------------
