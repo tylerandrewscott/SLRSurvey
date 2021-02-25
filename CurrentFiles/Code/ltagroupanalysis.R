@@ -216,6 +216,7 @@ correlations[is.na(correlations)]=0
 correlationmatrix <- cor(correlations, method="pearson")
 
 library("corrplot")
+library("Hmisc")
 
 data.rcorr <- rcorr(as.matrix(correlations))
 
