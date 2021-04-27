@@ -1,9 +1,8 @@
 ---
 title: "INSERT A GOOD TITLE HERE"
 output:
-  html_document:
-    df_print: paged
-  pdf_document: default
+  bookdown::html_document2: default
+  bookdown::pdf_document2: default
 ---
 
 **INTRODUCTION**  
@@ -69,23 +68,24 @@ Y<-Y[,sort(colnames(Y))]
 ```
 
   
-**METHODS AND MATERIALS**
+**METHODS AND MATERIALS**  
 
-**Data**
-- survey design and implementation
-- response statistics (sample, response rate, etc.)
-- basic survey descriptives
-  - summary table of actor train responses (experience, org type, etc.)
-  - three panel plot bar plot of frequency of choices for each of concerns, barriers, policies
-Figure \@ref(fig:figure_choice_percentages) shows the percentage of respondents who selected each item.
-```{r figure_choice_percentages, echo = F,message = F,warning = F,results = 'hide'}
+**Data**  
+- survey design and implementation  
+- response statistics (sample, response rate, etc.)  
+- basic survey descriptives  
+  - summary table of actor train responses (experience, org type, etc.)  
+  - three panel plot bar plot of frequency of choices for each of concerns, barriers, policies  
+Figure \@ref(fig:figure-choice-percentages) shows the percentage of respondents who selected each item.
+
+```{r figure-choice-percentages, echo = F,message = F,warning = F,fig.cap = 'Frequency of response choices in sample'}
 
 mY = melt(Y)
 mY$cat = {bip_net %v% 'Concept_Type'}[match(mY$Var2,bip_net %v% 'vertex.names')]
 mY<-data.table(mY)
 mY = mY[,mean(value),by=.(Var2,cat)][order(-V1)]
 mY$fact = fct_reorder(mY$Var2,mY$V1,mean)
-require(gridExtra)
+
 #ideally this would be a fact_wrap call but getting factors to drop out takes some effort
 
 grid.arrange(ggplot(mY[cat =='Concern',]) + geom_point(aes(x = fact,y = 100 * V1))+
