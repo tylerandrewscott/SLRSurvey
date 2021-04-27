@@ -10,7 +10,7 @@ FOR EVERYTHING BELOW, I DROPPED OUT THE THREE "OTHER" RESPONSE OPTIONS FROM THE 
 
 A bunch of code is hiddend under the hood here to get this all set up....
 ```{r startup_code, echo = F,message=F,warning=F,results = 'hide'}
-
+seed = 24
 packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net',
          'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot')
 need = packs[!sapply(packs,function(x) suppressMessages(require(x,character.only=T)))]
@@ -54,6 +54,7 @@ Y<-Y[,sort(colnames(Y))]
 
 
 ```{r correlation_between_responses,message=F,warning=F}
+
 
 combos = data.table(melt(crossprod(Y)))[Var1!=Var2,]
 combos = combos[as.numeric(combos$Var1) <= as.numeric(combos$Var2),]
@@ -105,16 +106,19 @@ The code chunk below fits an MLTAs for combinations--0 to 4 trait dimensions and
 
 ```{r mlta_analysis,message=F,warning=F}
 #### note -- mlta takes vectors instead of single D and G values -- but pblapply is used to parallelize #####
-opts = data.table(expand.grid(D = 0:4,G = 1:5,fix = c(F,T)))
+max_dims = 2
+max_groups = 3
+opts = data.table(expand.grid(D = 0:max_dims,G = 1:max_groups,fix = c(F,T)))
 opts = opts[D>0|!fix,]
-#### this part takes a while, so I commented out and upload an RDS at the end ###
-# require(doParallel)
-# cluster = makeCluster(4)
-# registerDoParallel(cluster)
-# clusterExport(cl = cluster,varlist = list('opts','Y'))
-# clusterEvalQ(cl = cluster,require(lvm4net))
-# mlta_tests = foreach(i = 1:nrow(opts)) %dopar% {mlta(X = Y, D = opts$D[i], G = opts$G[i],wfix = opts$fix[i],nstarts = 5,maxiter = 1e3)}
-# saveRDS(mlta_tests,'scratch/mlta_results.rds')
+### this part takes a while, so I commented out and upload an RDS at the end ###
+require(doParallel)
+cluster = makeCluster(4)
+registerDoParallel(cluster)
+clusterExport(cl = cluster,varlist = list('opts','Y'))
+clusterEvalQ(cl = cluster,require(lvm4net))
+mlta_tests = foreach(i = 1:nrow(opts)) %dopar% {mlta(X = Y, D = opts$D[i], G = opts$G[i],wfix = opts$fix[i],nstarts = 5,maxiter = 1e3)}
+
+saveRDS(mlta_tests,'scratch/mlta_results.rds')
 
 mlta_tests = readRDS('scratch/mlta_results.rds')
 mlta_results = data.table(opts,BIC = sapply(mlta_tests,function(x) x$BIC))
@@ -122,8 +126,7 @@ mlta_results$G_fix = paste0('G = ',mlta_results$G,' (fixed slope = ',mlta_result
 mlta_results$BIC <- round(mlta_results$BIC)
 mlta_cast = dcast(mlta_results[order(BIC)],G_fix ~ D,value.var = 'BIC')
 
-
-htmlTable(mlta_cast[,-1],caption = 'BIC scores by MLTA specification',rnames = mlta_cast$G_fix,header = paste0('D = ',0:4),
+htmlTable(mlta_cast[,-1],caption = 'BIC scores by MLTA specification',rnames = mlta_cast$G_fix,header = paste0('D = ',0:max_dims),
           tfoot = '*fixed slope refers to whether slope is constant across all groups are group-specific')
 ```
 
@@ -185,31 +188,39 @@ ggplot(data = lift_dt[Var3=='g = 2',],aes(x = Var2,y = Var1,fill = value,group =
 ```
 Group 2 looks relatively similar.
 
-Finally, I didn't include the code in this rmarkdown document becuase the models take a long time to fit, but we can back out similar results from bipartite ERGMs. I developed a specification that constraints each respondent to choosing no more than 3 options from each type of category, and then we can fit matching combo terms that reflect the probability of observing particular combos (i.e., how likely is a two-star where a respondent chooses "Permits" and "CBO relations"?). In any case, these results are pretty noisy, and we don't see any significant associations between a particular governance-type preference and choosing these other concepts. I want to keep running some more ERGMs on background to make sure I'm doing this right, but this works as proof of concept for constraining ties and such.
 
-```{r, message=F,warning=F}
-mod = readRDS('scratch/start_mod.rds')
-sm = summary(mod)
-cofs = data.table(sm$coefficients)
-cofs$coefs = names(mod$coef)
-cofs = cofs[grepl('twostar',cofs$coefs),]
-cofs$coefs <- str_remove(cofs$coefs,'.*names\\.')
-cofs = cofs[!grepl('Collab Experience',coefs),]
-cofs$group = ifelse(grepl('Existing',cofs$coefs),'Existing Agency',ifelse(grepl('Regional Authority',cofs$coefs),'Regional Authority','Collab.'))
-cofs$coefs <- str_remove(cofs$coefs,'Regional Authority\\.|\\.Regional Authority')
-cofs$coefs <- str_remove(cofs$coefs,'Existing Agency\\.|\\.Existing Agency')
-cofs$coefs <- str_remove(cofs$coefs,'^Collab\\.|.Collab$')
-cofs = cofs[order(Estimate),]
-cofs$coefs <- fct_inorder(cofs$coefs)
 
-ggplot(data = cofs) + 
-  geom_vline(xintercept=0,lty = 2,col = 'grey50') + 
-  geom_segment(aes(x = Estimate-1.96*`Std. Error`,xend = Estimate+1.96*`Std. Error`,y = coefs,yend = coefs)) +
-  geom_point(aes(x = Estimate,y = coefs))  +
-  facet_wrap(~group) + theme_bw() + 
-  ggtitle('Mean estimates, two-star pairings betwen gov. type and other concepts')+ theme(axis.title.y = element_blank(),axis.ticks = element_blank()) +
-  xlab('Parameter estimate (95% confidence interval')
-```
+
+
+
+
+
+
+<!-- Finally, I didn't include the code in this rmarkdown document becuase the models take a long time to fit, but we can back out similar results from bipartite ERGMs. I developed a specification that constraints each respondent to choosing no more than 3 options from each type of category, and then we can fit matching combo terms that reflect the probability of observing particular combos (i.e., how likely is a two-star where a respondent chooses "Permits" and "CBO relations"?). In any case, these results are pretty noisy, and we don't see any significant associations between a particular governance-type preference and choosing these other concepts. I want to keep running some more ERGMs on background to make sure I'm doing this right, but this works as proof of concept for constraining ties and such. -->
+
+<!-- ```{r, message=F,warning=F} -->
+<!-- mod = readRDS('scratch/start_mod.rds') -->
+<!-- sm = summary(mod) -->
+<!-- cofs = data.table(sm$coefficients) -->
+<!-- cofs$coefs = names(mod$coef) -->
+<!-- cofs = cofs[grepl('twostar',cofs$coefs),] -->
+<!-- cofs$coefs <- str_remove(cofs$coefs,'.*names\\.') -->
+<!-- cofs = cofs[!grepl('Collab Experience',coefs),] -->
+<!-- cofs$group = ifelse(grepl('Existing',cofs$coefs),'Existing Agency',ifelse(grepl('Regional Authority',cofs$coefs),'Regional Authority','Collab.')) -->
+<!-- cofs$coefs <- str_remove(cofs$coefs,'Regional Authority\\.|\\.Regional Authority') -->
+<!-- cofs$coefs <- str_remove(cofs$coefs,'Existing Agency\\.|\\.Existing Agency') -->
+<!-- cofs$coefs <- str_remove(cofs$coefs,'^Collab\\.|.Collab$') -->
+<!-- cofs = cofs[order(Estimate),] -->
+<!-- cofs$coefs <- fct_inorder(cofs$coefs) -->
+
+<!-- ggplot(data = cofs) +  -->
+<!--   geom_vline(xintercept=0,lty = 2,col = 'grey50') +  -->
+<!--   geom_segment(aes(x = Estimate-1.96*`Std. Error`,xend = Estimate+1.96*`Std. Error`,y = coefs,yend = coefs)) + -->
+<!--   geom_point(aes(x = Estimate,y = coefs))  + -->
+<!--   facet_wrap(~group) + theme_bw() +  -->
+<!--   ggtitle('Mean estimates, two-star pairings betwen gov. type and other concepts')+ theme(axis.title.y = element_blank(),axis.ticks = element_blank()) + -->
+<!--   xlab('Parameter estimate (95% confidence interval') -->
+<!-- ``` -->
 
 
 
