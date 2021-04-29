@@ -245,7 +245,124 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
 
 
 **RESULTS**  
+
 **Correlation between external items and concept responses**  
+```{r correlate_external_groups, echo=F}
+#Create list of group probabilities for respondents------------------------
+#looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
+
+group_prob <- as.data.frame(group_probs)
+#create dataframe of Y (row names are respondent ID) and add in the group 1 and group 2 probabilities
+RespGroups <- as.data.frame(Y)
+
+RespGroups$P_G1 <- group_prob$V1
+RespGroups$P_G2 <- group_prob$V2
+RespGroups$P_G3 <- group_prob$V3
+
+RespGroups$respondentID <- row.names(RespGroups)
+
+
+#Match that back to survey results--------------------------------------
+survey_orig <- as.data.frame(orig)
+RespGroups <- as.data.frame(RespGroups)
+survey_orig$respondentID <- survey_orig$ResponseId
+
+
+merged_survey <- left_join(RespGroups, survey_orig, by='respondentID')
+
+#Use merged_survey to find connections between groups and survey attributes--------------
+#create additional variable assigning to G1 G2 or G3 based on which has higher probability
+
+merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2 & merged_survey$P_G1>merged_survey$P_G3, 1, 
+                              ifelse(merged_survey$P_G2>merged_survey$P_G1 & merged_survey$P_G2>merged_survey$P_G3, 2,3))
+
+table(merged_survey$Group)
+
+#Crosstabs of group assignments with other variables
+table(merged_survey$Group, merged_survey$Q1_Num)
+
+table(merged_survey$Group, merged_survey$Q2_Personal)
+table(merged_survey$Group, merged_survey$Q2_OneOrg)
+table(merged_survey$Group, merged_survey$Q2_MultiOrg)
+
+table(merged_survey$Group, merged_survey$Q4)
+
+table(merged_survey$Group, merged_survey$Q5)
+
+table(merged_survey$Group, merged_survey$Q8_Sum)
+
+table(merged_survey$Group, merged_survey$Q8_Exec)
+table(merged_survey$Group, merged_survey$Q8_Policy)
+table(merged_survey$Group, merged_survey$Q8_Planning)
+table(merged_survey$Group, merged_survey$Q8_Science)
+table(merged_survey$Group, merged_survey$Q8_Gov)
+table(merged_survey$Group, merged_survey$Q8_PM)
+table(merged_survey$Group, merged_survey$Q8_Advocacy)
+table(merged_survey$Group, merged_survey$Q8_Outreach)
+table(merged_survey$Group, merged_survey$Q8_Other)
+
+table(merged_survey$Group, merged_survey$Q32_Sum)
+
+table(merged_survey$Group, merged_survey$Q11_STAware)
+table(merged_survey$Group, merged_survey$Q11_LTAware)
+
+table(merged_survey$Group, merged_survey$Q12_STConcern)
+table(merged_survey$Group, merged_survey$Q12_LTConcern)
+
+table(merged_survey$Group, merged_survey$WhenSLR)
+
+table(merged_survey$Group, merged_survey$RiskAgree)
+table(merged_survey$Group, merged_survey$ActionAgree)
+
+#Correlations between group probailities and other variables
+library(devtools)
+
+correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'P_G3', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD'))
+
+correlations[is.na(correlations)]=0
+
+correlationmatrix <- cor(correlations, method="pearson")
+
+library("corrplot")
+library("Hmisc")
+
+data.rcorr <- rcorr(as.matrix(correlations))
+
+data.coeff <- data.rcorr$r
+data.p <- data.rcorr$P
+
+significantp <- data.p[,1:3]
+threecolumncorr <- data.coeff[,1:3]
+
+significantp <- as.data.frame(significantp)
+threecolumncorr <- as.data.frame(threecolumncorr)
+
+significantp$PG1_p <- significantp$P_G1
+significantp$PG2_p <- significantp$P_G2
+significantp$PG3_p <- significantp$P_G3
+
+threecolumncorr$PG1_r <- threecolumncorr$P_G1
+threecolumncorr$PG2_r <- threecolumncorr$P_G2
+threecolumncorr$PG3_r <- threecolumncorr$P_G3
+
+
+significantp <- significantp[,4:6]
+threecolumncorr <- threecolumncorr[,4:6]
+
+threecolumncorr$names <- rownames(threecolumncorr)
+
+corrmatrix <- as.data.frame(threecolumncorr$names)
+corrmatrix$PG1_r <- threecolumncorr$PG1_r
+corrmatrix$PG1_p <- significantp$PG1_p
+corrmatrix$PG2_r <- threecolumncorr$PG2_r
+corrmatrix$PG2_p <- significantp$PG2_p
+corrmatrix$PG3_r <- threecolumncorr$PG3_r
+corrmatrix$PG3_p <- significantp$PG3_p
+
+#KYRA LEFT OFF HERE- when next work on this will be running code as is again and actually looking at correlations to get some results, need to think of best way to visualize it
+
+
+```
 **more results**  
 **more results**  
 
