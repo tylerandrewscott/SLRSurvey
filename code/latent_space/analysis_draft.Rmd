@@ -247,6 +247,8 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
 **RESULTS**  
 
 **Correlation between external items and concept responses**  
+See google doc with results from external items and group correlations here: 
+https://docs.google.com/document/d/1uz421G2w8q_PJQNSWrB-HOETRNiQCUw-MLa6p3zfwaw/edit?usp=sharing 
 ```{r correlate_external_groups, echo=F}
 #Create list of group probabilities for respondents------------------------
 #looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
@@ -358,9 +360,6 @@ corrmatrix$PG2_r <- threecolumncorr$PG2_r
 corrmatrix$PG2_p <- significantp$PG2_p
 corrmatrix$PG3_r <- threecolumncorr$PG3_r
 corrmatrix$PG3_p <- significantp$PG3_p
-
-#KYRA LEFT OFF HERE- when next work on this will be running code as is again and actually looking at correlations to get some results, need to think of best way to visualize it
-
 
 ```
 **more results**  
