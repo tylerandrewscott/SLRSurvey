@@ -246,8 +246,61 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
 
 **RESULTS**  
 **Correlation between external items and concept responses**  
+**Core differences between groups**  
+```{r echo = F,warning = F, message = F}
+
+require(ggradar)
+Y_dat = data.table(Y)
+Y_dat$group =  apply(mod$z,1,which.max)
+
+Ydt = melt(Y_dat,id.vars = 'group')
+Ydt$item_type = concept_types$Type[match(Ydt$variable,concept_types$Vector)]
+
+Y_means = Ydt[,mean(value),by=.(group,variable,item_type)]
+Y_means$group = paste0('Group ',Y_means$group)
+radar_grobs = lapply(unique(Ydt$item_type),function(x) {
+  tmp = dcast(Y_means[item_type == x,],group ~ variable,value.var = 'V1')
+  ggradar(tmp,axis.label.size = 3,group.point.size = 1) +ggtitle(x) +
+    theme(plot.margin = unit(rep(0.1,4),units = 'cm'))
+  })
+op <- par(mar = c(.1, .1, .1, .1))
+radar_grobs[[1]]
+radar_grobs[[2]]
+radar_grobs[[3]]
+```
+
 **more results**  
-**more results**  
+
+```{r echo = F,warning = F, message = F}
+require(networkD3)
+
+# Load energy projection data
+URL <- "https://cdn.rawgit.com/christophergandrud/networkD3/master/JSONdata/energy.json"
+
+test= Ydt[,sum(value),by=.(item_type,group,variable)][item_type%in%c('Concern','Policy'),][group == 1,]
+devtools::install_github('Displayr/flipPlots')
+library(flipPlots)
+SankeyDiagram(test,
+              link.color = "Source", 
+              weights = my.data$freq) 
+
+install.packages('flipPlots')
+
+Ydt[,sum(value),by=.(item_type,group,variable)][item_type=='Concern'&group == 1,]
+
+Ydt[,sum(value),by=.(item_type,group,variable)][item_type=='Policy'&group == 1,]
+
+sankey_list = list()
+sankey_list$nodes <- data.frame(name = unique(Ydt$variable[Ydt$item_type %in% c('Concern','Policy')]))
+
+
+
+
+str(Energy)
+
+
+
+```
 
 
 **DISCUSSION**
