@@ -281,60 +281,66 @@ merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2 & merged_sur
 table(merged_survey$Group)
 
 #Crosstabs of group assignments with other variables
-table(merged_survey$Group, merged_survey$Q1_Num)
+#table(merged_survey$Group, merged_survey$Q1_Num)
 
-table(merged_survey$Group, merged_survey$Q2_Personal)
-table(merged_survey$Group, merged_survey$Q2_OneOrg)
-table(merged_survey$Group, merged_survey$Q2_MultiOrg)
+#table(merged_survey$Group, merged_survey$Q2_Personal)
+#table(merged_survey$Group, merged_survey$Q2_OneOrg)
+#table(merged_survey$Group, merged_survey$Q2_MultiOrg)
 
-table(merged_survey$Group, merged_survey$Q4)
+#table(merged_survey$Group, merged_survey$Q4)
 
-table(merged_survey$Group, merged_survey$Q5)
+#table(merged_survey$Group, merged_survey$Q5)
 
-table(merged_survey$Group, merged_survey$Q8_Sum)
+#table(merged_survey$Group, merged_survey$Q8_Sum)
 
-table(merged_survey$Group, merged_survey$Q8_Exec)
-table(merged_survey$Group, merged_survey$Q8_Policy)
-table(merged_survey$Group, merged_survey$Q8_Planning)
-table(merged_survey$Group, merged_survey$Q8_Science)
-table(merged_survey$Group, merged_survey$Q8_Gov)
-table(merged_survey$Group, merged_survey$Q8_PM)
-table(merged_survey$Group, merged_survey$Q8_Advocacy)
-table(merged_survey$Group, merged_survey$Q8_Outreach)
-table(merged_survey$Group, merged_survey$Q8_Other)
+#table(merged_survey$Group, merged_survey$Q8_Exec)
+#table(merged_survey$Group, merged_survey$Q8_Policy)
+#table(merged_survey$Group, merged_survey$Q8_Planning)
+#table(merged_survey$Group, merged_survey$Q8_Science)
+#table(merged_survey$Group, merged_survey$Q8_Gov)
+#table(merged_survey$Group, merged_survey$Q8_PM)
+#table(merged_survey$Group, merged_survey$Q8_Advocacy)
+#table(merged_survey$Group, merged_survey$Q8_Outreach)
+#table(merged_survey$Group, merged_survey$Q8_Other)
 
-table(merged_survey$Group, merged_survey$Q32_Sum)
+#table(merged_survey$Group, merged_survey$Q32_Sum)
 
-table(merged_survey$Group, merged_survey$Q11_STAware)
-table(merged_survey$Group, merged_survey$Q11_LTAware)
+#table(merged_survey$Group, merged_survey$Q11_STAware)
+#table(merged_survey$Group, merged_survey$Q11_LTAware)
 
-table(merged_survey$Group, merged_survey$Q12_STConcern)
-table(merged_survey$Group, merged_survey$Q12_LTConcern)
+#table(merged_survey$Group, merged_survey$Q12_STConcern)
+#table(merged_survey$Group, merged_survey$Q12_LTConcern)
 
-table(merged_survey$Group, merged_survey$WhenSLR)
+#table(merged_survey$Group, merged_survey$WhenSLR)
 
-table(merged_survey$Group, merged_survey$RiskAgree)
-table(merged_survey$Group, merged_survey$ActionAgree)
+#table(merged_survey$Group, merged_survey$RiskAgree)
+#table(merged_survey$Group, merged_survey$ActionAgree)
 
 #Correlations between group probailities and other variables
 library(devtools)
 
-correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'P_G3', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD'))
+correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'P_G3', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree'))
+
 
 correlations[is.na(correlations)]=0
 
-correlationmatrix <- cor(correlations, method="pearson")
+
+correlationmatrix <- cor(correlations, method="kendall")
+correlationmatrix_sp <- cor(correlations, method="spearman")
+
 
 library("corrplot")
 library("Hmisc")
+#note that corrplot which I used for this only allows pearson and spearman- if we want kendall will need to do it another way
+data.rcorr.pear <- rcorr(as.matrix(correlations), type="pearson")
+data.rcorr.sp <- rcorr(as.matrix(correlations), type="spearman")
 
-data.rcorr <- rcorr(as.matrix(correlations))
+data.coeff.sp <- data.rcorr.sp$r
+data.p.sp <- data.rcorr.sp$P
+data.p.sp
 
-data.coeff <- data.rcorr$r
-data.p <- data.rcorr$P
-
-significantp <- data.p[,1:3]
-threecolumncorr <- data.coeff[,1:3]
+significantp <- data.p.sp[,1:3]
+threecolumncorr <- data.coeff.sp[,1:3]
 
 significantp <- as.data.frame(significantp)
 threecolumncorr <- as.data.frame(threecolumncorr)
@@ -360,6 +366,11 @@ corrmatrix$PG2_r <- threecolumncorr$PG2_r
 corrmatrix$PG2_p <- significantp$PG2_p
 corrmatrix$PG3_r <- threecolumncorr$PG3_r
 corrmatrix$PG3_p <- significantp$PG3_p
+
+?subset()
+corrmatrix.sigG1 <- subset(corrmatrix, corrmatrix$PG1_p<0.05)
+corrmatrix.sigG2 <- subset(corrmatrix, corrmatrix$PG2_p<0.05)
+corrmatrix.sigG3 <- subset(corrmatrix, corrmatrix$PG3_p <0.05)
 
 ```
 **more results**  
