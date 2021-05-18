@@ -249,6 +249,12 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
 **Correlation between external items and concept responses**  
 See google doc with results from external items and group correlations here: 
 https://docs.google.com/document/d/1uz421G2w8q_PJQNSWrB-HOETRNiQCUw-MLa6p3zfwaw/edit?usp=sharing 
+
+Using Spearman's rho, Probability of Group 1 membership significantly correlated with more work tasks related to SLR including project management and outreach, being in a CBO or NGO org, and showing more concern for both short and long term SLR impacts. Also correlated with anticipating impacts of SLR happening sooner in time and negatively correlated with being in a water special district or local government org. 
+
+Group 2 membership significantly correlated with higher level of involvement with SLR and executive job tasks. Also correlated with enviro and water special district orgs and negatively correlated with NGO, CBO, and state government organizations. This group is correlated with higher short term awareness of SLR impacts but lower long term concern and higher assessment of risk agreement regionally. 
+
+Group 3 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an enviro SD or NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks. 
 ```{r correlate_external_groups, echo=F}
 #Create list of group probabilities for respondents------------------------
 #looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
