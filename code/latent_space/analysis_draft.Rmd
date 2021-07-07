@@ -1,9 +1,8 @@
 ---
 title: "INSERT A GOOD TITLE HERE"
 output:
-  html_document:
-    df_print: paged
-  pdf_document: default
+  bookdown::html_document2: default
+  bookdown::pdf_document2: default
 ---
 
 **INTRODUCTION**  
@@ -69,23 +68,24 @@ Y<-Y[,sort(colnames(Y))]
 ```
 
   
-**METHODS AND MATERIALS**
+**METHODS AND MATERIALS**  
 
-**Data**
-- survey design and implementation
-- response statistics (sample, response rate, etc.)
-- basic survey descriptives
-  - summary table of actor train responses (experience, org type, etc.)
-  - three panel plot bar plot of frequency of choices for each of concerns, barriers, policies
-Figure \@ref(fig:figure_choice_percentages) shows the percentage of respondents who selected each item.
-```{r figure_choice_percentages, echo = F,message = F,warning = F,results = 'hide'}
+**Data**  
+- survey design and implementation  
+- response statistics (sample, response rate, etc.)  
+- basic survey descriptives  
+  - summary table of actor train responses (experience, org type, etc.)  
+  - three panel plot bar plot of frequency of choices for each of concerns, barriers, policies  
+Figure \@ref(fig:figure-choice-percentages) shows the percentage of respondents who selected each item.
+
+```{r figure-choice-percentages, echo = F,message = F,warning = F,fig.cap = 'Frequency of response choices in sample'}
 
 mY = melt(Y)
 mY$cat = {bip_net %v% 'Concept_Type'}[match(mY$Var2,bip_net %v% 'vertex.names')]
 mY<-data.table(mY)
 mY = mY[,mean(value),by=.(Var2,cat)][order(-V1)]
 mY$fact = fct_reorder(mY$Var2,mY$V1,mean)
-require(gridExtra)
+
 #ideally this would be a fact_wrap call but getting factors to drop out takes some effort
 
 grid.arrange(ggplot(mY[cat =='Concern',]) + geom_point(aes(x = fact,y = 100 * V1))+
@@ -245,7 +245,140 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
 
 
 **RESULTS**  
+
 **Correlation between external items and concept responses**  
+See google doc with results from external items and group correlations here: 
+https://docs.google.com/document/d/1uz421G2w8q_PJQNSWrB-HOETRNiQCUw-MLa6p3zfwaw/edit?usp=sharing 
+
+Using Spearman's rho, Probability of Group 1 membership significantly correlated with more work tasks related to SLR including project management and outreach, being in a CBO or NGO org, and showing more concern for both short and long term SLR impacts. Also correlated with anticipating impacts of SLR happening sooner in time and negatively correlated with being in a water special district or local government org. 
+
+Group 2 membership significantly correlated with higher level of involvement with SLR and executive job tasks. Also correlated with enviro and water special district orgs and negatively correlated with NGO, CBO, and state government organizations. This group is correlated with higher short term awareness of SLR impacts but lower long term concern and higher assessment of risk agreement regionally. 
+
+Group 3 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an enviro SD or NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks. 
+```{r correlate_external_groups, echo=F}
+#Create list of group probabilities for respondents------------------------
+#looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
+
+group_prob <- as.data.frame(group_probs)
+#create dataframe of Y (row names are respondent ID) and add in the group 1 and group 2 probabilities
+RespGroups <- as.data.frame(Y)
+
+RespGroups$P_G1 <- group_prob$V1
+RespGroups$P_G2 <- group_prob$V2
+RespGroups$P_G3 <- group_prob$V3
+
+RespGroups$respondentID <- row.names(RespGroups)
+
+
+#Match that back to survey results--------------------------------------
+survey_orig <- as.data.frame(orig)
+RespGroups <- as.data.frame(RespGroups)
+survey_orig$respondentID <- survey_orig$ResponseId
+
+
+merged_survey <- left_join(RespGroups, survey_orig, by='respondentID')
+
+#Use merged_survey to find connections between groups and survey attributes--------------
+#create additional variable assigning to G1 G2 or G3 based on which has higher probability
+
+merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2 & merged_survey$P_G1>merged_survey$P_G3, 1, 
+                              ifelse(merged_survey$P_G2>merged_survey$P_G1 & merged_survey$P_G2>merged_survey$P_G3, 2,3))
+
+table(merged_survey$Group)
+
+#Crosstabs of group assignments with other variables
+#table(merged_survey$Group, merged_survey$Q1_Num)
+
+#table(merged_survey$Group, merged_survey$Q2_Personal)
+#table(merged_survey$Group, merged_survey$Q2_OneOrg)
+#table(merged_survey$Group, merged_survey$Q2_MultiOrg)
+
+#table(merged_survey$Group, merged_survey$Q4)
+
+#table(merged_survey$Group, merged_survey$Q5)
+
+#table(merged_survey$Group, merged_survey$Q8_Sum)
+
+#table(merged_survey$Group, merged_survey$Q8_Exec)
+#table(merged_survey$Group, merged_survey$Q8_Policy)
+#table(merged_survey$Group, merged_survey$Q8_Planning)
+#table(merged_survey$Group, merged_survey$Q8_Science)
+#table(merged_survey$Group, merged_survey$Q8_Gov)
+#table(merged_survey$Group, merged_survey$Q8_PM)
+#table(merged_survey$Group, merged_survey$Q8_Advocacy)
+#table(merged_survey$Group, merged_survey$Q8_Outreach)
+#table(merged_survey$Group, merged_survey$Q8_Other)
+
+#table(merged_survey$Group, merged_survey$Q32_Sum)
+
+#table(merged_survey$Group, merged_survey$Q11_STAware)
+#table(merged_survey$Group, merged_survey$Q11_LTAware)
+
+#table(merged_survey$Group, merged_survey$Q12_STConcern)
+#table(merged_survey$Group, merged_survey$Q12_LTConcern)
+
+#table(merged_survey$Group, merged_survey$WhenSLR)
+
+#table(merged_survey$Group, merged_survey$RiskAgree)
+#table(merged_survey$Group, merged_survey$ActionAgree)
+
+#Correlations between group probailities and other variables
+library(devtools)
+
+correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'P_G3', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree'))
+
+
+correlations[is.na(correlations)]=0
+
+
+correlationmatrix <- cor(correlations, method="kendall")
+correlationmatrix_sp <- cor(correlations, method="spearman")
+
+
+library("corrplot")
+library("Hmisc")
+#note that corrplot which I used for this only allows pearson and spearman- if we want kendall will need to do it another way
+data.rcorr.pear <- rcorr(as.matrix(correlations), type="pearson")
+data.rcorr.sp <- rcorr(as.matrix(correlations), type="spearman")
+
+data.coeff.sp <- data.rcorr.sp$r
+data.p.sp <- data.rcorr.sp$P
+data.p.sp
+
+significantp <- data.p.sp[,1:3]
+threecolumncorr <- data.coeff.sp[,1:3]
+
+significantp <- as.data.frame(significantp)
+threecolumncorr <- as.data.frame(threecolumncorr)
+
+significantp$PG1_p <- significantp$P_G1
+significantp$PG2_p <- significantp$P_G2
+significantp$PG3_p <- significantp$P_G3
+
+threecolumncorr$PG1_r <- threecolumncorr$P_G1
+threecolumncorr$PG2_r <- threecolumncorr$P_G2
+threecolumncorr$PG3_r <- threecolumncorr$P_G3
+
+
+significantp <- significantp[,4:6]
+threecolumncorr <- threecolumncorr[,4:6]
+
+threecolumncorr$names <- rownames(threecolumncorr)
+
+corrmatrix <- as.data.frame(threecolumncorr$names)
+corrmatrix$PG1_r <- threecolumncorr$PG1_r
+corrmatrix$PG1_p <- significantp$PG1_p
+corrmatrix$PG2_r <- threecolumncorr$PG2_r
+corrmatrix$PG2_p <- significantp$PG2_p
+corrmatrix$PG3_r <- threecolumncorr$PG3_r
+corrmatrix$PG3_p <- significantp$PG3_p
+
+?subset()
+corrmatrix.sigG1 <- subset(corrmatrix, corrmatrix$PG1_p<0.05)
+corrmatrix.sigG2 <- subset(corrmatrix, corrmatrix$PG2_p<0.05)
+corrmatrix.sigG3 <- subset(corrmatrix, corrmatrix$PG3_p <0.05)
+
+```
 **more results**  
 **more results**  
 
