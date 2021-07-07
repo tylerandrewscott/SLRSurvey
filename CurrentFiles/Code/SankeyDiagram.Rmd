@@ -1,0 +1,197 @@
+---
+title: "SankeyDiagramCode"
+author: "Kyra Gmoser-Daskalakis"
+date: "7/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r setup}
+setwd("C:/Users/kyras/OneDrive/Desktop/SLRSurvey/SLRSurvey/CurrentFiles/Data")
+AdjMatrix <- read.csv("AdjacencyMatrix_Sankey.csv")
+RespGroups <- read.csv("RespGroups_Sankey.csv")
+
+RespGroups$ResponseId <- RespGroups$respondentID
+
+merged <- merge(AdjMatrix, RespGroups, by="ResponseId")
+
+
+merged$Group <- ifelse(merged$P_G1>merged$P_G2 & merged$P_G1>merged$P_G3, 1, 
+ifelse(merged$P_G2>merged$P_G1 & merged$P_G2>merged$P_G3, 2,3))
+
+table(merged$Group)
+
+str(merged)
+
+Sankey <- merged[, c(2:43, 87)]
+
+library(dplyr)
+library(tidyverse)
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(SLR.Plan.x=="1")
+#Group 1 is 111 Yes, 178 No and Group 2 is 29 Yes, 97 No, and Group 3 is 121 Yes, 162 No
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Vulnerable.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Local.Tax.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Lobby.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Permits.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Info.Platform.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(DACs.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Green.Infra.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Vision.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Innov.Design.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Local.Response.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Regional.Authority.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Existing.Agency.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Collab.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(OtherP=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Transpo.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Water.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Stormwater.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Energy.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Ecosystem.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Erosion.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Commercial.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(DACsC.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Econ.Growth.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Property.Value.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Housing.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(Public.Health.x=="1")
+
+Sankey %>% 
+  group_by(Sankey$Group) %>% 
+  count(OtherC=="1")
+
+#These are now in the Sankey_Counts.csv file in Current Files -> Data
+
+```
+
+
+
+```{r Sankey Diagram}
+library(networkD3)
+
+Sankey_counts <- read.csv("Sankey_Counts.csv")
+
+SankeyCounts <- Sankey_counts[, 2:29]
+
+links <- SankeyCounts %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var="source") %>% 
+  gather(key="target", value="value", -1) %>%
+  filter(value != 0)
+
+# From these flows we need to create a node data frame: it lists every entities involved in the flow
+nodes <- data.frame(
+  name=c(as.character(links$source), as.character(links$target)) %>% 
+    unique()
+  )
+ 
+# With networkD3, connection must be provided using id, not using real name like in the links dataframe.. So we need to reformat it.
+links$IDsource <- match(links$source, nodes$name)-1 
+links$IDtarget <- match(links$target, nodes$name)-1
+ 
+# Make the Network
+sankey <- sankeyNetwork(Links = links, Nodes = nodes,
+                     Source = "IDsource", Target = "IDtarget",
+                     Value = "value", NodeID = "name", 
+                     sinksRight=FALSE)
+
+sankey
+
+
+
+# prepare color scale: I give one specific color for each node type (group, policy, concern)
+my_color <- 'd3.scaleOrdinal() .domain(["1", "2","3", "SLR.Plan.x", "Vulnerable.x", "Local.Tax.x",, "Lobby.x", "Permits.x", "Info.Platform.x", "DACs.x", "Green.Infra.x", "Vision.x", "Innov.Design.x", "Local.Response.x", "Regional.Authority.x", "Existing.Agency.x", "Collab.x", "OtherP", "Transpo.x", "Water.x", "Stormwater.x", "Energy.x", "Ecosystem.x", "Erosion.x", "Commercial.x", "DACsC.x", "Econ.Growth.x", "Property.Value.x", "Housing.x", "Public.Health.x", "OtherC"]) .range(["blue", "blue" , "blue", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow"])'
+ 
+# Make the Network. I call my colour scale with the colourScale argument
+sankey_color <- sankeyNetwork(Links = links, Nodes = nodes, Source = "IDsource", Target = "IDtarget", 
+              Value = "value", NodeID = "name", colourScale=my_color, iterations=0)
+sankey_color
+
+#exported as an html file
+```
