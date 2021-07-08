@@ -198,5 +198,5 @@ sankey_color <- sankeyNetwork(Links = links, Nodes = nodes, Source = "IDsource",
               Value = "value", NodeID = "name", colourScale=my_color, iterations=0)
 sankey_color
 
-#exported as an html file
+#exported as an html file and png
 ```
