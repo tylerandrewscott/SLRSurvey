@@ -29,6 +29,9 @@ table(merged$Group)
 str(merged)
 
 Sankey <- merged[, c(2:43, 87)]
+Sankey <- Sankey[, c(1:28, 43)]
+
+colnames(Sankey) <- c("SLRPlan", "Vulnerable", "LocalTax", "Lobby", "Permits", "InfoPlatform", "DACs", "GreenInfra", "Vision", "InnovDesign", "LocalResponse", "RegionalAuthority", "ExistingAgency", "Collab", "OtherP", "Transpo", "Water", "Stormwater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACsC", "EconGrowth", "PropertyValue", "Housing", "PublicHealth", "OtherC", "Group")
 
 library(dplyr)
 library(tidyverse)
@@ -159,6 +162,8 @@ Sankey_counts <- read.csv("Sankey_Counts.csv")
 
 SankeyCounts <- Sankey_counts[, 2:29]
 
+colnames(SankeyCounts) <- c("SLRPlan", "Vulnerable", "LocalTax", "Lobby", "Permits", "InfoPlatform", "DACs", "GreenInfra", "Vision", "InnovDesign", "LocalResponse", "RegionalAuthority", "ExistingAgency", "Collab", "OtherP", "Transpo", "Water", "Stormwater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACsC", "EconGrowth", "PropertyValue", "Housing", "PublicHealth", "OtherC")
+
 links <- SankeyCounts %>% 
   as.data.frame() %>% 
   rownames_to_column(var="source") %>% 
@@ -186,7 +191,7 @@ sankey
 
 
 # prepare color scale: I give one specific color for each node type (group, policy, concern)
-my_color <- 'd3.scaleOrdinal() .domain(["1", "2","3", "SLR.Plan.x", "Vulnerable.x", "Local.Tax.x",, "Lobby.x", "Permits.x", "Info.Platform.x", "DACs.x", "Green.Infra.x", "Vision.x", "Innov.Design.x", "Local.Response.x", "Regional.Authority.x", "Existing.Agency.x", "Collab.x", "OtherP", "Transpo.x", "Water.x", "Stormwater.x", "Energy.x", "Ecosystem.x", "Erosion.x", "Commercial.x", "DACsC.x", "Econ.Growth.x", "Property.Value.x", "Housing.x", "Public.Health.x", "OtherC"]) .range(["blue", "blue" , "blue", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow"])'
+my_color <- 'd3.scaleOrdinal() .domain(["1", "2","3", "SLRPlan", "Vulnerable", "LocalTax","Lobby", "Permits", "InfoPlatform", "DACs", "GreenInfra", "Vision", "InnovDesign", "LocalResponse", "RegionalAuthority", "ExistingAgency", "Collab", "OtherP", "Transpo", "Water", "Stormwater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACsC", "EconGrowth", "PropertyValue", "Housing", "PublicHealth", "OtherC"]) .range(["blue", "blue" , "blue", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "green", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow", "yellow"])'
  
 # Make the Network. I call my colour scale with the colourScale argument
 sankey_color <- sankeyNetwork(Links = links, Nodes = nodes, Source = "IDsource", Target = "IDtarget", 
