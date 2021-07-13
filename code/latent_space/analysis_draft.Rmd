@@ -5,6 +5,21 @@ output:
   bookdown::pdf_document2: default
 ---
 
+
+
+hypotheses
+
+H1 -dimensions on which things organize
+  tensions:
+    top down vs. bottom up
+    regional vs. local
+    economic infrastructure vs. environment
+H2 -org type
+H3 -psychological distance
+H4 -involvement
+
+
+
 **INTRODUCTION**  
 - ecology of games  
 - network management  
@@ -24,10 +39,11 @@ output:
 
 ```{r startup_code, echo = F,message=F,results='hide',warning=F}
 RERUN_MLTA = FALSE
+DROP_BARRIERS = FALSE
 seed = 24
 
 packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','Ternary',
-         'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors')
+         'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors','ggrepel','plotly','ggalluvial')
 need = packs[!packs %in% names(installed.packages()[,2])]
 invisible(sapply(need,function(x) suppressMessages(install.packages(x,type= 'source'))))
 invisible(sapply(packs,function(x) suppressMessages(library(x,character.only = T))))
@@ -61,10 +77,17 @@ bip_net %v% 'id' <- network.vertex.names(bip_net)
 bip_net %v% 'id_concept' <- ifelse({bip_net %v% 'Concept_Type'} == 'Person',network.vertex.names(bip_net),bip_net %v% 'Concept_Type')
 
 bip_net %v% 'b1_dummy_b2_names' <- ifelse({bip_net %v% 'Concept_Type'} == 'Person','Person',bip_net %v% 'vertex.names')
+
+#DROP BARRIERS#
+if(DROP_BARRIERS){
+bip_net = get.inducedSubgraph(x = bip_net,v = which(bip_net %v% 'Concept_Type' != 'Barrier'))
+}
 #convert to incidence matrix
 Y = as.sociomatrix(bip_net)
 Y = Y[,!grepl('Other',colnames(Y))]
 Y<-Y[,sort(colnames(Y))]
+
+
 ```
 
   
@@ -87,17 +110,18 @@ mY = mY[,mean(value),by=.(Var2,cat)][order(-V1)]
 mY$fact = fct_reorder(mY$Var2,mY$V1,mean)
 
 #ideally this would be a fact_wrap call but getting factors to drop out takes some effort
-
-grid.arrange(ggplot(mY[cat =='Concern',]) + geom_point(aes(x = fact,y = 100 * V1))+
+plist = list(ggplot(mY[cat =='Concern',]) + geom_point(aes(x = fact,y = 100 * V1))+
                geom_text(aes(x = fact,y = 100 * V1 +5,label = fact),hjust = 0) + scale_y_continuous(limits = c(0,100)) +facet_wrap(~cat) + 
-  theme_bw() + theme(axis.title = element_blank(),axis.text.y = element_blank(),axis.ticks.y= element_blank())+coord_flip(),
-ggplot(mY[cat =='Barrier',]) + geom_point(aes(x = fact,y = 100 * V1))+
-               geom_text(aes(x = fact,y = 100 * V1 +5,label = fact), hjust = 0) + scale_y_continuous(limits = c(0,100)) +facet_wrap(~cat) + 
   theme_bw() + theme(axis.title = element_blank(),axis.text.y = element_blank(),axis.ticks.y= element_blank())+coord_flip(),
 ggplot(mY[cat =='Policy',]) + geom_point(aes(x = fact,y = 100 * V1))+
                geom_text(aes(x = fact,y = 100 * V1 +5,label = fact),hjust = 0) + scale_y_continuous(limits = c(0,100)) +facet_wrap(~cat) + 
-  theme_bw() + theme(axis.title = element_blank(),axis.text.y = element_blank(),axis.ticks.y= element_blank())+coord_flip(),bottom= 'Respondent selection #',ncol = 3)
+  theme_bw() + theme(axis.title = element_blank(),axis.text.y = element_blank(),axis.ticks.y= element_blank())+coord_flip(),
+if(!DROP_BARRIERS){
+ggplot(mY[cat =='Barrier',]) + geom_point(aes(x = fact,y = 100 * V1))+
+              geom_text(aes(x = fact,y = 100 * V1 +5,label = fact), hjust = 0) + scale_y_continuous(limits = c(0,100)) +facet_wrap(~cat) + theme_bw() + theme(axis.title = element_blank(),axis.text.y = element_blank(),axis.ticks.y= element_blank())+coord_flip()}else{NULL})
 
+if(DROP_BARRIERS){grid.arrange(plist[[1]],plist[[2]],bottom= 'Respondent selection #',ncol=2)}
+if(!DROP_BARRIERS){grid.arrange(plist[[1]],plist[[2]],plist[[3]],bottom= 'Respondent selection #',ncol=3)}
 ```
   
   
@@ -220,14 +244,17 @@ beta_dt = data.table(t(mod$w),item = colnames(Y))
 beta_dt$group = concept_types$Type[match(beta_dt$item,concept_types$Vector)]
 circles <- data.frame( x0 = 0, y0 = 0, r = 1)
 
+#rotate factors for interpretation
+library(psych)
+beta_dt[,1:D] <- data.table(factor.rotate(f =as.matrix(beta_dt[,1:D]),plot = F,angle = 85))
 library(ggforce)
 ggplot() +
       geom_circle(data = circles,aes(x0 = x0,y0 = y0,r = r),lty = 2, col = 'grey50') +
   geom_vline(xintercept = 0,lty = 2,col = 'grey40') +
   geom_hline(yintercept = 0,lty = 2,col = 'grey40') + 
-geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = group,fill = group),
+geom_text_repel(data = beta_dt[group!=if(DROP_BARRIERS){'Barrier'}else{'KEEP'},],aes(x = `Dim 1`,y = `Dim 2`,label = item,col = group,fill = group),
                 size = 2.5,max.overlaps = 100,min.segment.length = 0.2,show.legend = F) +
-    geom_point(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = group,fill = group),
+    geom_point(data = beta_dt[group!=if(DROP_BARRIERS){'Barrier'}else{'KEEP'},],aes(x = `Dim 1`,y = `Dim 2`,label = item,col = group,fill = group),
                pch = 19,show.legend = T) +
     scale_fill_colorblind(name = 'Concept type') +
   scale_color_colorblind(name = 'Concept type') +
@@ -235,11 +262,8 @@ geom_text_repel(data = beta_dt,aes(x = `Dim 1`,y = `Dim 2`,label = item,col = gr
   theme_bw() + 
   scale_x_continuous(name= 'Slope for dimension 1',limits = c(-1,1)) + 
   scale_y_continuous(name= 'Slope for dimension 2',limits = c(-1,1)) + 
-
   theme(axis.title = element_text(size = 10,inherit.blank = F,family = 'Times',,margin =c(1,1,1,1)),
         legend.position = c(0.9,0.2)) 
-
-
 ```
 
 
@@ -255,7 +279,7 @@ Using Spearman's rho, Probability of Group 1 membership significantly correlated
 Group 2 membership significantly correlated with higher level of involvement with SLR and executive job tasks. Also correlated with enviro and water special district orgs and negatively correlated with NGO, CBO, and state government organizations. This group is correlated with higher short term awareness of SLR impacts but lower long term concern and higher assessment of risk agreement regionally. 
 
 Group 3 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an enviro SD or NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks. 
-```{r correlate_external_groups, echo=F}
+```{r correlate_external_groups, echo=F,insert = F,warning = F,message = F}
 #Create list of group probabilities for respondents------------------------
 #looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
 
@@ -284,7 +308,7 @@ merged_survey <- left_join(RespGroups, survey_orig, by='respondentID')
 merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2 & merged_survey$P_G1>merged_survey$P_G3, 1, 
                               ifelse(merged_survey$P_G2>merged_survey$P_G1 & merged_survey$P_G2>merged_survey$P_G3, 2,3))
 
-table(merged_survey$Group)
+#table(merged_survey$Group)
 
 #Crosstabs of group assignments with other variables
 #table(merged_survey$Group, merged_survey$Q1_Num)
@@ -343,7 +367,6 @@ data.rcorr.sp <- rcorr(as.matrix(correlations), type="spearman")
 
 data.coeff.sp <- data.rcorr.sp$r
 data.p.sp <- data.rcorr.sp$P
-data.p.sp
 
 significantp <- data.p.sp[,1:3]
 threecolumncorr <- data.coeff.sp[,1:3]
@@ -373,12 +396,154 @@ corrmatrix$PG2_p <- significantp$PG2_p
 corrmatrix$PG3_r <- threecolumncorr$PG3_r
 corrmatrix$PG3_p <- significantp$PG3_p
 
-?subset()
 corrmatrix.sigG1 <- subset(corrmatrix, corrmatrix$PG1_p<0.05)
 corrmatrix.sigG2 <- subset(corrmatrix, corrmatrix$PG2_p<0.05)
 corrmatrix.sigG3 <- subset(corrmatrix, corrmatrix$PG3_p <0.05)
 
 ```
+
+
+*respondents mapped on latent variables*
+We can map each individual survey respondent on the (D = 2) latent variables. But, because the model probabilistically clusters respondents by group (G = 3), what is actually estimated is the posterior mean for each individual on each latent variable conditional on being in group G. So, I use the group assignment probabilities to select the 'best' posterior means for each respondent.
+
+```{r,echo = F,message = F,warning = F}
+g_index = apply(mod$z,1,which.max)
+list_of_locs = lapply(seq_along(g_index),function(i) mod$mu[i,,g_index[i]])
+locs_df = data.table(do.call(rbind,list_of_locs))
+locs_df$group = g_index
+ggplot(locs_df,aes(x = V1,y = V2,col = as.factor(group))) + 
+  geom_point() +
+  scale_y_continuous(name = 'Location on latent dimension 2') + 
+  scale_x_continuous(name = 'Location on latent dimension 1') + 
+  scale_color_brewer(type = 'qual',palette = 2,name = 'Predicted group') + 
+  theme(legend.position = c(0.8,0.1)) + 
+  ggtitle('Estimated location of respondents in latent space') + 
+  NULL
+
+```
+
+Obviously, this is super messy. There is clearly variance in positioning within and between groups, but the groups themselves don't correspond directly to positions in the latent space. To some extent, that makes sense -- groups are based on responses, and latent dimensions are based on responses, but the groups and latent dimensions aren't connected at all so the "solution" to the latent dimension model and the "solution" to the respondent grouping model can organize the data differently.
+
+
+HERE IS AN EXAMPLE OF HOW WE CAN TRY TO GET AT THIS VARIANCE -- IN THIS EXAMPLE, THIS PLOTS D1 AND D2 POSITION BY ORG. TYPE. I DON'T KNOW ENOUGH ABOUT THE OTHER SURVEY ITEMS, BUT KYRA YOU CAN USE THIS CODE (AND THE ABOVE PLOT) TO SEE HOW DIFFERENT ACTOR-LEVEL VARIABLES PLAY OUT
+```{r,echo = F,warnings = F,message = F}
+sub = data.table(orig[orig$ResponseId %in% rownames(Y),])
+sub[,V1:=NULL]
+locs_df2 = cbind(locs_df,sub)
+
+ggplot(locs_df2,aes(y = Q4)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by org. type') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+```
+
+
+
+```{r,echo = F,warnings = F,message = F}
+org_count = locs_df2[,.N,by=.(group,Q4)]
+tot_count = locs_df2[,.N,by=.(group)]
+setnames(tot_count,'N','group_total')
+org_count = merge(org_count,tot_count)
+ggplot(data =org_count,
+  aes(fill = Q4,x = group,y = N/group_total ))+
+    geom_col(position = position_dodge()) +
+  coord_flip()  +
+ scale_y_continuous(labels = scales::percent,name = '% of group total')
+```
+
+
+
+**groups mapped to item-response loadings**
+
+We can then evaluate the intercept terms in each logistic response function to identify which items load heavily by group. Ignoring the model slope parameters. Here, it's clear that some items are identified by both groups (e.g., stormwater, transportation) while others are more excluvisely related to one and not the other (e.g., concern about DACs). Some are rare in both, like "commercial" and "property value". This also begins to reveal why increased dimensionality doens't seem to help model fit very much, many items are about as likely to be selected by one group as the other. Heuristically, items below the dashed line are more strongly associated with Group 1, and above are more strongly associated with Group 2.
+
+```{r, message=F,warning=F,echo = F}
+beta_dt = data.table(t(mod$b),keep.rownames = T)
+beta_dt$concept = colnames(Y)
+beta_dt$type = concept_types$Type[match(beta_dt$concept,concept_types$Vector)]
+
+
+# 
+g_base = ggplot(beta_dt) + geom_abline(a =0, b = 1,lty = 2) +
+  scale_x_continuous(limits = c(-4,4)) +
+  scale_y_continuous(limits = c(-4,4))
+g1_vs_g2 = g_base +
+  geom_point(aes(x = `Group 1`,y = `Group 2`)) +
+  geom_text_repel(max.overlaps = 15,aes(x = `Group 1`,y = `Group 2`,label = concept))
+g2_vs_g3 = g_base +
+  geom_point(aes(x = `Group 2`,y = `Group 3`)) +
+  geom_text_repel(max.overlaps = 15,aes(x = `Group 2`,y = `Group 3`,label = concept))
+g1_vs_g3 = g_base +
+  geom_point(aes(x = `Group 1`,y = `Group 3`)) +
+  geom_text_repel(max.overlaps = 15,aes(x = `Group 1`,y = `Group 3`,label = concept))
+grid.arrange(g1_vs_g2,g2_vs_g3,g1_vs_g3,ncol = 2,
+             top ='Intercept estimates for item-response by group (p = 1 / exp(-beta))')
+
+```
+
+
+```{r, warning = F,message= F,echo = F}
+library(plotly)
+
+
+
+fig <- plot_ly(beta_dt, x = ~ `Group 1`, y = ~ `Group 2`, z = ~`Group 3`,
+               color = ~type,
+               text = ~concept, hoverinfo = 'text')
+fig <- fig %>% add_markers()
+fig <- fig %>% layout(scene = list(
+                      title= list(title = 'Group item-responese intercepts'),
+                       xaxis = list(title = 'intercept, group 1'),
+                     yaxis = list(title = 'intercept, group 2'),
+                     zaxis = list(title = 'intercept, group 3')))
+fig
+```
+
+
+```{r}
+#keepConcepts = network.vertex.names(bip_net)[{bip_net %v% 'Concept_Type'} %in% c('Policy','Concern')]
+
+coFreq_all = rbindlist(lapply(1:G,function(g) {
+coFreq = data.table(reshape2::melt(crossprod(Y[g_index==g,])))
+coFreq$Var1_Type = {bip_net %v% 'Concept_Type'}[match(coFreq$Var1,bip_net %v% 'vertex.names')]
+coFreq$Var2_Type = {bip_net %v% 'Concept_Type'}[match(coFreq$Var2,bip_net %v% 'vertex.names')]
+coFreq = coFreq[Var1_Type=='Concern'&Var2_Type=='Policy',]
+coFreq$group = paste0('G',g)
+coFreq}))
+
+coFreq_all$Var1 <- as.character(coFreq_all$Var1 )
+coFreq_all$Var2 <- as.character(coFreq_all$Var2 )
+coFreq_all <- coFreq_all[order(Var1,Var2),][value>0,]
+
+ggplot(coFreq_all[,sum(value),by=.(Var1,Var2,Var1_Type,Var2_Type)],
+       aes(y = V1, axis1 = Var1, axis2 = Var2)) +
+  geom_alluvium(width = 1/12,aes(alpha = V1),fill= 'grey20') + 
+  geom_stratum(fill = "black", colour = 'grey',width = .1) + 
+  ggtitle('Concern and policy co-occurence') + 
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)))+
+  scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
+  guides(alpha = F)
+  
+```
+
+
+THIS IS THE SAME PLOT BUT FACETED SO EACH GROUP IS SEPARATE
+
+```{r,warning=F,message = F,echo = F,fig.height = 15}
+ggplot(coFreq_all,
+       aes(y = value, axis1 = Var1, axis2 = Var2)) +
+  geom_alluvium(width = 1/12,aes(alpha = value),fill= 'grey20') + 
+  facet_wrap(~group,ncol = 1,scale = 'free_y') +
+  geom_stratum(fill = "black", colour = 'grey',width = .1) + 
+  ggtitle('Concern and policy co-occurence') + 
+  geom_label(stat = "stratum", aes(label = after_stat(stratum)))+
+  scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
+  guides(alpha = F)
+```
+
 **more results**  
 **more results**  
 
