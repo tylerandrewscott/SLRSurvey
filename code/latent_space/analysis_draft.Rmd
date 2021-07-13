@@ -526,6 +526,7 @@ ggplot(coFreq_all[,sum(value),by=.(Var1,Var2,Var1_Type,Var2_Type)],
   geom_label(stat = "stratum", aes(label = after_stat(stratum)))+
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
+
   
 ```
 
@@ -542,6 +543,19 @@ ggplot(coFreq_all,
   geom_label(stat = "stratum", aes(label = after_stat(stratum)))+
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
+
+#Attempting to change colors and labels based on flows- only has label for those with more than 25 responses for a group linking policy to concern, colored so greener/yellower is more frequency 
+ggplot(coFreq_all,
+       aes(y = value, axis1 = Var1, axis2 = Var2)) +
+  geom_alluvium(width = 1/12,aes(alpha = value, fill=value)) + 
+  scale_fill_continuous(type="viridis")+
+  facet_wrap(~group,ncol = 1,scale = 'free_y') +
+  geom_stratum(fill = "grey", colour = 'black',width = .1) + 
+  geom_label_repel(data=subset(coFreq_all, value>25), stat="stratum", aes(label=after_stat(stratum)))+
+  ggtitle('Concern and policy co-occurence') +
+  scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
+  guides(alpha = F)
+
 ```
 
 **more results**  
