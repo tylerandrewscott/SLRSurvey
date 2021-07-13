@@ -200,3 +200,57 @@ sankey_color
 
 #exported as an html file and png
 ```
+
+```{r Response Count Correlations}
+#Looking for Significant Differences in Response Selection by Group
+correlations_counts <- subset(RespGroups, select= c("P_G1", "P_G2", "P_G3", "SLR.Plan", "Vulnerable", "Local.Tax","Lobby", "Permits", "Info.Platform", "DACs", "Green.Infra", "Vision", "Innov.Design", "Local.Response", "Regional.Authority", "Existing.Agency", "Collab", "Transpo", "Water", "Stormwater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACsC", "Econ.Growth", "Property.Value", "Housing", "Public.Health"))
+
+correlations_counts[is.na(correlations_counts)]=0
+correlationmatrix_counts <- cor(correlations_counts, method="kendall")
+correlationmatrix_counts_sp <- cor(correlations_counts, method="spearman")
+
+library("corrplot")
+library("Hmisc")
+#note that corrplot which I used for this only allows pearson and spearman- if we want kendall will need to do it another way
+data.rcorr.pear <- rcorr(as.matrix(correlations_counts), type="pearson")
+data.rcorr.sp <- rcorr(as.matrix(correlations_counts), type="spearman")
+
+data.coeff.sp <- data.rcorr.sp$r
+data.p.sp <- data.rcorr.sp$P
+data.p.sp
+
+significantp <- data.p.sp[,1:3]
+threecolumncorr <- data.coeff.sp[,1:3]
+
+significantp <- as.data.frame(significantp)
+threecolumncorr <- as.data.frame(threecolumncorr)
+
+significantp$PG1_p <- significantp$P_G1
+significantp$PG2_p <- significantp$P_G2
+significantp$PG3_p <- significantp$P_G3
+
+threecolumncorr$PG1_r <- threecolumncorr$P_G1
+threecolumncorr$PG2_r <- threecolumncorr$P_G2
+threecolumncorr$PG3_r <- threecolumncorr$P_G3
+
+
+significantp <- significantp[,4:6]
+threecolumncorr <- threecolumncorr[,4:6]
+
+threecolumncorr$names <- rownames(threecolumncorr)
+
+corrmatrix <- as.data.frame(threecolumncorr$names)
+corrmatrix$PG1_r <- threecolumncorr$PG1_r
+corrmatrix$PG1_p <- significantp$PG1_p
+corrmatrix$PG2_r <- threecolumncorr$PG2_r
+corrmatrix$PG2_p <- significantp$PG2_p
+corrmatrix$PG3_r <- threecolumncorr$PG3_r
+corrmatrix$PG3_p <- significantp$PG3_p
+
+?subset()
+corrmatrix.sigG1 <- subset(corrmatrix, corrmatrix$PG1_p<0.05)
+corrmatrix.sigG2 <- subset(corrmatrix, corrmatrix$PG2_p<0.05)
+corrmatrix.sigG3 <- subset(corrmatrix, corrmatrix$PG3_p <0.05)
+
+
+```
