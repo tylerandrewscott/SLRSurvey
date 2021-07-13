@@ -1,0 +1,476 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Latent trait analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Latent trait analysis}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+Memo to Kyra and Mark
+
+I was searching around for tools that do latent network space modeling
+more quickly, and found the lvm4net package
+(\url{https://cran.r-project.org/web/packages/lvm4net/lvm4net.pdf}).
+It's more standalone than latentnet, which integrates nicely with
+statnet and ergm capabilities. But on the upside, it is \emph{very} fast
+and turns out it has some really cool tools.
+
+Firstly, it performs latent trait analysis (see
+\url{https://arxiv.org/abs/1301.2167} and
+\url{https://arxiv.org/abs/1905.02659}, same author as lvm4net package).
+The basic idea in this case is that the concepts survey respondents
+selected are essentially categorical traits. There's a lot of stats talk
+and monkey business behind that, but here's the upshot\ldots{}
+
+\#ignore this chunk, ut just loads and builds network object
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{packs =}\KeywordTok{c}\NormalTok{(}\StringTok{'tidyverse'}\NormalTok{,}\StringTok{'purrr'}\NormalTok{,}\StringTok{'data.table'}\NormalTok{,}\StringTok{'statnet'}\NormalTok{,}\StringTok{'latentnet'}\NormalTok{,}\StringTok{'bipartite'}\NormalTok{,}\StringTok{'lvm4net'}\NormalTok{,}\StringTok{'ggthemes'}\NormalTok{)}
+\NormalTok{need =}\StringTok{ }\NormalTok{packs[}\OperatorTok{!}\KeywordTok{sapply}\NormalTok{(packs,}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{require}\NormalTok{(x,}\DataTypeTok{character.only=}\NormalTok{T)))]}
+\KeywordTok{sapply}\NormalTok{(need,}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{install.packages}\NormalTok{(x,,}\DataTypeTok{type=} \StringTok{'source'}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sapply}\NormalTok{(packs[need],}\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{suppressMessages}\NormalTok{(}\KeywordTok{require}\NormalTok{(x,}\DataTypeTok{character.only=}\NormalTok{T)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## named list()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readxl)}
+\NormalTok{orig =}\StringTok{ }\NormalTok{readxl}\OperatorTok{::}\KeywordTok{read_excel}\NormalTok{(}\StringTok{'input/SLRSurvey_Full.xlsx'}\NormalTok{)}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{is.na}\NormalTok{(orig}\OperatorTok{$}\NormalTok{Q4)]<-}\StringTok{'Other'}
+\CommentTok{#recode anything with fewer than 10 respondents as other}
+\CommentTok{# see what wed recode}
+\CommentTok{#as.data.table(table(orig$Q4))[order(-N),][N<10,]}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[orig}\OperatorTok{$}\NormalTok{Q4 }\OperatorTok{%in%}\StringTok{ }\KeywordTok{as.data.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(orig}\OperatorTok{$}\NormalTok{Q4))[}\KeywordTok{order}\NormalTok{(}\OperatorTok{-}\NormalTok{N),][N}\OperatorTok{<}\DecValTok{10}\NormalTok{,]}\OperatorTok{$}\NormalTok{V1] <-}\StringTok{ 'Other'}
+\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{grepl}\NormalTok{(}\StringTok{'Other'}\NormalTok{,orig}\OperatorTok{$}\NormalTok{Q4)]<-}\StringTok{'Other'}
+\NormalTok{incidence_dt =}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{'input/NewAdjacencyMatrix_ColumnRenames.csv'}\NormalTok{)}
+\NormalTok{incidence_mat =}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(incidence_dt[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\StringTok{'ResponseId'}\NormalTok{,}\StringTok{'ResponseId_number'}\NormalTok{,}\StringTok{'DK'}\NormalTok{)])}
+\KeywordTok{rownames}\NormalTok{(incidence_mat)<-incidence_dt}\OperatorTok{$}\NormalTok{ResponseId}
+\CommentTok{#drop isolates}
+\NormalTok{incidence_mat =}\StringTok{ }\NormalTok{incidence_mat[}\KeywordTok{rowSums}\NormalTok{(incidence_mat)}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
+
+\CommentTok{#create network object}
+\NormalTok{bip_net =}\StringTok{ }\KeywordTok{as.network}\NormalTok{(incidence_mat,}\DataTypeTok{matrix.type =} \StringTok{'incidence'}\NormalTok{,}\DataTypeTok{bipartite =}\NormalTok{ T,}\DataTypeTok{directed =}\NormalTok{ F,}\DataTypeTok{loops =}\NormalTok{ F)}
+\CommentTok{#code actor types}
+\NormalTok{bip_net }\OperatorTok{%v%}\StringTok{ 'Actor_Type'}\NormalTok{ <-}\StringTok{ }\NormalTok{orig}\OperatorTok{$}\NormalTok{Q4[}\KeywordTok{match}\NormalTok{(}\KeywordTok{network.vertex.names}\NormalTok{(bip_net),orig}\OperatorTok{$}\NormalTok{ResponseId)]}
+\CommentTok{#code concept types}
+\NormalTok{concept_types =}\StringTok{ }\KeywordTok{fread}\NormalTok{(}\StringTok{'input/Combined_VectorTypes_NoNewOther.csv'}\NormalTok{)}
+\NormalTok{bip_net }\OperatorTok{%v%}\StringTok{ 'Concept_Type'}\NormalTok{ <-}\StringTok{ }\NormalTok{concept_types}\OperatorTok{$}\NormalTok{Type[}\KeywordTok{match}\NormalTok{(}\KeywordTok{network.vertex.names}\NormalTok{(bip_net), concept_types}\OperatorTok{$}\NormalTok{Vector)]}
+\KeywordTok{set.vertex.attribute}\NormalTok{(bip_net,}\StringTok{'Concept_Type'}\NormalTok{,}\DataTypeTok{value =} \StringTok{'Person'}\NormalTok{,}\DataTypeTok{v =} \KeywordTok{which}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(bip_net }\OperatorTok{%v%}\StringTok{ 'Concept_Type'}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#convert to incidence matrix}
+\NormalTok{Y =}\StringTok{ }\KeywordTok{as.sociomatrix}\NormalTok{(bip_net)}
+\CommentTok{#run lta with 1 to 4 dimensions}
+\NormalTok{dims =}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{4}
+\NormalTok{d_list =}\StringTok{ }\KeywordTok{lapply}\NormalTok{(dims,}\ControlFlowTok{function}\NormalTok{(d) }\KeywordTok{lta}\NormalTok{(Y,}\DataTypeTok{D =}\NormalTok{ d))}
+\KeywordTok{names}\NormalTok{(d_list) <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{'D'}\NormalTok{,dims)}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(d_list,}\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{$}\NormalTok{BIC))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## D1.BIC (G-H Quadrature correction): D2.BIC (G-H Quadrature correction): 
+##                            24977.53                            25088.76 
+## D3.BIC (G-H Quadrature correction): D4.BIC (G-H Quadrature correction): 
+##                            25275.91                            25570.34
+\end{verbatim}
+
+Comparing BIC scores shows that 2-d is a lot better than 1 dimension or
+3-4 dimensions. Thus, the results that follow assume that the
+categorical 0/1 responses to the concepts are underlain by a 2-D
+continuous latent variable. The first thing we can get out of this model
+is a set of intercepts and slopes for logistic response functions that
+connect the probability of choosing ``1'' for a particular concept as a
+function of each respondents' position within the 2-d space.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod =}\StringTok{ }\NormalTok{d_list[[}\DecValTok{2}\NormalTok{]]}
+\CommentTok{#intercepts}
+\KeywordTok{print}\NormalTok{(mod}\OperatorTok{$}\NormalTok{b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Item 1    Item 2    Item 3    Item 4    Item 5   Item 6    Item 7
+##  -0.6087304 -1.173079 -2.118472 -1.420503 -1.267788 -1.59291 -1.782609
+##      Item 8    Item 9   Item 10   Item 11   Item 12   Item 13    Item 14
+##  -0.9474216 -2.024345 -1.800655 -2.773816 -1.971598 -1.325555 -0.6546694
+##    Item 15   Item 16   Item 17   Item 18   Item 19    Item 20   Item 21
+##  -2.527557 0.5267802 -1.405382 0.2567234 -2.704893 -0.8013628 -1.539975
+##    Item 22    Item 23   Item 24   Item 25   Item 26   Item 27   Item 28
+##  -3.452151 -0.2397502 -2.549427 -2.893269 -1.995153 -2.071741 -2.915063
+##    Item 29   Item 30   Item 31 Item 32   Item 33   Item 34   Item 35   Item 36
+##  -1.541826 -1.191989 -2.542214 -2.6334 -1.143005 -1.756605 -3.113311 -2.580458
+##     Item 37   Item 38   Item 39   Item 40   Item 41
+##  -0.4537304 -1.817951 -1.503274 -2.078618 -1.668431
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#slopes}
+\KeywordTok{print}\NormalTok{(mod}\OperatorTok{$}\NormalTok{w)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Item 1      Item 2       Item 3     Item 4     Item 5      Item 6
+## Dim 1 -0.05455778 -0.02103478 -0.067547679 0.01042797 -0.5322390  0.01373894
+## Dim 2 -0.93326330 -0.21838299  0.009719372 0.22726876  0.1501614 -0.30270928
+##          Item 7     Item 8    Item 9     Item 10     Item 11     Item 12
+## Dim 1 0.8485023 -0.2968877 0.1620940 -0.08788925 -0.01650485  0.17862428
+## Dim 2 0.3838903  0.4200159 0.0181001  0.20267712  0.25629399 -0.02460105
+##          Item 13      Item 14   Item 15    Item 16     Item 17    Item 18
+## Dim 1  0.1596526 -0.141501691 0.1300562 -0.1275781 -0.13081956 -0.4520571
+## Dim 2 -0.2971735  0.005676044 0.3508687 -0.5321885 -0.06814983 -0.4662872
+##           Item 19    Item 20    Item 21      Item 22   Item 23     Item 24
+## Dim 1 -0.10970619 -0.4337072 -0.4786699 -0.002950863 1.2282952  0.04680427
+## Dim 2 -0.06109533  0.6003194  0.1768776 -0.235605920 0.2500082 -0.15295970
+##           Item 25     Item 26   Item 27     Item 28   Item 29    Item 30
+## Dim 1 -0.13602443 0.260648606 0.3907546 -0.03826591 0.2646802 0.08984605
+## Dim 2 -0.08603677 0.005548706 0.1853602  0.28059075 0.1145346 0.31563208
+##          Item 31    Item 32     Item 33    Item 34     Item 35   Item 36
+## Dim 1 0.02687508 -0.2287302 -0.06633452 -0.1265691 -0.14898681 0.2071504
+## Dim 2 0.06320472  0.1579134 -0.07818821 -0.4184685 -0.03455448 0.0898867
+##           Item 37     Item 38     Item 39   Item 40    Item 41
+## Dim 1 -0.06665446 -0.62559720 -0.06881547 0.4342047 0.09314506
+## Dim 2 -0.66993357  0.07494996 -0.19499931 0.1507341 0.21492904
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{unique}\NormalTok{( (bip_net }\OperatorTok{%v%}\StringTok{ 'Actor_Type'}\NormalTok{)[\{bip_net }\OperatorTok{%v%}\StringTok{ 'Concept_Type'}\NormalTok{\}}\OperatorTok{==}\StringTok{'Person'}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Other"                                                                   
+##  [2] "Education/Consulting/Research"                                           
+##  [3] "No-profit organization/Non-governmental organization"                    
+##  [4] "Local government (cities, counties)"                                     
+##  [5] "Environmental Group"                                                     
+##  [6] "Trade/Business/Industry Group"                                           
+##  [7] "Regional government"                                                     
+##  [8] "Environmental Special District (e.g. Park district, open space district)"
+##  [9] "State government"                                                        
+## [10] "Community-based organization"                                            
+## [11] "Water Infrastructure Special District (e.g. irrigation district)"        
+## [12] "Federal government"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trait_space =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(mod}\OperatorTok{$}\NormalTok{mu)}
+\NormalTok{trait_space}\OperatorTok{$}\NormalTok{org_type =}\StringTok{ }\NormalTok{(bip_net }\OperatorTok{%v%}\StringTok{ 'Actor_Type'}\NormalTok{)[\{bip_net }\OperatorTok{%v%}\StringTok{ 'Concept_Type'}\NormalTok{\}}\OperatorTok{==}\StringTok{'Person'}\NormalTok{]}
+\KeywordTok{ggplot}\NormalTok{(trait_space) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ V1,}\DataTypeTok{y =}\NormalTok{ V2,}\DataTypeTok{col =}\NormalTok{ org_type),}\DataTypeTok{pch =} \DecValTok{19}\NormalTok{,}\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{'1st dimension'}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"2nd dimension"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{'Latent trait space'}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_color_tableau}\NormalTok{(}\DataTypeTok{palette =}\StringTok{'Tableau 20'}\NormalTok{)}\OperatorTok{+}\StringTok{   }\KeywordTok{scale_fill_tableau}\NormalTok{(}\DataTypeTok{palette =}\StringTok{'Tableau 20'}\NormalTok{)}\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lta_notebook_files/figure-latex/evaluate_latent_space-1.pdf}
+Doesn't seem to be a stark pattern at this point between actor type and
+location. But it's tough to see acrsoss 10+ types anyways, so a simplied
+lens likely sheds more light.
+
+The next thing that is feasible is a `mixture of latent trait analyzers'
+(MLTA) model; real talk, I need to reread the arxiv paper again, because
+I can't explain this very well. But the tl;dr is that it incorporates a
+group structure (like the clusters we've been discussing). To keep it
+simple, I'll just use the 2-d model. The code also allows for different
+slopes by group (for logistic response function) but I turned that off.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{groups =}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{4}
+\NormalTok{g_list =}\StringTok{ }\KeywordTok{lapply}\NormalTok{(groups,}\ControlFlowTok{function}\NormalTok{(g) }\KeywordTok{mlta}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ Y,}\DataTypeTok{D =} \DecValTok{2}\NormalTok{,}\DataTypeTok{G =}\NormalTok{ g,}\DataTypeTok{wfix =}\NormalTok{ T))}
+\KeywordTok{names}\NormalTok{(g_list) <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{'G'}\NormalTok{, groups)}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(g_list,}\ControlFlowTok{function}\NormalTok{(x) x}\OperatorTok{$}\NormalTok{BIC))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## G1.BIC (G-H Quadrature correction): G2.BIC (G-H Quadrature correction): 
+##                            25089.13                            25195.48 
+## G3.BIC (G-H Quadrature correction): G4.BIC (G-H Quadrature correction): 
+##                            25325.84                            25471.82
+\end{verbatim}
+
+What is not particularly promising here is that BIC scores prefer the G
+= 1 option\ldots{} so not that fun. The G = 2 option is pretty close GOF
+wise, so we'll continue with that. When there are multiple groups fit,
+there are cool results like the probability of membership in each group
+for each node:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(}\KeywordTok{round}\NormalTok{(g_list[[}\DecValTok{2}\NormalTok{]]}\OperatorTok{$}\NormalTok{z,}\DecValTok{2}\NormalTok{),}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2]
+##  [1,] 0.95 0.05
+##  [2,] 0.99 0.01
+##  [3,] 0.04 0.96
+##  [4,] 0.97 0.03
+##  [5,] 1.00 0.00
+##  [6,] 0.69 0.31
+##  [7,] 0.80 0.20
+##  [8,] 0.14 0.86
+##  [9,] 1.00 0.00
+## [10,] 0.96 0.04
+## [11,] 0.30 0.70
+## [12,] 0.01 0.99
+## [13,] 0.03 0.97
+## [14,] 0.86 0.14
+## [15,] 0.90 0.10
+## [16,] 0.02 0.98
+## [17,] 0.15 0.85
+## [18,] 0.99 0.01
+## [19,] 1.00 0.00
+## [20,] 0.97 0.03
+\end{verbatim}
+
+Since G = 2, 1 - p(g1) = p(g2). We can compare across org types:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_org_dt =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(g_list[[}\DecValTok{2}\NormalTok{]]}\OperatorTok{$}\NormalTok{z,}\DataTypeTok{org_type =}\NormalTok{ trait_space}\OperatorTok{$}\NormalTok{org_type)}
+\KeywordTok{ggplot}\NormalTok{(p_org_dt) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ V1,}\DataTypeTok{x =}\NormalTok{ org_type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{'p(group 1) by org. type'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lta_notebook_files/figure-latex/p_group_type-1.pdf}
+
+Just for kicks, here's G = 3\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p_3group =}\StringTok{ }\KeywordTok{data.table}\NormalTok{(g_list[[}\DecValTok{3}\NormalTok{]]}\OperatorTok{$}\NormalTok{z,}\DataTypeTok{org_type =}\NormalTok{ trait_space}\OperatorTok{$}\NormalTok{org_type)}
+\NormalTok{p3 =}\StringTok{ }\KeywordTok{melt}\NormalTok{(p_3group)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in melt.data.table(p_3group): id.vars and measure.vars are internally
+## guessed when both are 'NULL'. All non-numeric/integer/logical type columns
+## are considered id.vars, which in this case are columns [org_type]. Consider
+## providing at least one of 'id' or 'measure' vars in future.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p3}\OperatorTok{$}\NormalTok{variable <-}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{'V'}\NormalTok{,}\StringTok{'G'}\NormalTok{,p3}\OperatorTok{$}\NormalTok{variable)}
+\KeywordTok{ggplot}\NormalTok{(p3) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{variable,}\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ value,}\DataTypeTok{x =}\NormalTok{ org_type)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{'p(group) by org. type'}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{6}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lta_notebook_files/figure-latex/group3-1.pdf} Instead
+of the latent trait analysis above, can also fit latent class analysis
+on the bipartite network. First example, 2 groups:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_lca =}\StringTok{ }\KeywordTok{lca}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ Y,}\DataTypeTok{G =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+lca() outputs p-values for the conditional probability of observed a
+link between a concept and an actor if the concept is in group X.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_lca}\OperatorTok{$}\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              p_g1      p_g2      p_g3      p_g4      p_g5      p_g6       p_g7
+## Group 1 0.4999666 0.2695509 0.1051539 0.1672294 0.2861284 0.2147380 0.04322116
+## Group 2 0.1792811 0.1923350 0.1107415 0.2379162 0.1476491 0.1105337 0.35294105
+##              p_g8      p_g9     p_g10      p_g11     p_g12     p_g13     p_g14
+## Group 1 0.2751048 0.1026309 0.1323219 0.03679444 0.1155131 0.2314976 0.3744148
+## Group 2 0.3029169 0.1387647 0.1589571 0.09368688 0.1342427 0.1876177 0.2965189
+##              p_g15     p_g16     p_g17     p_g18      p_g19     p_g20     p_g21
+## Group 1 0.01258268 0.6934768 0.2096852 0.6545647 0.07855339 0.3052323 0.2207613
+## Group 2 0.17023705 0.5224705 0.1805363 0.4248463 0.04079264 0.3468897 0.1332778
+##               p_g22     p_g23      p_g24      p_g25     p_g26      p_g27
+## Group 1 0.048141957 0.2982611 0.09247542 0.06450384 0.1028941 0.07059298
+## Group 2 0.007686697 0.6671908 0.04523959 0.03652852 0.1488472 0.18469563
+##              p_g28     p_g29     p_g30      p_g31      p_g32     p_g33
+## Group 1 0.02818003 0.1356376 0.1795988 0.06144027 0.06740838 0.2522755
+## Group 2 0.08860390 0.2413684 0.3178076 0.08973291 0.07071699 0.2275615
+##              p_g34      p_g35      p_g36     p_g37     p_g38     p_g39
+## Group 1 0.21774719 0.05926941 0.04475048 0.4844129 0.2023253 0.2071062
+## Group 2 0.06089387 0.01962665 0.11017352 0.2678250 0.0795168 0.1493677
+##              p_g40     p_g41
+## Group 1 0.06509157 0.1179822
+## Group 2 0.19258269 0.2213543
+\end{verbatim}
+
+and lca() outputs p-values for the probability that each \emph{actor} is
+part of group G:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(}\KeywordTok{round}\NormalTok{(m_lca}\OperatorTok{$}\NormalTok{z,}\DecValTok{2}\NormalTok{),}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2]
+##  [1,] 0.62 0.38
+##  [2,] 0.29 0.71
+##  [3,] 0.27 0.73
+##  [4,] 0.87 0.13
+##  [5,] 0.02 0.98
+##  [6,] 0.02 0.98
+##  [7,] 0.01 0.99
+##  [8,] 0.05 0.95
+##  [9,] 0.05 0.95
+## [10,] 0.37 0.63
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lca_compare_G =}\StringTok{ }\KeywordTok{lca}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ Y,}\DataTypeTok{G =} \DecValTok{2}\OperatorTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{lca_compare_G}\OperatorTok{$}\NormalTok{BIC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`Model Selection`
+## Model with lower BIC: 
+##                 "G=2" 
+## 
+## $`Table of BIC Results`
+##      G=2      G=3      G=4      G=5 
+## 24940.42 25031.81 25151.54 25316.06
+\end{verbatim}
+
+Again, G = 2 is best; G = 3 pretty close. What none of this accommodates
+is the incorporation of predictive covariates as inputs. But could be
+treated in relation to the \emph{outputs} (e.g., association between
+covariate x and p-value of membership in one group or another).
+
+\end{document}

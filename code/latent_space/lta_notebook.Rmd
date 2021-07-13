@@ -1,6 +1,7 @@
 ---
 title: "Latent trait analysis"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -159,7 +160,10 @@ lca_compare_G$BIC
 Again, G = 2 is best; G = 3 pretty close. What none of this accommodates is the incorporation of predictive covariates as inputs. But could be treated in relation to the _outputs_ (e.g., association between covariate x and p-value of membership in one group or another).
 
 
-
+```{r}
+lca_compare_G = lca(X = Y,G = 2:5)
+lca_compare_G$BIC
+```
 
 
 
