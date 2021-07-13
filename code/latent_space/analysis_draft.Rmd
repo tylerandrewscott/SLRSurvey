@@ -271,14 +271,12 @@ geom_text_repel(data = beta_dt[group!=if(DROP_BARRIERS){'Barrier'}else{'KEEP'},]
 **RESULTS**  
 
 **Correlation between external items and concept responses**  
-See google doc with results from external items and group correlations here: 
-https://docs.google.com/document/d/1uz421G2w8q_PJQNSWrB-HOETRNiQCUw-MLa6p3zfwaw/edit?usp=sharing 
+ Using Spearman's rho,  Probability of Group 1 membership significantly correlated with higher level of involvement with SLR. Also correlated with enviro and water special district orgs and negatively correlated with CBOs. This group is correlated with higher short term and long term awareness of SLR impacts and higher assessment of risk agreement regionally. 
 
-Using Spearman's rho, Probability of Group 1 membership significantly correlated with more work tasks related to SLR including project management and outreach, being in a CBO or NGO org, and showing more concern for both short and long term SLR impacts. Also correlated with anticipating impacts of SLR happening sooner in time and negatively correlated with being in a water special district or local government org. 
+Probability of Group 2 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks.
 
-Group 2 membership significantly correlated with higher level of involvement with SLR and executive job tasks. Also correlated with enviro and water special district orgs and negatively correlated with NGO, CBO, and state government organizations. This group is correlated with higher short term awareness of SLR impacts but lower long term concern and higher assessment of risk agreement regionally. 
+Probability of Group 3 membership significantly correlated with more work tasks related to SLR including project management and outreach, being in a CBO or NGO org, and showing more concern for both short and long term SLR impacts. Also correlated with anticipating impacts of SLR happening sooner in time and negatively correlated with being in a water special district or local government org.
 
-Group 3 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an enviro SD or NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks. 
 ```{r correlate_external_groups, echo=F,insert = F,warning = F,message = F}
 #Create list of group probabilities for respondents------------------------
 #looks like group_probs is the probabilities and Y is cooccurrence matrix with row names as respondent ID
@@ -346,7 +344,7 @@ merged_survey$Group <- ifelse(merged_survey$P_G1>merged_survey$P_G2 & merged_sur
 #table(merged_survey$Group, merged_survey$RiskAgree)
 #table(merged_survey$Group, merged_survey$ActionAgree)
 
-#Correlations between group probailities and other variables
+#Correlations between group probabilities and other variables
 library(devtools)
 
 correlations <- subset(merged_survey, select= c('P_G1', 'P_G2', 'P_G3', 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree'))
@@ -559,6 +557,111 @@ ggplot(coFreq_all,
 ```
 
 **more results**  
+Correlations between probability of group membership and response choices reveals certain trends in responses that fits with earlier correlations of respondent characteristics and group probabilities
+
+Higher Group 1 probability, which correlated with more Enviro and Water SD with more SLR awareness and level of involvement are correlated with more often selecting streamlining permits and local taxes as policies and more concern for transportation, stormwater, erosion with less concern for or selection of policies related to DACs and less selection of top down policies like information platform, overall SLR plan, or new regional authority
+
+Group 1 could be categorized as special districts with more SLR awareness/involvement focused on local level infrastructure implementation with concerns for ecosystem and infrastructure functioning
+
+Higher Group 2 probability, which correlated with local government actors with lower involvement and awareness and seeing SLR impacts later, was correlated with more selection of top down policies (SLR plan, lobbying for fed/state funding, information platform) and more concern for built environment (water, stormwater, energy) but also for commercial and property value concerns with negative correlations to housing, public health, and DACs concerns or DACs focused policies
+
+Group 2 could be categorized as local government actors with less sLR concern and involvement focused on local economic growth and infrastructure favoring top down policies
+
+Higher Group 3 probability, which correlated with CBOs and NGOs and more outreach tasks and higher concerns and seeing SLR impacts sooner, correlated with selection of social concerns (DACs, housing and public health) with negative correlations for selecting environmental, economic, or infrastructure concerns (water supply, stormwater, energy, erosion, ecosystem health, property value, commercial), and correlated with selection of bottom up policies (focus on DACs, visioning process) with negative correlations with infrastructure policies (permits, GI)
+
+Group 3 could be categorized as NGO/CBOs with higher SLR concerns and focused on social concerns of SLR impacts with priorities of socially based and bottom up policies
+
+```{r correlate_groups_responses, echo=F,insert = F,warning = F,message = F}
+correlations_counts <- subset(RespGroups, select= c("P_G1", "P_G2", "P_G3", "SLR Plan", "Vulnerable", "Local Tax","Lobby", "Permits", "Info Platform", "DACs", "Green Infra", "Vision", "Innov Design", "Local Response", "Regional Authority", "Existing Agency", "Collab", "Transpo", "Water", "Stormwater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACsC", "Econ Growth", "Property Value", "Housing", "Public Health"))
+
+correlations_counts[is.na(correlations_counts)]=0
+correlationmatrix_counts <- cor(correlations_counts, method="kendall")
+correlationmatrix_counts_sp <- cor(correlations_counts, method="spearman")
+
+library("corrplot")
+library("Hmisc")
+#note that corrplot which I used for this only allows pearson and spearman- if we want kendall will need to do it another way
+data.rcorr.count.pear <- rcorr(as.matrix(correlations_counts), type="pearson")
+data.rcorr.count.sp <- rcorr(as.matrix(correlations_counts), type="spearman")
+
+data.coeff.count.sp <- data.rcorr.count.sp$r
+data.p.count.sp <- data.rcorr.count.sp$P
+data.p.count.sp
+
+significantp.count <- data.p.count.sp[,1:3]
+threecolumncorr.count <- data.coeff.count.sp[,1:3]
+
+significantp.count <- as.data.frame(significantp.count)
+threecolumncorr.count <- as.data.frame(threecolumncorr.count)
+
+significantp.count$PG1_p <- significantp.count$P_G1
+significantp.count$PG2_p <- significantp.count$P_G2
+significantp.count$PG3_p <- significantp.count$P_G3
+
+threecolumncorr.count$PG1_r <- threecolumncorr.count$P_G1
+threecolumncorr.count$PG2_r <- threecolumncorr.count$P_G2
+threecolumncorr.count$PG3_r <- threecolumncorr.count$P_G3
+
+
+significantp.count <- significantp.count[,4:6]
+threecolumncorr.count <- threecolumncorr.count[,4:6]
+
+threecolumncorr.count$names <- rownames(threecolumncorr.count)
+
+corrmatrix.count <- as.data.frame(threecolumncorr.count)
+corrmatrix.count$PG1_r <- threecolumncorr.count$PG1_r
+corrmatrix.count$PG1_p <- significantp.count$PG1_p
+corrmatrix.count$PG2_r <- threecolumncorr.count$PG2_r
+corrmatrix.count$PG2_p <- significantp.count$PG2_p
+corrmatrix.count$PG3_r <- threecolumncorr.count$PG3_r
+corrmatrix.count$PG3_p <- significantp.count$PG3_p
+
+?subset()
+corrmatrix.sigG1.count <- subset(corrmatrix.count, corrmatrix.count$PG1_p<0.05)
+corrmatrix.sigG2.count <- subset(corrmatrix.count, corrmatrix.count$PG2_p<0.05)
+corrmatrix.sigG3.count <- subset(corrmatrix.count, corrmatrix.count$PG3_p <0.05)
+
+#Double check with pearson
+
+data.coeff.count.p <- data.rcorr.count.pear$r
+data.p.count.p <- data.rcorr.count.pear$P
+data.p.count.p
+
+significantp.count.pear <- data.p.count.p[,1:3]
+threecolumncorr.count.pear <- data.coeff.count.p[,1:3]
+
+significantp.count.pear <- as.data.frame(significantp.count.pear)
+threecolumncorr.count.pear <- as.data.frame(threecolumncorr.count.pear)
+
+significantp.count.pear$PG1_p <- significantp.count.pear$P_G1
+significantp.count.pear$PG2_p <- significantp.count.pear$P_G2
+significantp.count.pear$PG3_p <- significantp.count.pear$P_G3
+
+threecolumncorr.count.pear$PG1_r <- threecolumncorr.count.pear$P_G1
+threecolumncorr.count.pear$PG2_r <- threecolumncorr.count.pear$P_G2
+threecolumncorr.count.pear$PG3_r <- threecolumncorr.count.pear$P_G3
+
+
+significantp.count.pear <- significantp.count.pear[,4:6]
+threecolumncorr.count.pear <- threecolumncorr.count.pear[,4:6]
+
+threecolumncorrv.pear$names <- rownames(threecolumncorr.count.pear)
+
+corrmatrixp.count <- as.data.frame(threecolumncorr.count.pear)
+corrmatrixp.count$PG1_r <- threecolumncorr.count.pear$PG1_r
+corrmatrixp.count$PG1_p <- significantp.count.pear$PG1_p
+corrmatrixp.count$PG2_r <- threecolumncorr.count.pear$PG2_r
+corrmatrixp.count$PG2_p <- significantp.count.pear$PG2_p
+corrmatrixp.count$PG3_r <- threecolumncorr.count.pear$PG3_r
+corrmatrixp.count$PG3_p <- significantp.count.pear$PG3_p
+
+?subset()
+corrmatrix.sigG1.p.count <- subset(corrmatrixp.count, corrmatrixp.count$PG1_p<0.05)
+corrmatrix.sigG2.p.count <- subset(corrmatrixp.count, corrmatrixp.count$PG2_p<0.05)
+corrmatrix.sigG3.p.count <- subset(corrmatrixp.count, corrmatrixp.count$PG3_p <0.05)
+
+```
+
 **more results**  
 
 
