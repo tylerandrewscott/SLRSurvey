@@ -252,5 +252,43 @@ corrmatrix.sigG1 <- subset(corrmatrix, corrmatrix$PG1_p<0.05)
 corrmatrix.sigG2 <- subset(corrmatrix, corrmatrix$PG2_p<0.05)
 corrmatrix.sigG3 <- subset(corrmatrix, corrmatrix$PG3_p <0.05)
 
+#Double check with pearson
+
+data.coeff.p <- data.rcorr.pear$r
+data.p.p <- data.rcorr.pear$P
+data.p.p
+
+significantp.pear <- data.p.p[,1:3]
+threecolumncorr.pear <- data.coeff.p[,1:3]
+
+significantp.pear <- as.data.frame(significantp.pear)
+threecolumncorr.pear <- as.data.frame(threecolumncorr.pear)
+
+significantp.pear$PG1_p <- significantp.pear$P_G1
+significantp.pear$PG2_p <- significantp.pear$P_G2
+significantp.pear$PG3_p <- significantp.pear$P_G3
+
+threecolumncorr.pear$PG1_r <- threecolumncorr.pear$P_G1
+threecolumncorr.pear$PG2_r <- threecolumncorr.pear$P_G2
+threecolumncorr.pear$PG3_r <- threecolumncorr.pear$P_G3
+
+
+significantp.pear <- significantp.pear[,4:6]
+threecolumncorr.pear <- threecolumncorr.pear[,4:6]
+
+threecolumncorr.pear$names <- rownames(threecolumncorr.pear)
+
+corrmatrixp <- as.data.frame(threecolumncorr.pear$names)
+corrmatrixp$PG1_r <- threecolumncorr.pear$PG1_r
+corrmatrixp$PG1_p <- significantp.pear$PG1_p
+corrmatrixp$PG2_r <- threecolumncorr.pear$PG2_r
+corrmatrixp$PG2_p <- significantp.pear$PG2_p
+corrmatrixp$PG3_r <- threecolumncorr.pear$PG3_r
+corrmatrixp$PG3_p <- significantp.pear$PG3_p
+
+?subset()
+corrmatrix.sigG1.p <- subset(corrmatrixp, corrmatrixp$PG1_p<0.05)
+corrmatrix.sigG2.p <- subset(corrmatrixp, corrmatrixp$PG2_p<0.05)
+corrmatrix.sigG3.p <- subset(corrmatrixp, corrmatrixp$PG3_p <0.05)
 
 ```
