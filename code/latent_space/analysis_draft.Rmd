@@ -704,15 +704,15 @@ ggplot(coFreq_all,
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
 
-#Attempting to use ranking to color flows by rank and label top 5 flows
-#Not actually sure what the rank values signify... they range from 25 to 400? Would've expected 0 to the total number of flows...
+#Attempting to use ranking to color flows by rank and label top flows... ended up just labeling those with rank > 400 (top 25ish) but should've done top 5 for each group but couldn't figure it out... can keep trying
+coFreq_all$Rank <- frank(coFreq_all, value, ties.method="random")
 ggplot(coFreq_all,
        aes(y = value, axis1 = Var1, axis2 = Var2)) +
-  geom_alluvium(width = 1/12,aes(alpha = value, fill=frank(value))) + 
+  geom_alluvium(width = 1/12,aes(alpha = value, fill=Rank)) + 
   scale_fill_continuous(type="viridis")+
   facet_wrap(~group,ncol = 1,scale = 'free_y') +
   geom_stratum(fill = "grey", colour = 'black',width = .1) + 
-  geom_label_repel(data=subset(coFreq_all, frank(value)>300), stat="stratum", aes(label=after_stat(stratum)))+
+  geom_label_repel(data=subset(coFreq_all, Rank>350), stat="stratum", aes(label=after_stat(stratum)))+
   ggtitle('Concern and policy co-occurence') +
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
