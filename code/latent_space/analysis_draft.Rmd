@@ -271,7 +271,7 @@ geom_text_repel(data = beta_dt[group!=if(DROP_BARRIERS){'Barrier'}else{'KEEP'},]
 **RESULTS**  
 
 **Correlation between external items and concept responses**  
- Using Spearman's rho,  Probability of Group 1 membership significantly correlated with higher level of involvement with SLR. Also correlated with enviro and water special district orgs and negatively correlated with CBOs. This group is correlated with higher short term and long term awareness of SLR impacts and higher assessment of risk agreement regionally. 
+Using Spearman's rho,  probability of Group 1 membership significantly correlated with higher level of involvement with SLR work. It also correlated with environmental and water special district organizations and negatively correlated with CBO organizations. This group is correlated with higher short term and long term awareness of SLR impacts and higher perceived regional agreement on SLR risks. 
 
 Probability of Group 2 is significantly correlated with local government organizations but shows correlations with lower involvement levels, fewer SLR related work tasks (particularly project management and outreach), and fewer information sources used in SLR work. Negatively correlated with being in an NGO and correlated with lower short and long term SLR awareness, lower short and long term SLR concern, and later anticipated timing of SLR impacts. Also lower assessment of regional agreement on risks.
 
@@ -422,13 +422,15 @@ ggplot(locs_df,aes(x = V1,y = V2,col = as.factor(group))) +
 
 Obviously, this is super messy. There is clearly variance in positioning within and between groups, but the groups themselves don't correspond directly to positions in the latent space. To some extent, that makes sense -- groups are based on responses, and latent dimensions are based on responses, but the groups and latent dimensions aren't connected at all so the "solution" to the latent dimension model and the "solution" to the respondent grouping model can organize the data differently.
 
+When plotting individual dimension scores by actor level variables, few trends emerge.For the most part, average scores are around zero for all dimensions by different respondent characteristics. Based on the plots,  D1 (top down to bottom up) average scores appear higher for Federal Gov, and Enviro Group actors while D2 (built enviro/econ to EJ/enviro)  is higher for Local Gov actors. There is a very weak trend visible in the plots for D1 to increase and D2 to decrease with increasing numbers of info sources used in SLR work. Also weak decline in average D1 scores and increase in average D2 scores for increasing perceived regional risk agreement. 
 
-HERE IS AN EXAMPLE OF HOW WE CAN TRY TO GET AT THIS VARIANCE -- IN THIS EXAMPLE, THIS PLOTS D1 AND D2 POSITION BY ORG. TYPE. I DON'T KNOW ENOUGH ABOUT THE OTHER SURVEY ITEMS, BUT KYRA YOU CAN USE THIS CODE (AND THE ABOVE PLOT) TO SEE HOW DIFFERENT ACTOR-LEVEL VARIABLES PLAY OUT
+Correlation values can determine if these observed trends are statistically significant. Higher D1 average scores is significantly correlated with Enviro Group and Fed Gov actors and higher D2 average scores is significantly correlated with Local Gov and State actors. Higher concern for short term SLR impacts is significantly correlated with higher D1 scores and lower D2 scores. Timing of SLR is negatively correlated with D1 average scores (later anticipated SLR impacts has higher D1 scores). Meanwhile higher perceived agreement of actions regionally and lower short and long term concern for SLR impacts is correlated with higher D2 average scores. 
 ```{r,echo = F,warnings = F,message = F}
 sub = data.table(orig[orig$ResponseId %in% rownames(Y),])
 sub[,V1:=NULL]
 locs_df2 = cbind(locs_df,sub)
 
+#Plot of D scores by org type
 ggplot(locs_df2,aes(y = Q4)) + 
   geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
   geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
@@ -436,11 +438,159 @@ ggplot(locs_df2,aes(y = Q4)) +
   scale_color_tableau(name = 'dimension') +
   scale_x_continuous(name = 'location')
 
+#Plot of D scores by level of involvement
+locs_df2$Q1_Fact <- as.factor(locs_df2$Q1_Num)
+levels(locs_df2$Q1_Fact) <- c("Major Aspect > 5 years", "Major Aspect 1-5 years", "Major Aspect < 1 year", "Routine Involvement", "Occasional Involvement")
+
+ggplot(locs_df2,aes(y = Q1_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by level of involvement') +
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by Risk Agreement
+locs_df2$RiskAgree_Fact <- as.factor(locs_df2$RiskAgree)
+levels(locs_df2$RiskAgree_Fact) <- c("Very Low", "Low", "Not Very High", "Fairly High", "High", "Very High")
+
+ggplot(locs_df2,aes(y = RiskAgree_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by assessed regional risk agreement') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+```
+
+```{r plots_d_scores,echo=F,insert = F,warning = F,message = F}}
+
+#Plot of D scores by number of task types 
+locs_df2$Q8_Fact <- as.factor(locs_df2$Q8_Sum)
+levels(locs_df2$Q8_Fact)
+
+ggplot(locs_df2,aes(y = Q8_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by number of tasks') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by sum of info types used
+locs_df2$Q32_Fact <- as.factor(locs_df2$Q32_Sum)
+
+ggplot(locs_df2,aes(y = Q32_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by number of info types used') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by short term SLR awareness
+ggplot(locs_df2,aes(y = Q11_1)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by awareness about short term SLR impacts') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D Scores by long term SLR awareness
+ggplot(locs_df2,aes(y = Q11_2)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by awareness of long term SLR impacts') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by short term SLR concern
+ggplot(locs_df2,aes(y = Q12_1)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by concern of short term SLR impacts') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by long term SLR concern
+ggplot(locs_df2,aes(y = Q12_2)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by concern of long term SLR impacts') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+#Plot of D scores by anticipated SLR impacts timing 
+locs_df2$WhenSLR_Fact <- as.factor(locs_df2$WhenSLR)
+levels(locs_df2$WhenSLR_Fact) <- c("Already Felt", "Starting Now", "Next Few Years", "Next Few Decades", "By 2100", "Later than 2100")
+ggplot(locs_df2,aes(y = WhenSLR_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by expected timing of SLR impacts') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
+
+
+
+#Plot of D scores by Action Agreement
+locs_df2$ActionAgree_Fact <- as.factor(locs_df2$ActionAgree)
+levels(locs_df2$ActionAgree_Fact) <- c("Very Low", "Low", "Not Very High", "Fairly High", "High", "Very High")
+
+ggplot(locs_df2,aes(y = ActionAgree_Fact)) + 
+  geom_boxplot(aes(x = V1,col = 'D1'),width = 0.4,position = position_nudge(y = -0.25),fill = NA)+
+  geom_boxplot(aes(x = V2,col = 'D2'),width = 0.4,position = position_nudge(y = 0.25),fill = NA)+
+  ggtitle('position on latent dimensions by assessed regional action agreement') + 
+  scale_color_tableau(name = 'dimension') +
+  scale_x_continuous(name = 'location')
 ```
 
 
+```{r correlate_D_scores_actors, echo=F,insert = F,warning = F,message = F}
+correlations_d <- subset(locs_df2, select= c("V1", "V2", 'Q1_Num', 'Q2_Personal', 'Q2_OneOrg', 'Q2_MultiOrg', 'Q8_Sum', 'Q8_Exec', 'Q8_Policy', 'Q8_Planning', 'Q8_Science', 'Q8_Gov', 'Q8_PM', 'Q8_Advocacy', 'Q8_Outreach', 'Q8_Other', 'Q32_Sum', 'Q4_Ag', 'Q4_CBO', 'Q4_Ed', 'Q4_Enviro', 'Q4_EnviroSD', 'Q4_Fed', 'Q4_LocalGov', 'Q4_Media', 'Q4_Multijuris', 'Q4_Multistake', 'Q4_NGO', 'Q4_Other', 'Q4_Political', 'Q4_RegGov', 'Q4_State', 'Q4_Trade', 'Q4_WaterSD', 'Q11_STAware', 'Q11_LTAware', 'Q12_STConcern', 'Q12_LTConcern', 'WhenSLR', 'RiskAgree', 'ActionAgree'))
 
-```{r,echo = F,warnings = F,message = F}
+correlations_d[is.na(correlations_d)]=0
+correlationmatrix_d <- cor(correlations_d, method="pearson")
+correlationmatrix_d_sp <- cor(correlations_d, method="spearman")
+
+library("corrplot")
+library("Hmisc")
+#note that corrplot which I used for this only allows pearson and spearman- if we want kendall will need to do it another way
+data.rcorr.d <- rcorr(as.matrix(correlations_d), type="pearson")
+data.rcorr.d.sp <- rcorr(as.matrix(correlations_d), type="spearman")
+
+data.coeff.d.sp <- data.rcorr.d.sp$r
+data.p.d.sp <- data.rcorr.d.sp$P
+data.p.d.sp
+
+significantp.d <- data.p.d.sp[,1:2]
+threecolumncorr.d <- data.coeff.d.sp[,1:2]
+
+significantp.d <- as.data.frame(significantp.d)
+threecolumncorr.d <- as.data.frame(threecolumncorr.d)
+
+significantp.d$V1_p <- significantp.d$V1
+significantp.d$V2_p <- significantp.d$V2
+
+threecolumncorr.d$V1_r <- threecolumncorr.d$V1
+threecolumncorr.d$V2_r <- threecolumncorr.d$V2
+
+
+significantp.d <- significantp.d[,4:6]
+threecolumncorr.d <- threecolumncorr.d[,4:6]
+
+threecolumncorr.d$names <- rownames(threecolumncorr.d)
+
+corrmatrix.d <- as.data.frame(threecolumncorr.d)
+corrmatrix.d$V1_r <- threecolumncorr.d$V1_r
+corrmatrix.d$V1_p <- significantp.d$V1_p
+corrmatrix.d$V2_r <- threecolumncorr.d$V2_r
+corrmatrix.d$V2_p <- significantp.d$V2_p
+
+?subset()
+corrmatrix.sigV1.d <- subset(corrmatrix.d, corrmatrix.d$V1_p<0.05)
+corrmatrix.sigV2.d <- subset(corrmatrix.d, corrmatrix.d$V2_p<0.05)
+
+
+```
+
+```{r org count, echo = F, warnings = F, message = F}
 org_count = locs_df2[,.N,by=.(group,Q4)]
 tot_count = locs_df2[,.N,by=.(group)]
 setnames(tot_count,'N','group_total')
@@ -558,6 +708,14 @@ ggplot(coFreq_all,
 
 **more results**  
 Correlations between probability of group membership and response choices reveals certain trends in responses that fits with earlier correlations of respondent characteristics and group probabilities
+
+Can roughly group policies along D1 (top down vs. bottom up) and concerns along D2 (built enviro/econ/regional vs. EJ/social/environmental) to figure out if group probability correlates with certain categories of responses
+
+Top down policies: existing agency, new regional authority, information platform, overall SLR plan, streamling permits, lobby for state/fed funding
+Bottom up: local response, focus on DACs, vulnerability assessments, collaboration, visioning, local taxes, innovative design, green infrastructure
+
+Built/econ/regional: transpo, Water supply, stormwater, energy, commercial, econ growth, property value
+Enviro/ej/social/local: ecosystem, erosion, DACs, Public Health, housing
 
 Higher Group 1 probability, which correlated with more Enviro and Water SD with more SLR awareness and level of involvement are correlated with more often selecting streamlining permits and local taxes as policies and more concern for transportation, stormwater, erosion with less concern for or selection of policies related to DACs and less selection of top down policies like information platform, overall SLR plan, or new regional authority
 
