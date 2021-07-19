@@ -1,8 +1,8 @@
 ---
 title: "INSERT A GOOD TITLE HERE"
 output:
-  bookdown::html_document2: default
   bookdown::pdf_document2: default
+  bookdown::html_document2: default
 ---
 
 
@@ -691,6 +691,9 @@ ggplot(coFreq_all,
   geom_label(stat = "stratum", aes(label = after_stat(stratum)))+
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
+```
+
+```{r, echo=F,insert = F,warning = F,message = F}
 
 #Attempting to change colors and labels based on flows- only has label for those with more than 25 responses for a group linking policy to concern, colored so greener/yellower is more frequency 
 ggplot(coFreq_all,
@@ -703,7 +706,9 @@ ggplot(coFreq_all,
   ggtitle('Concern and policy co-occurence') +
   scale_x_discrete(limits = c("Concern", "Policy"), expand = c(.05, .05)) +
   guides(alpha = F)
+```
 
+```{r, echo=F,warning = F,message = F}
 #Attempting to use ranking to color flows by rank and label top flows... ended up just labeling those with rank > 400 (top 25ish) but should've done top 5 for each group but couldn't figure it out... can keep trying
 coFreq_all$Rank <- frank(coFreq_all, value, ties.method="random")
 ggplot(coFreq_all,
