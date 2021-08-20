@@ -270,6 +270,19 @@ htmlTable(rbind(cor.test(facts$F1, facts$Q1_Focus)$p.value, cor.test(facts$F1, f
 
 htmlTable(rbind(cor.test(facts$F2, facts$Q1_Focus)$p.value, cor.test(facts$F2, facts$When_SLR)$p.value, cor.test(facts$F2, facts$Q16_Risk_Agree)$p.value, cor.test(facts$F2, facts$Q17_Action_Agree)$p.value, cor.test(facts$F2, facts$Q4_Fed)$p.value, cor.test(facts$F2, facts$Q4_State)$p.value, cor.test(facts$F2, facts$Q4_RegGov)$p.value, cor.test(facts$F2, facts$Q4_LocalGov)$p.value, cor.test(facts$F2, facts$Q4_WaterSD)$p.value, cor.test(facts$F2, facts$Q4_EnviroSD)$p.value, cor.test(facts$F2, facts$Q4_Enviro)$p.value, cor.test(facts$F2, facts$Q4_Trade)$p.value, cor.test(facts$F2, facts$Q4_Ed)$p.value, cor.test(facts$F2, facts$Q4_Multistake)$p.value, cor.test(facts$F2, facts$Q4_Multijuris)$p.value, cor.test(facts$F2, facts$Q4_Political)$p.value, cor.test(facts$F2, facts$Q4_CBO)$p.value, cor.test(facts$F2, facts$Q4_NGO)$p.value, cor.test(facts$F2, facts$Q8_Sum)$p.value, cor.test(facts$F2, facts$Q32_Sum)$p.value, cor.test(facts$F2, facts$Q11_STAware)$p.value, cor.test(facts$F2, facts$Q11_LTAware)$p.value, cor.test(facts$F2, facts$Q12_STConcern)$p.value, cor.test(facts$F2, facts$Q12_LTConcern)$p.value, cor.test(facts$F2, facts$Q20_HumRes)$p.value, cor.test(facts$F2, facts$Q20_FinRes)$p.value, cor.test(facts$F2, facts$Q20_ExpCollab)$p.value, cor.test(facts$F2, facts$Q20_StakeOpp)$p.value, cor.test(facts$F2, facts$Q20_PolLead)$p.value, cor.test(facts$F2, facts$Q20_SLRUncertain)$p.value, cor.test(facts$F2, facts$Q20_SciInfo)$p.value, cor.test(facts$F2, facts$Q20_OrgLead)$p.value, cor.test(facts$F2, facts$Q20_OverallPlan)$p.value, cor.test(facts$F2, facts$Q20_Permits)$p.value, cor.test(facts$F2, facts$Q20_PubSupport)$p.value, cor.test(facts$F2, facts$Q20_CBORelation)$p.value, cor.test(facts$F2, facts$Q20_Sum)$p.value))
 
+#Corr Plot
+
+corrsdata <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_Sum", "Q32_Sum", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"))
+
+library(data.table)
+setnames(corrsdata, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_Sum", "Q32_Sum", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed","State", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "CBO", "NGO", "Tasks", "InfoTypes", "STAware", "LTAware", "STConcern", "LTConcern", "HumRes", "FinRes", "CollabExp", "PublicOppose", "PoliticalLead", "SLRUncertain", "SciInfo", "OrgLead", "OverallPlan", "Permits","PubSupport", "CBORelations", "No.Barriers"))
+
+corrs <- cor(corrsdata)
+corrplot(corrs, method='color')
+corrplot(corrs, method='circle')
+
+
+
 # plot distributions of items and people on factors 1 and 2 in 2 factor model
 grid.arrange(
   ggplot() + 
