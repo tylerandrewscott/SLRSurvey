@@ -1,6 +1,9 @@
 #set seed for replicable results
 seed = 24
 
+#DropBarriers
+DROP_BARRIERS=T
+
 ### load packages (not all of htese are needed at this point, so shoudl be cleaned up a bit)
 packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc','htmlTable',
          'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors','ggrepel','plotly','ggalluvial')
@@ -206,9 +209,7 @@ mods = mclapply(dims,function(d){
 
 
 ###Code to Run on Window####
-#mods = lapply(dims,function(d){
-  # note that formula allows fitting predictors, but this only seems to work with dominance models like 2PL, which I guess makes sense since in unfolding model it's about relative location
-#mirt(Y,model = d,itemtype = 'ideal',method = 'EM',technical = list(NCYCLES = cycles))#,formula = ~Q1_Focus + When_SLR + Q16_Risk_Agree + Q17_Action_Agree,covdata = predictor_dt)})
+#mods = lapply(dims,function(d){mirt(Y,model = d,itemtype = 'ideal',method = 'EM',technical = list(NCYCLES = cycles))}) #,formula = ~Q1_Focus + When_SLR + Q16_Risk_Agree + Q17_Action_Agree,covdata = predictor_dt)
 
 #make a data.table of item factor scores for d = 1
 rotated.factors = data.table(mirt::summary(mods[[1]])$rotF,item = colnames(Y))
@@ -338,6 +339,30 @@ f2f3 = ggplot() +
 grid.arrange(f1f2,f1f3,f2f3,ncol = 1)
 }else{print("you didn't run a 3 dimensional model; set dims = 1:3 if you want the 3d model to be fit")}
 
+####Start of Regression Modeling-----------------
+
+#Reformatting Data for Inclusion in Regression
+#create average scores for short and long term awareness/concern
+facts$aware <- ((facts$Q11_STAware+facts$Q11_LTAware)/2)
+facts$concern <- ((facts$Q12_STConcern+ facts$Q12_LTConcern)/2)
+#Combine CBO and NGO Actor Types
+facts$nonprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1", 1, 0)
+#Combine state and federal gov
+facts$govagency <- ifelse(facts$Q4_Fed=="1"|facts$Q4_State=="1", 1, 0)
+
+#Regular OLS
+ols1 <- lm(F1~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
+ols2 <- lm(F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
+summary(ols1)
+summary(ols2)
+
+#SUR
+#install.packages("systemfit")
+library(systemfit)
+r1 <- F1~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r2 <- F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+fitsur <-systemfit(list(f1reg=r1, f2reg=r2), data=facts)
+summary(fitsur)
 
 
 
