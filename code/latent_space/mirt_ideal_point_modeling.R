@@ -356,6 +356,9 @@ ols2 <- lm(F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_Reg
 summary(ols1)
 summary(ols2)
 
+library(stargazer)
+stargazer(ols1, ols2)
+
 #SUR
 #install.packages("systemfit")
 library(systemfit)
@@ -364,7 +367,30 @@ r2 <- F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q
 fitsur <-systemfit(list(f1reg=r1, f2reg=r2), data=facts)
 summary(fitsur)
 
+#install.packages("texreg")
+library(texreg)
+texreg(list(fitsur))
 
 
+#Correlations with new variables
+cor(facts$F1, facts$govagency)
 
+cor.test(facts$F1, facts$govagency)
+cor.test(facts$F1, facts$aware)
+cor.test(facts$F1, facts$concern)
+cor.test(facts$F1, facts$nonprofit)
+
+cor.test(facts$F2, facts$govagency)
+cor.test(facts$F2, facts$aware)
+cor.test(facts$F2, facts$concern)
+cor.test(facts$F2, facts$nonprofit)
+
+corrsdata2 <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_Sum", "Q32_Sum", "aware", "concern"))
+
+
+setnames(corrsdata2, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_Sum", "Q32_Sum", "aware", "concern"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed State Gov", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "Nonprofit", "Tasks", "InfoTypes", "Awareness", "Concern"))
+
+corrs2 <- cor(corrsdata2)
+corrplot(corrs2, method='color')
+corrplot(corrs2, method='circle')
 
