@@ -5,7 +5,7 @@ seed = 24
 DROP_BARRIERS=T
 
 ### load packages (not all of htese are needed at this point, so shoudl be cleaned up a bit)
-packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc','htmlTable',
+packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc','htmlTable','parallel',
          'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors','ggrepel','plotly','ggalluvial')
 need = packs[!packs %in% names(installed.packages()[,2])]
 invisible(sapply(need,function(x) suppressMessages(install.packages(x,type= 'source'))))
@@ -214,12 +214,14 @@ mods = mclapply(dims,function(d){
 #make a data.table of item factor scores for d = 1
 rotated.factors = data.table(mirt::summary(mods[[1]])$rotF,item = colnames(Y))
 # plot d = 1 factor scores
-ggplot(rotated.factors[order(-F1)]) + 
+gg1 = ggplot(rotated.factors[order(-F1)]) + 
   geom_point(aes(y = fct_reorder(item,.x = F1),x = F1)) + 
   theme_bw() + 
   scale_y_discrete(name = 'item') + 
   scale_x_continuous(name = 'Factor loading' ) + 
-  ggtitle('Unidimensional model item discrimination')
+  ggtitle('Single dimension item discrimination')
+
+ggsave(filename = 'output/figures/figure_1d_discrimination.png',plot = gg1,width = 4.5,height = 4.5, units = 'in',dpi = 350)
 
 #make a data.table of item factor scores for d = 2
 rotated.factors = data.table(mirt::summary(mods[[2]],'oblimin')$rotF,item = colnames(Y))
@@ -229,7 +231,7 @@ rotated.factors$type = concept_types$Type[match(rotated.factors$item,concept_typ
 rotated.factors = merge(rotated.factors,data.table(item = colnames(Y),colMeans(Y)))
 
 # plot d = 2 factor scores
-ggplot(rotated.factors)+
+gg2 = ggplot(rotated.factors)+
   geom_vline(xintercept = 0,lty = 2,col = 'grey50') + 
   geom_hline(yintercept= 0,lty = 2,col = 'grey50')+
   geom_point(aes(y =F2,x = F1,shape = type,colour = type,size = V2)) + 
@@ -237,12 +239,13 @@ ggplot(rotated.factors)+
   theme_bw() + 
   scale_color_tableau(type = 'regular',name = 'item type')+
   scale_shape_discrete(name = 'item type')+
-  scale_size_continuous(name = 'response %',breaks = c(0.2,0.4,0.6),labels = c('20%','40%','60%'))+
+  scale_size_continuous(name = '% chosen',breaks = c(0.1,0.3,0.5,0.7),labels = c('10%','30%','50%','70%'))+
   theme(legend.position = c(0.25,0.25))+
   scale_y_continuous(name = 'Factor loading, dimension 2' ) + 
   scale_x_continuous(name = 'Factor loading, dimension 1' ) + 
   ggtitle('Bi-dimensional model') 
 
+ggsave(filename = 'output/figures/figure_factor_loadings.png',plot = gg2,width = 7,height = 5.5, units = 'in',dpi = 350)
 #plot item and respondent locations for d = 2 model
 ggplot() + 
   geom_point(aes(x = F1,y = F2,col = 'red'),data = rotated.factors,pch = 17,size = 2)+
@@ -259,17 +262,27 @@ ggplot() +
 # compute correlations between factors scores and select varibles
 # note still need ot find a good way to test correlation significance without having to run cor.test a bunch of times
 
+
 facts =  data.table(fscores(mods[[2]],rotate = 'oblimin'),predictor_dt)
-htmlTable(
-round(rbind(cor(facts[,.(F1,Q1_Focus,When_SLR,Q16_Risk_Agree,Q17_Action_Agree,Q4_Fed, Q4_State, Q4_RegGov, Q4_LocalGov, Q4_WaterSD, Q4_EnviroSD, Q4_Enviro, Q4_Trade, Q4_Ed, Q4_Multistake, Q4_Multijuris, Q4_Political, Q4_CBO, Q4_NGO, Q8_Sum, Q32_Sum, Q11_STAware, Q11_LTAware, Q12_STConcern, Q12_LTConcern, Q20_HumRes, Q20_FinRes, Q20_ExpCollab, Q20_StakeOpp, Q20_PolLead, Q20_SLRUncertain, Q20_SciInfo, Q20_OrgLead, Q20_OverallPlan, Q20_Permits, Q20_PubSupport, Q20_CBORelation, Q20_Sum)])[1,-1],
-cor(facts[,.(F2,Q1_Focus,When_SLR,Q16_Risk_Agree,Q17_Action_Agree,Q4_Fed, Q4_State, Q4_RegGov, Q4_LocalGov, Q4_WaterSD, Q4_EnviroSD, Q4_Enviro, Q4_Trade, Q4_Ed, Q4_Multistake, Q4_Multijuris, Q4_Political, Q4_CBO, Q4_NGO, Q8_Sum, Q32_Sum, Q11_STAware, Q11_LTAware, Q12_STConcern, Q12_LTConcern, Q20_HumRes, Q20_FinRes, Q20_ExpCollab, Q20_StakeOpp, Q20_PolLead, Q20_SLRUncertain, Q20_SciInfo, Q20_OrgLead, Q20_OverallPlan, Q20_Permits, Q20_PubSupport, Q20_CBORelation, Q20_Sum)],)[1,-1]),3)
-)
+
+varlist = grep('^Q',names(facts),value = T)
 
 
-htmlTable(rbind(cor.test(facts$F1, facts$Q1_Focus)$p.value, cor.test(facts$F1, facts$When_SLR)$p.value, cor.test(facts$F1, facts$Q16_Risk_Agree)$p.value, cor.test(facts$F1, facts$Q17_Action_Agree)$p.value, cor.test(facts$F1, facts$Q4_Fed)$p.value, cor.test(facts$F1, facts$Q4_State)$p.value, cor.test(facts$F1, facts$Q4_RegGov)$p.value, cor.test(facts$F1, facts$Q4_LocalGov)$p.value, cor.test(facts$F1, facts$Q4_WaterSD)$p.value, cor.test(facts$F1, facts$Q4_EnviroSD)$p.value, cor.test(facts$F1, facts$Q4_Enviro)$p.value, cor.test(facts$F1, facts$Q4_Trade)$p.value, cor.test(facts$F1, facts$Q4_Ed)$p.value, cor.test(facts$F1, facts$Q4_Multistake)$p.value, cor.test(facts$F1, facts$Q4_Multijuris)$p.value, cor.test(facts$F1, facts$Q4_Political)$p.value, cor.test(facts$F1, facts$Q4_CBO)$p.value, cor.test(facts$F1, facts$Q4_NGO)$p.value, cor.test(facts$F1, facts$Q8_Sum)$p.value, cor.test(facts$F1, facts$Q32_Sum)$p.value, cor.test(facts$F1, facts$Q11_STAware)$p.value, cor.test(facts$F1, facts$Q11_LTAware)$p.value, cor.test(facts$F1, facts$Q12_STConcern)$p.value, cor.test(facts$F1, facts$Q12_LTConcern)$p.value, cor.test(facts$F1, facts$Q20_HumRes)$p.value, cor.test(facts$F1, facts$Q20_FinRes)$p.value, cor.test(facts$F1, facts$Q20_ExpCollab)$p.value, cor.test(facts$F1, facts$Q20_StakeOpp)$p.value, cor.test(facts$F1, facts$Q20_PolLead)$p.value, cor.test(facts$F1, facts$Q20_SLRUncertain)$p.value, cor.test(facts$F1, facts$Q20_SciInfo)$p.value, cor.test(facts$F1, facts$Q20_OrgLead)$p.value, cor.test(facts$F1, facts$Q20_OverallPlan)$p.value, cor.test(facts$F1, facts$Q20_Permits)$p.value, cor.test(facts$F1, facts$Q20_PubSupport)$p.value, cor.test(facts$F1, facts$Q20_CBORelation)$p.value, cor.test(facts$F1, facts$Q20_Sum)$p.value))
+f1_cor_tests = lapply(varlist,function(x) cor.test(facts$F1,facts[[x]],method = 'kendall'))
+est1 = formatC(round(sapply(f1_cor_tests,function(x) x$estimate),3),flag = '0',digits = 3)
+p1 = sapply(f1_cor_tests,function(x) x$p.value)
 
 
-htmlTable(rbind(cor.test(facts$F2, facts$Q1_Focus)$p.value, cor.test(facts$F2, facts$When_SLR)$p.value, cor.test(facts$F2, facts$Q16_Risk_Agree)$p.value, cor.test(facts$F2, facts$Q17_Action_Agree)$p.value, cor.test(facts$F2, facts$Q4_Fed)$p.value, cor.test(facts$F2, facts$Q4_State)$p.value, cor.test(facts$F2, facts$Q4_RegGov)$p.value, cor.test(facts$F2, facts$Q4_LocalGov)$p.value, cor.test(facts$F2, facts$Q4_WaterSD)$p.value, cor.test(facts$F2, facts$Q4_EnviroSD)$p.value, cor.test(facts$F2, facts$Q4_Enviro)$p.value, cor.test(facts$F2, facts$Q4_Trade)$p.value, cor.test(facts$F2, facts$Q4_Ed)$p.value, cor.test(facts$F2, facts$Q4_Multistake)$p.value, cor.test(facts$F2, facts$Q4_Multijuris)$p.value, cor.test(facts$F2, facts$Q4_Political)$p.value, cor.test(facts$F2, facts$Q4_CBO)$p.value, cor.test(facts$F2, facts$Q4_NGO)$p.value, cor.test(facts$F2, facts$Q8_Sum)$p.value, cor.test(facts$F2, facts$Q32_Sum)$p.value, cor.test(facts$F2, facts$Q11_STAware)$p.value, cor.test(facts$F2, facts$Q11_LTAware)$p.value, cor.test(facts$F2, facts$Q12_STConcern)$p.value, cor.test(facts$F2, facts$Q12_LTConcern)$p.value, cor.test(facts$F2, facts$Q20_HumRes)$p.value, cor.test(facts$F2, facts$Q20_FinRes)$p.value, cor.test(facts$F2, facts$Q20_ExpCollab)$p.value, cor.test(facts$F2, facts$Q20_StakeOpp)$p.value, cor.test(facts$F2, facts$Q20_PolLead)$p.value, cor.test(facts$F2, facts$Q20_SLRUncertain)$p.value, cor.test(facts$F2, facts$Q20_SciInfo)$p.value, cor.test(facts$F2, facts$Q20_OrgLead)$p.value, cor.test(facts$F2, facts$Q20_OverallPlan)$p.value, cor.test(facts$F2, facts$Q20_Permits)$p.value, cor.test(facts$F2, facts$Q20_PubSupport)$p.value, cor.test(facts$F2, facts$Q20_CBORelation)$p.value, cor.test(facts$F2, facts$Q20_Sum)$p.value))
+f2_cor_tests = lapply(varlist,function(x) cor.test(facts$F2,facts[[x]],method = 'kendall'))
+est2 = formatC(round(sapply(f2_cor_tests,function(x) x$estimate),3),flag = '0',digits = 3)
+p2 = sapply(f2_cor_tests,function(x) x$p.value)
+
+
+stargazer::stargazer(data.table(item = varlist,
+           F1 = paste0(est1,ifelse(p<0.05,'*',ifelse(p<0.01,'**',ifelse(p<0.001,'***','')))),
+           F2 = paste0(est2,ifelse(p<0.05,'*',ifelse(p<0.01,'**',ifelse(p<0.001,'***',''))))),summary = F,out = 'output/tables/correlation_tests.html')
+
+
 
 #Corr Plot
 
@@ -283,19 +296,19 @@ corrplot(corrs, method='color')
 corrplot(corrs, method='circle')
 
 
-
-# plot distributions of items and people on factors 1 and 2 in 2 factor model
-grid.arrange(
-  ggplot() + 
-    geom_density(data = rotated.factors,aes(x = F1,fill = 'item'),alpha = 0.7) +  
-    geom_density(data = data.table(fscores(mods[[2]],rotate = 'oblimin')),aes(x = F1,fill = 'respondent'),alpha = 0.7) +
-    scale_fill_manual(values = c('light blue','dark blue'),name = 'estimated location') + 
-    xlab('factor 1'),
-  ggplot() + 
-    geom_density(data = rotated.factors,aes(x = F2,fill = 'item'),alpha = 0.7) +  
-    geom_density(data = data.table(fscores(mods[[2]],rotate = 'oblimin')),aes(x = F2,fill = 'respondent'),alpha = 0.7) +
-    scale_fill_manual(values = c('light blue','dark blue'),name = 'estimated location') + 
-    xlab('factor 2'))
+# 
+# # plot distributions of items and people on factors 1 and 2 in 2 factor model
+# grid.arrange(
+#   ggplot() + 
+#     geom_density(data = rotated.factors,aes(x = F1,fill = 'item'),alpha = 0.7) +  
+#     geom_density(data = data.table(fscores(mods[[2]],rotate = 'oblimin')),aes(x = F1,fill = 'respondent'),alpha = 0.7) +
+#     scale_fill_manual(values = c('light blue','dark blue'),name = 'estimated location') + 
+#     xlab('factor 1'),
+#   ggplot() + 
+#     geom_density(data = rotated.factors,aes(x = F2,fill = 'item'),alpha = 0.7) +  
+#     geom_density(data = data.table(fscores(mods[[2]],rotate = 'oblimin')),aes(x = F2,fill = 'respondent'),alpha = 0.7) +
+#     scale_fill_manual(values = c('light blue','dark blue'),name = 'estimated location') + 
+#     xlab('factor 2'))
 
 
 
@@ -350,6 +363,37 @@ facts$nonprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1", 1, 0)
 #Combine state and federal gov
 facts$govagency <- ifelse(facts$Q4_Fed=="1"|facts$Q4_State=="1", 1, 0)
 
+
+
+require(lavaan)
+require(tidySEM)
+
+facts$Q32_Sum
+facts$When_SLR = facts$When_SLR * -1
+cfa_form <- ' 
+#latent variable for engagement
+Engagement  =~  Q32_Sum + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+'
+cfa_fit = cfa(cfa_form,data = facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
+
+graph_sem(model = cfa_fit)
+
+sem_form <- '
+#latent variable for engagement
+Engagement  =~  Q32_Sum + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+
+#regression 
+F1 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
+F2 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
+
+#resid corrs
+F1~~F2
+'
+sem_fit = sem(sem_form,data =  facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
+
+summary(sem_fit,fit.measures = T)
+
+
 #Regular OLS
 ols1 <- lm(F1~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
 ols2 <- lm(F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
@@ -393,4 +437,15 @@ setnames(corrsdata2, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree
 corrs2 <- cor(corrsdata2)
 corrplot(corrs2, method='color')
 corrplot(corrs2, method='circle')
+
+
+
+
+
+
+
+
+
+
+
 
