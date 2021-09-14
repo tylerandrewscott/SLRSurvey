@@ -114,8 +114,8 @@ predictor_dt$Q4_Multijuris <- orig$Q4_Multijuris[match(predictor_dt$id,orig$Resp
 predictor_dt$Q4_Political <- orig$Q4_Political[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q4_CBO <- orig$Q4_CBO[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q4_NGO <- orig$Q4_NGO[match(predictor_dt$id,orig$ResponseId)]
-predictor_dt$Q8_Sum <- orig$Q8_Sum[match(predictor_dt$id,orig$ResponseId)]
-predictor_dt$Q32_Sum <- orig$Q32_Sum[match(predictor_dt$id,orig$ResponseId)]
+predictor_dt$Q8_JobTasks <- orig$Q8_Sum[match(predictor_dt$id,orig$ResponseId)]
+predictor_dt$Q32_InfoTypes <- orig$Q32_Sum[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q11_STAware <- orig$Q11_STAware[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q11_LTAware <- orig$Q11_LTAware[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q12_STConcern <- orig$Q12_STConcern[match(predictor_dt$id,orig$ResponseId)]
@@ -154,8 +154,8 @@ predictor_dt$Q4_Political[is.na(predictor_dt$Q4_Political)]<-round(mean(predicto
 predictor_dt$Q4_CBO[is.na(predictor_dt$Q4_CBO)]<-round(mean(predictor_dt$Q4_CBO,na.rm = T))
 predictor_dt$Q4_NGO[is.na(predictor_dt$Q4_NGO)]<-round(mean(predictor_dt$Q4_NGO,na.rm = T))
 
-predictor_dt$Q8_Sum[is.na(predictor_dt$Q8_Sum)]<-round(mean(predictor_dt$Q8_Sum,na.rm = T))
-predictor_dt$Q32_Sum[is.na(predictor_dt$Q32_Sum)]<-round(mean(predictor_dt$Q32_Sum,na.rm = T))
+predictor_dt$Q8_JobTasks[is.na(predictor_dt$Q8_JobTasks)]<-round(mean(predictor_dt$Q8_JobTasks,na.rm = T))
+predictor_dt$Q32_InfoTypes[is.na(predictor_dt$Q32_InfoTypes)]<-round(mean(predictor_dt$Q32_InfoTypes,na.rm = T))
 predictor_dt$Q11_STAware[is.na(predictor_dt$Q11_STAware)]<-round(mean(predictor_dt$Q11_STAware,na.rm = T))
 predictor_dt$Q11_LTAware[is.na(predictor_dt$Q11_LTAware)]<-round(mean(predictor_dt$Q11_LTAware,na.rm = T))
 predictor_dt$Q12_STConcern[is.na(predictor_dt$Q12_STConcern)]<-round(mean(predictor_dt$Q12_STConcern,na.rm = T))
@@ -259,8 +259,8 @@ ggplot() +
         legend.backgroun = element_rect(fill = alpha('white',0)))
 
 
-# compute correlations between factors scores and select varibles
-# note still need ot find a good way to test correlation significance without having to run cor.test a bunch of times
+# compute correlations between factors scores and select variables
+# note still need to find a good way to test correlation significance without having to run cor.test a bunch of times
 
 
 facts =  data.table(fscores(mods[[2]],rotate = 'oblimin'),predictor_dt)
@@ -279,20 +279,22 @@ p2 = sapply(f2_cor_tests,function(x) x$p.value)
 
 
 stargazer::stargazer(data.table(item = varlist,
-           F1 = paste0(est1,ifelse(p<0.05,'*',ifelse(p<0.01,'**',ifelse(p<0.001,'***','')))),
-           F2 = paste0(est2,ifelse(p<0.05,'*',ifelse(p<0.01,'**',ifelse(p<0.001,'***',''))))),summary = F,out = 'output/tables/correlation_tests.html')
+           F1 = paste0(est1,ifelse(p1<0.05,'*',ifelse(p1<0.01,'**',ifelse(p1<0.001,'***','')))),
+           F2 = paste0(est2,ifelse(p2<0.05,'*',ifelse(p2<0.01,'**',ifelse(p2<0.001,'***',''))))),summary = F,out = 'output/tables/correlation_tests.html')
 
 
 
 #Corr Plot
 
-corrsdata <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_Sum", "Q32_Sum", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"))
+corrsdata <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_JobTasks", "Q32_InfoTypes", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"))
 
 library(data.table)
-setnames(corrsdata, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_Sum", "Q32_Sum", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed","State", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "CBO", "NGO", "Tasks", "InfoTypes", "STAware", "LTAware", "STConcern", "LTConcern", "HumRes", "FinRes", "CollabExp", "PublicOppose", "PoliticalLead", "SLRUncertain", "SciInfo", "OrgLead", "OverallPlan", "Permits","PubSupport", "CBORelations", "No.Barriers"))
+setnames(corrsdata, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "Q4_Fed","Q4_State", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "Q4_CBO", "Q4_NGO", "Q8_JobTasks", "Q32_InfoTypes", "Q11_STAware", "Q11_LTAware", "Q12_STConcern", "Q12_LTConcern", "Q20_HumRes", "Q20_FinRes", "Q20_ExpCollab", "Q20_StakeOpp", "Q20_PolLead", "Q20_SLRUncertain", "Q20_SciInfo", "Q20_OrgLead", "Q20_OverallPlan", "Q20_Permits","Q20_PubSupport", "Q20_CBORelation", "Q20_Sum"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed","State", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "CBO", "NGO", "Tasks", "InfoTypes", "STAware", "LTAware", "STConcern", "LTConcern", "HumRes", "FinRes", "CollabExp", "PublicOppose", "PoliticalLead", "SLRUncertain", "SciInfo", "OrgLead", "OverallPlan", "Permits","PubSupport", "CBORelations", "No.Barriers"))
 
 corrs <- cor(corrsdata)
+png(filename='output/figures/figure_corrplot.png')
 corrplot(corrs, method='color')
+dev.off()
 corrplot(corrs, method='circle')
 
 
@@ -368,11 +370,11 @@ facts$govagency <- ifelse(facts$Q4_Fed=="1"|facts$Q4_State=="1", 1, 0)
 require(lavaan)
 require(tidySEM)
 
-facts$Q32_Sum
+facts$Q32_InfoTypes
 facts$When_SLR = facts$When_SLR * -1
 cfa_form <- ' 
 #latent variable for engagement
-Engagement  =~  Q32_Sum + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
 '
 cfa_fit = cfa(cfa_form,data = facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
 
@@ -380,7 +382,7 @@ graph_sem(model = cfa_fit)
 
 sem_form <- '
 #latent variable for engagement
-Engagement  =~  Q32_Sum + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
 
 #regression 
 F1 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
@@ -392,11 +394,26 @@ F1~~F2
 sem_fit = sem(sem_form,data =  facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
 
 summary(sem_fit,fit.measures = T)
+texreg(sem_fit)
 
+#install.packages("semTable")
+library(semTable)
+
+sem_html <- semTable(sem_fit, type="html")
+#install.packages("readr")
+library(readr)
+readr::write_file(sem_html, "output/tables/sem_model.html")
+
+####Sem Paths Plot Diagram of SEM Model------------
+#Kyra's computer wouldn't load sem plot (error with one related package called arm) so couldn't test this code... but ideally we'll get a path diagram of our model...
+#install.packages("semPlot")
+#library(semPlot)
+#png('output/figures/sem_paths.png')
+#semPaths(sem_fit, what="paths")
 
 #Regular OLS
-ols1 <- lm(F1~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
-ols2 <- lm(F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
+ols1 <- lm(F1~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
+ols2 <- lm(F2~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
 summary(ols1)
 summary(ols2)
 
@@ -405,16 +422,39 @@ stargazer(ols1, ols2)
 
 #SUR
 #install.packages("systemfit")
+#initial regression
 library(systemfit)
-r1 <- F1~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
-r2 <- F2~Q1_Focus+Q32_Sum+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r1 <- F1~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r2 <- F2~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
 fitsur <-systemfit(list(f1reg=r1, f2reg=r2), data=facts)
 summary(fitsur)
+
+#regression without awareness
+r1.2 <- F1~Q1_Focus+Q32_InfoTypes+When_SLR+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r2.2 <- F2~Q1_Focus+Q32_InfoTypes+When_SLR+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+fitsur2 <-systemfit(list(f1reg=r1.2, f2reg=r2.2), data=facts)
+summary(fitsur2)
+
+#regression with awareness and info types interaction
+r1.3 <- F1~Q1_Focus+Q32_InfoTypes*aware+When_SLR+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r2.3 <- F2~Q1_Focus+Q32_InfoTypes*aware+When_SLR+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+fitsur3 <-systemfit(list(f1reg=r1.3, f2reg=r2.3), data=facts)
+summary(fitsur3)
+
+#regression with awareness and concern interaction
+r1.4 <- F1~Q1_Focus+Q32_InfoTypes+aware*concern+When_SLR+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+r2.4 <- F2~Q1_Focus+Q32_InfoTypes+aware*concern+When_SLR+nonprofit+govagency+Q4_RegGov+Q4_LocalGov
+fitsur4 <- systemfit(list(f1reg=r1.4, f2reg=r2.4), data=facts)
+summary(fitsur4)
 
 #install.packages("texreg")
 library(texreg)
 texreg(list(fitsur))
+texreg(list(fitsur2))
+texreg(list(fitsur3))
+texreg(list(fitsur4))
 
+htmlreg(list(fitsur), file='output/tables/table_SURresults.html')
 
 #Correlations with new variables
 cor(facts$F1, facts$govagency)
@@ -429,22 +469,57 @@ cor.test(facts$F2, facts$aware)
 cor.test(facts$F2, facts$concern)
 cor.test(facts$F2, facts$nonprofit)
 
-corrsdata2 <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_Sum", "Q32_Sum", "aware", "concern"))
+corrsdata2 <- subset(facts,select=c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_JobTasks", "Q32_InfoTypes", "aware", "concern"))
 
 
-setnames(corrsdata2, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_Sum", "Q32_Sum", "aware", "concern"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed State Gov", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "Nonprofit", "Tasks", "InfoTypes", "Awareness", "Concern"))
+setnames(corrsdata2, old = c("F1", "F2", "Q1_Focus", "When_SLR", "Q16_Risk_Agree", "Q17_Action_Agree", "govagency", "Q4_RegGov", "Q4_LocalGov", "Q4_WaterSD", "Q4_EnviroSD", "Q4_Enviro", "Q4_Trade", "Q4_Ed", "Q4_Multistake", "Q4_Multijuris", "Q4_Political", "nonprofit", "Q8_JobTasks", "Q32_InfoTypes", "aware", "concern"), new = c("F1", "F2", "Focus", "When_SLR", "Risk_Agree", "Action_Agree", "Fed State Gov", "RegGov", "LocalGov", "WaterSD", "EnviroSD", "Enviro", "Trade", "Ed", "Multistake", "Multijuris", "Political", "Nonprofit", "Tasks", "InfoTypes", "Awareness", "Concern"))
 
 corrs2 <- cor(corrsdata2)
 corrplot(corrs2, method='color')
 corrplot(corrs2, method='circle')
 
+####Create Basic Descriptive Figures for Paper--------------------
+#concerns
+allconcerns <-incidence_dt[,c(17:29)]
 
+allconcerns %>%
+  summarise_all(sum)
 
+concernsums <- c(434, 137, 393, 41, 227, 128, 24, 315, 51, 36, 88, 81, 21)
+concernnames <- c("Transpo", "Water", "Stormwater Wastewater", "Energy", "Ecosystem", "Erosion", "Commercial", "DACs", "Econ Growth", "Property Value", "Housing", "Public Health", "Other")  
+concernmatrix <- data.frame(name=concernnames, value=concernsums)
 
+ggsave(filename='output/figures/figure_concerns_bar_plot.png', width = 4.5,height = 4.5, dpi = 350)
+ggplot(concernmatrix, aes(x=name, y=value))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())+
+  ggtitle("Concerns for SLR Impacts")+
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
+#policies
+allpolicies <-incidence_dt[,c(2:16)]
 
+allpolicies %>%
+  summarise_all(sum)
 
+policysums <- c(261, 167, 75, 141, 162, 120, 121, 200, 82, 100, 42, 89, 149, 243, 34)
+policynames <- c("SLR Plan", "Vulnerability Assessment", "Local Tax", "Fund Lobbying", "Streamline Permits", "Info Platform", "DACs Focus", "Green Infrastructure", "Visioning", "Innovative Design", "Local Response", "Regional Authority", "Existing Agency", "Collaboration", "Other")  
+policymatrix <- data.frame(value=policysums, name=policynames)
 
+ggsave(filename='output/figures/figure_policies_bar_plot.png', width = 4.5,height = 4.5, dpi = 350)
+ggplot(policymatrix, aes(x=name, y=value))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())+
+  ggtitle("Policy Preferences")+
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
 
 
