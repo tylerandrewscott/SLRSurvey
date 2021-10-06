@@ -5,11 +5,22 @@ seed = 24
 DROP_BARRIERS=T
 
 ### load packages (not all of htese are needed at this point, so shoudl be cleaned up a bit)
-packs =c('tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc','htmlTable','parallel',
+packs =c('reshape2','Hmisc','tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc',
+         'htmlTable','parallel','parallel','semTable',
          'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors','ggrepel','plotly','ggalluvial')
 need = packs[!packs %in% names(installed.packages()[,2])]
 invisible(sapply(need,function(x) suppressMessages(install.packages(x,type= 'source'))))
 invisible(sapply(packs,function(x) suppressMessages(library(x,character.only = T))))
+
+
+packs =c('Hmisc','tidyverse','purrr','data.table','statnet','latentnet','bipartite','lvm4net','mirt','pbapply','Hmisc','htmlTable','parallel','parallel',
+         'ggthemes','here','ggnetwork','gridExtra','ggrepel','corrplot','htmlTable','readxl','nFactors','ggrepel','plotly','ggalluvial')
+need = packs[!packs %in% names(installed.packages()[,2])]
+invisible(sapply(need,function(x) suppressMessages(install.packages(x,type= 'library'))))
+invisible(sapply(packs,function(x) suppressMessages(library(x,character.only = T))))
+
+
+
 
 #above code didn't work for Kyra so below commented out code is just to reload packages manually each time Kyra runs code
 #library(tidyverse)
@@ -175,7 +186,7 @@ predictor_dt$Q20_CBORelation[is.na(predictor_dt$Q20_CBORelation)]<-round(mean(pr
 predictor_dt$Q20_Sum[is.na(predictor_dt$Q20_Sum)]<-round(mean(predictor_dt$Q20_Sum,na.rm = T))
 
 
-mY = melt(Y)
+mY = reshape2::melt(Y)
 mY$cat = {bip_net %v% 'Concept_Type'}[match(mY$Var2,bip_net %v% 'vertex.names')]
 mY<-data.table(mY)
 mY = mY[,mean(value),by=.(Var2,cat)][order(-V1)]
@@ -377,27 +388,31 @@ cfa_form <- '
 Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
 '
 cfa_fit = cfa(cfa_form,data = facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
+cfa_fit = cfa(cfa_form,data = facts)
 
-graph_sem(model = cfa_fit)
+
+#### THIS IS A GRAPH OF THE CFA FOR ENGAGEMENT
+cfa_graph = prepare_graph(cfa_fit)
+cfa_graph = hide_var(cfa_graph)
+gg_cfa = plot(cfa_graph) + 
+  ggtitle('Confirmatory factor analysis: indicators of policy engagement') +
+  coord_flip()
+ggsave(plot = gg_cfa,filename = 'output/figures/cfa_plot.png',width = 6,height = 4.5,dpi = 300, units = 'in')
 
 sem_form <- '
 #latent variable for engagement
 Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
-
 #regression 
 F1 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
 F2 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
-
 #resid corrs
 F1~~F2
 '
-sem_fit = sem(sem_form,data =  facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
+sem_fit = sem(sem_form,data =  facts)
 
 summary(sem_fit,fit.measures = T)
-texreg(sem_fit)
 
-#install.packages("semTable")
-library(semTable)
+
 
 sem_html <- semTable(sem_fit, type="html")
 #install.packages("readr")
@@ -405,11 +420,16 @@ library(readr)
 readr::write_file(sem_html, "output/tables/sem_model.html")
 
 ####Sem Paths Plot Diagram of SEM Model------------
-#Kyra's computer wouldn't load sem plot (error with one related package called arm) so couldn't test this code... but ideally we'll get a path diagram of our model...
-#install.packages("semPlot")
-#library(semPlot)
-#png('output/figures/sem_paths.png')
-#semPaths(sem_fit, what="paths")
+
+
+ly = get_layout(sem_fit, 
+                     layout_algorithm = 'layout_with_kk')
+sem_plot = tidySEM::prepare_graph(sem_fit,layout = ly)
+sem_plot <- tidySEM::hide_var(sem_plot)
+
+gg_sem = plot(sem_plot) + ggtitle('F1 and F1 regressed on engagement + covariates')
+
+ggsave(filename = 'output/figures/SEM_model_diagram.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
 
 #Regular OLS
 ols1 <- lm(F1~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
