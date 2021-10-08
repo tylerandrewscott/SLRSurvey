@@ -373,9 +373,20 @@ facts$aware <- ((facts$Q11_STAware+facts$Q11_LTAware)/2)
 facts$concern <- ((facts$Q12_STConcern+ facts$Q12_LTConcern)/2)
 #Combine CBO and NGO Actor Types
 facts$nonprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1", 1, 0)
-#Combine state and federal gov
-facts$govagency <- ifelse(facts$Q4_Fed=="1"|facts$Q4_State=="1", 1, 0)
-
+#Combine federal, state, and regional gov
+facts$govagency <- ifelse(facts$Q4_Fed=="1"|facts$Q4_State=="1"|facts$Q4_RegGov=="1", 1, 0)
+#Combine local gov with special districts
+facts$localagency <- ifelse(facts$Q4_LocalGov=="1"|facts$Q4_EnviroSD=="1"|facts$Q4_WaterSD=="1", 1, 0)
+#Keep Enviro Groups Separate for first version
+facts$enviro <- ifelse(facts$Q4_Enviro=="1", 1, 0)
+#create category of all the actors not in these categories
+facts$noactorcat <- ifelse(facts$Q4_CBO=="0"& facts$Q4_NGO=="0"& facts$Q4_Fed=="0"& facts$Q4_State=="0"& facts$Q4_RegGov=="0"& facts$Q4_LocalGov=="0"& facts$Q4_EnviroSD=="0"& facts$Q4_WaterSD=="0"& facts$Q4_Ed=="0"& facts$Q4_Multijuris=="0"& facts$Q4_Multistake=="0"& facts$Q4_Political=="0"& facts$Q4_Trade=="0"& facts$Q4_Enviro=="0", 1, 0)
+#Create other for all other actors without enviro
+facts$othergroup <- ifelse(facts$Q4_Ed=="1"|facts$Q4_Multijuris=="1"|facts$Q4_Multistake=="1"|facts$Q4_Political=="1"|facts$Q4_Trade=="1"|facts$noactorcat=="1", 1, 0)
+#create second other option with enviro included
+facts$othergroup_wEnviro <- ifelse(facts$Q4_Ed=="1"|facts$Q4_Multijuris=="1"|facts$Q4_Multistake=="1"|facts$Q4_Political=="1"|facts$Q4_Trade=="1"|facts$Q4_Enviro=="1"|facts$noactorcat=="1", 1, 0)
+#create new nonprofit with enviro
+facts$noprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1"|facts$Q4_Enviro=="1", 1, 0)
 
 
 require(lavaan)
@@ -403,8 +414,8 @@ sem_form <- '
 #latent variable for engagement
 Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
 #regression 
-F1 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
-F2 ~ Engagement + nonprofit + govagency + Q4_RegGov + Q4_LocalGov
+F1 ~ Engagement + nonprofit + govagency + othergroup_wEnviro
+F2 ~ Engagement + nonprofit + govagency + othergroup_wEnviro
 #resid corrs
 F1~~F2
 '
@@ -417,11 +428,43 @@ summary(sem_fit,fit.measures = T)
 sem_html <- semTable(sem_fit, type="html")
 #install.packages("readr")
 library(readr)
-readr::write_file(sem_html, "output/tables/sem_model.html")
+readr::write_file(sem_html, "output/tables/sem_model_V1_10-7.html")
 
+####Try SEM with environmental groups separated
+sem_form2 <- '
+#latent variable for engagement
+Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+#regression 
+F1 ~ Engagement + nonprofit + govagency + enviro + othergroup
+F2 ~ Engagement + nonprofit + govagency + enviro + othergroup
+#resid corrs
+F1~~F2
+'
+sem_fit2 = sem(sem_form2,data =  facts)
+
+summary(sem_fit2,fit.measures = T)
+
+sem_html2 <- semTable(sem_fit2, type="html")
+readr::write_file(sem_html2, "output/tables/sem_model_V2_10-7.html")
+
+####Try SEM with enviro groups added to nonprofit
+sem_form3 <- '
+#latent variable for engagement
+Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+#regression 
+F1 ~ Engagement + noprofit + govagency + othergroup
+F2 ~ Engagement + noprofit + govagency + othergroup
+#resid corrs
+F1~~F2
+'
+sem_fit3 = sem(sem_form3,data =  facts)
+
+summary(sem_fit3,fit.measures = T)
+
+sem_html3 <- semTable(sem_fit3, type="html")
+readr::write_file(sem_html3, "output/tables/sem_model_V3_10-7.html")
 ####Sem Paths Plot Diagram of SEM Model------------
-
-
+#path plot for first sem
 ly = get_layout(sem_fit, 
                      layout_algorithm = 'layout_with_kk')
 sem_plot = tidySEM::prepare_graph(sem_fit,layout = ly)
@@ -430,6 +473,26 @@ sem_plot <- tidySEM::hide_var(sem_plot)
 gg_sem = plot(sem_plot) + ggtitle('F1 and F1 regressed on engagement + covariates')
 
 ggsave(filename = 'output/figures/SEM_model_diagram.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
+
+#second sem model
+ly2 = get_layout(sem_fit2, 
+                layout_algorithm = 'layout_with_kk')
+sem_plot2 = tidySEM::prepare_graph(sem_fit2,layout = ly2)
+sem_plot2 <- tidySEM::hide_var(sem_plot2)
+
+gg_sem2 = plot(sem_plot2) + ggtitle('F1 and F1 regressed on engagement + covariates')
+
+ggsave(filename = 'output/figures/SEM_model_diagram2.png',plot = gg_sem2,dpi = 300,width = 7,height = 5,units = 'in')
+
+#third sem model 
+ly3 = get_layout(sem_fit3, 
+                 layout_algorithm = 'layout_with_kk')
+sem_plot3 = tidySEM::prepare_graph(sem_fit3,layout = ly3)
+sem_plot3 <- tidySEM::hide_var(sem_plot3)
+
+gg_sem3 = plot(sem_plot3) + ggtitle('F1 and F1 regressed on engagement + covariates')
+
+ggsave(filename = 'output/figures/SEM_model_diagram3.png',plot = gg_sem3,dpi = 300,width = 7,height = 5,units = 'in')
 
 #Regular OLS
 ols1 <- lm(F1~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
