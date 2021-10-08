@@ -461,6 +461,20 @@ sem_fit3 = sem(sem_form3,data =  facts)
 
 summary(sem_fit3,fit.measures = T)
 
+test = reshape2::melt(facts[,c(grep('Q4',names(facts),value = T),'F1','F2'),with = F],
+               id.vars = c('F1','F2'))
+test = data.table(test)
+
+test_mean = test[value ==1,list(mean(F1),mean(F2)),by=.(variable)]
+
+head(test_mean)
+ggplot(test_mean,aes(x = V1,y = V2,label= variable)) + 
+  geom_point() + scale_x_continuous(limits = c(-1,1))+
+  scale_y_continuous(limits = c(-1,1))+
+  geom_label_repel()
+
+
+
 sem_html3 <- semTable(sem_fit3, type="html")
 readr::write_file(sem_html3, "output/tables/sem_model_V3_10-7.html")
 ####Sem Paths Plot Diagram of SEM Model------------
