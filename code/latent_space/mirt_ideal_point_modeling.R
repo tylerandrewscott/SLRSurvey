@@ -144,7 +144,7 @@ predictor_dt$Q20_Permits <- orig$Q20_Permits[match(predictor_dt$id,orig$Response
 predictor_dt$Q20_PubSupport <- orig$Q20_PubSupport[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q20_CBORelation <- orig$Q20_CBORelation[match(predictor_dt$id,orig$ResponseId)]
 predictor_dt$Q20_Sum <- orig$Q20_Sum[match(predictor_dt$id,orig$ResponseId)]
-
+predictor_dt$Q19_Sum <- orig$Q19_SUM[match(predictor_dt$id, orig$ResponseId)]
 
 predictor_dt$Q1_Focus[is.na(predictor_dt$Q1_Focus)]<-round(mean(predictor_dt$Q1_Focus,na.rm = T))
 predictor_dt$When_SLR[is.na(predictor_dt$When_SLR)]<-round(mean(predictor_dt$When_SLR,na.rm = T))
@@ -184,7 +184,7 @@ predictor_dt$Q20_Permits[is.na(predictor_dt$Q20_Permits)]<-round(mean(predictor_
 predictor_dt$Q20_PubSupport[is.na(predictor_dt$Q20_PubSupport)]<-round(mean(predictor_dt$Q20_PubSupport,na.rm = T))
 predictor_dt$Q20_CBORelation[is.na(predictor_dt$Q20_CBORelation)]<-round(mean(predictor_dt$Q20_CBORelation,na.rm = T))
 predictor_dt$Q20_Sum[is.na(predictor_dt$Q20_Sum)]<-round(mean(predictor_dt$Q20_Sum,na.rm = T))
-
+predictor_dt$Q19_Sum[is.na(predictor_dt$Q19_Sum)]<-round(mean(predictor_dt$Q20_Sum, na.rm=T))
 
 mY = reshape2::melt(Y)
 mY$cat = {bip_net %v% 'Concept_Type'}[match(mY$Var2,bip_net %v% 'vertex.names')]
@@ -387,7 +387,8 @@ facts$othergroup <- ifelse(facts$Q4_Ed=="1"|facts$Q4_Multijuris=="1"|facts$Q4_Mu
 facts$othergroup_wEnviro <- ifelse(facts$Q4_Ed=="1"|facts$Q4_Multijuris=="1"|facts$Q4_Multistake=="1"|facts$Q4_Political=="1"|facts$Q4_Trade=="1"|facts$Q4_Enviro=="1"|facts$noactorcat=="1", 1, 0)
 #create new nonprofit with enviro
 facts$noprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1"|facts$Q4_Enviro=="1", 1, 0)
-
+#rename the no category actor
+facts$OtherActorType <- ifelse(facts$noactorcat=="1", 1, 0)
 
 require(lavaan)
 require(tidySEM)
@@ -508,6 +509,43 @@ gg_sem3 = plot(sem_plot3) + ggtitle('F1 and F1 regressed on engagement + covaria
 
 ggsave(filename = 'output/figures/SEM_model_diagram3.png',plot = gg_sem3,dpi = 300,width = 7,height = 5,units = 'in')
 
+####Final SEM Model Redo (all actor types and two latent variables)---------------------
+sem_formfin <- '
+#2 latent variables for engagement
+Engagement  =~  Q32_InfoTypes + Q1_Focus + Q11_STAware + Q11_LTAware + Q19_Sum
+
+Concern =~ Q12_STConcern + Q12_LTConcern + When_SLR
+
+#regression with all actor types (local gov baseline)
+F1 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+F2 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+#resid corrs
+F1~~F2
+'
+
+
+sem_fitfin = sem(sem_formfin,data =  facts)
+
+summary(sem_fitfin,fit.measures = T)
+
+sem_htmlfin <- semTable(sem_fitfin, type="html")
+#install.packages("readr")
+library(readr)
+readr::write_file(sem_htmlfin, "output/tables/sem_model_10-18.html")
+
+
+#path plot for final sem
+library(tidySEM)
+lyfin = get_layout(sem_fitfin, 
+                layout_algorithm = 'layout_with_kk')
+sem_plotfin = tidySEM::prepare_graph(sem_fitfin,layout = lyfin)
+sem_plotfin <- tidySEM::hide_var(sem_plotfin)
+
+gg_semfin = plot(sem_plotfin) + ggtitle('F1 and F1 regressed on engagement + concern + covariates')
+
+ggsave(filename = 'output/figures/SEM_final_diagram.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
+
+
 #Regular OLS
 ols1 <- lm(F1~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
 ols2 <- lm(F2~Q1_Focus+Q32_InfoTypes+When_SLR+aware+concern+nonprofit+govagency+Q4_RegGov+Q4_LocalGov, data=facts)
@@ -516,6 +554,8 @@ summary(ols2)
 
 library(stargazer)
 stargazer(ols1, ols2)
+
+
 
 #SUR
 #install.packages("systemfit")
