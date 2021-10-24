@@ -395,21 +395,76 @@ require(tidySEM)
 
 facts$Q32_InfoTypes
 facts$When_SLR = facts$When_SLR * -1
-cfa_form <- ' 
-#latent variable for engagement
-Engagement  =~  Q32_InfoTypes + Q1_Focus + When_SLR + Q11_STAware + Q11_LTAware + Q12_LTConcern + Q12_STConcern
+
+
+cfa_form <- '
+Engagement  =~  Q32_InfoTypes + Q1_Focus + Q11_STAware + Q11_LTAware + Q19_Sum\
+Concern =~ Q12_STConcern + Q12_LTConcern + When_SLR
 '
-cfa_fit = cfa(cfa_form,data = facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
+#cfa_fit = cfa(cfa_form,data = facts,ordered = c('Q1_Focus','When_SLR','Q11_STAware','Q11_LTAware','Q12_LTConcern','Q12_STConcern'))
 cfa_fit = cfa(cfa_form,data = facts)
 
 
 #### THIS IS A GRAPH OF THE CFA FOR ENGAGEMENT
-cfa_graph = prepare_graph(cfa_fit)
+
+start= get_layout('Q32_InfoTypes','Q1_Focus','Q11_STAware','Q11_LTAware','Q19_Sum',NA,
+NA,NA,'Engagement','Concern',NA,NA,
+NA,NA,'Q12_STConcern','Q12_LTConcern','When_SLR',NA,rows = 3)
+
+cfa_graph = prepare_graph(cfa_fit,
+                          layout =start)
 cfa_graph = hide_var(cfa_graph)
-gg_cfa = plot(cfa_graph) + 
+
+(gg_cfa = plot(cfa_graph) + 
   ggtitle('Confirmatory factor analysis: indicators of policy engagement') +
-  coord_flip()
+  coord_flip())
 ggsave(plot = gg_cfa,filename = 'output/figures/cfa_plot.png',width = 6,height = 4.5,dpi = 300, units = 'in')
+
+
+
+####Final SEM Model Redo (all actor types and two latent variables)---------------------
+sem_formfin <- '
+#2 latent variables for engagement
+Engagement  =~  Q32_InfoTypes + Q1_Focus + Q11_STAware + Q11_LTAware + Q19_Sum
+
+Concern =~ Q12_STConcern + Q12_LTConcern + When_SLR
+
+#regression with all actor types (local gov baseline)
+F1 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+F2 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+#resid corrs
+F1~~F2
+'
+sem_fitfin = sem(sem_formfin,data =  facts)
+start= get_layout('Q32_InfoTypes','Q1_Focus','Q11_STAware','Q11_LTAware','Q19_Sum',
+                  NA,NA,'Concern',NA,'Engagement','Q12_STConcern','Q12_LTConcern','When_SLR',NA,NA,NA,NA,
+                  NA,NA,NA,rows = 4)
+sem_graph = prepare_graph(sem_fitfin,
+                          layout =start)
+sem_graph = hide_var(sem_graph)
+
+
+(gg_sem = plot(sem_graph) + 
+    ggtitle('SEM: indicators of policy engagement') +
+    coord_flip())
+
+
+
+cor.test(predict(cfa_fit)[,1],facts$F1)
+
+
+
+dim(predict(sem_fitfin))
+dim(predict(cfa_fit))
+summary(sem_fitfin)
+summary(sem_fitfin,fit.measures = T)
+summary(cfa_fit)
+
+library(stargazer)
+summary(cfa_fit)
+summary(sem_fitfin)
+sem_fitfin@Fit@est
+cfa_fit@Fit@est
 
 sem_form <- '
 #latent variable for engagement
