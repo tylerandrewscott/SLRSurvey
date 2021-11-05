@@ -390,6 +390,9 @@ facts$noprofit <- ifelse(facts$Q4_CBO=="1"|facts$Q4_NGO=="1"|facts$Q4_Enviro=="1
 #rename the no category actor
 facts$OtherActorType <- ifelse(facts$noactorcat=="1", 1, 0)
 
+#create a percent of possible collaborative activities variable
+facts$Q19_percent <- facts$Q19_Sum/15
+
 require(lavaan)
 require(tidySEM)
 
@@ -421,7 +424,24 @@ cfa_graph = hide_var(cfa_graph)
 ggsave(plot = gg_cfa,filename = 'output/figures/cfa_plot.png',width = 6,height = 4.5,dpi = 300, units = 'in')
 
 
+###Graph of CFA for engagement with Q19 percent instead of sum
+cfa_form2 <- '
+Engagement  =~  Q32_InfoTypes + Q1_Focus + Q11_STAware + Q11_LTAware + Q19_percent\
+Concern =~ Q12_STConcern + Q12_LTConcern + When_SLR
+'
+cfa_fit2 = cfa(cfa_form2,data = facts)
+start2= get_layout('Q32_InfoTypes','Q1_Focus','Q11_STAware','Q11_LTAware','Q19_percent',NA,
+                  NA,NA,'Engagement','Concern',NA,NA,
+                  NA,NA,'Q12_STConcern','Q12_LTConcern','When_SLR',NA,rows = 3)
 
+cfa_graph2 = prepare_graph(cfa_fit2,
+                          layout =start2)
+cfa_graph2 = hide_var(cfa_graph2)
+
+(gg_cfa2 = plot(cfa_graph2) + 
+    ggtitle('Confirmatory factor analysis: indicators of policy engagement') +
+    coord_flip())
+ggsave(plot = gg_cfa2,filename = 'output/figures/cfa_plot_V2.png',width = 6,height = 4.5,dpi = 300, units = 'in')
 ####Final SEM Model Redo (all actor types and two latent variables)---------------------
 sem_formfin <- '
 #2 latent variables for engagement
@@ -588,6 +608,30 @@ sem_htmlfin <- semTable(sem_fitfin, type="html")
 library(readr)
 readr::write_file(sem_htmlfin, "output/tables/sem_model_10-18.html")
 
+####Redo Final Model but combine CBO and NGO- final final I think 
+
+sem_formfin2 <- '
+#2 latent variables for engagement
+Engagement  =~  Q32_InfoTypes + Q1_Focus + Q11_STAware + Q11_LTAware + Q19_percent
+
+Concern =~ Q12_STConcern + Q12_LTConcern + When_SLR
+
+#regression with all actor types (local gov baseline)
+F1 ~ Engagement + Concern + nonprofit + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+F2 ~ Engagement + Concern + nonprofit + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+#resid corrs
+F1~~F2
+'
+
+sem_fitfin2 = sem(sem_formfin2,data =  facts)
+
+summary(sem_fitfin2,fit.measures = T)
+library(semTable)
+sem_htmlfin2 <- semTable(sem_fitfin2, type="html")
+#install.packages("readr")
+library(readr)
+readr::write_file(sem_htmlfin2, "output/tables/sem_model_11-4.html")
+
 
 #path plot for final sem
 library(tidySEM)
@@ -598,7 +642,17 @@ sem_plotfin <- tidySEM::hide_var(sem_plotfin)
 
 gg_semfin = plot(sem_plotfin) + ggtitle('F1 and F1 regressed on engagement + concern + covariates')
 
-ggsave(filename = 'output/figures/SEM_final_diagram.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
+ggsave(filename = 'output/figures/SEM_final_diagram_11-4.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
+
+
+lyfin2 = get_layout(sem_fitfin2, 
+                   layout_algorithm = 'layout_with_kk')
+sem_plotfin2 = tidySEM::prepare_graph(sem_fitfin2,layout = lyfin2)
+sem_plotfin2 <- tidySEM::hide_var(sem_plotfin2)
+
+gg_semfin2 = plot(sem_plotfin2) + ggtitle('F1 and F1 regressed on engagement + concern + covariates')
+
+ggsave(filename = 'output/figures/SEM_final_diagram_11-2.png',plot = gg_sem,dpi = 300,width = 7,height = 5,units = 'in')
 
 
 #Regular OLS
