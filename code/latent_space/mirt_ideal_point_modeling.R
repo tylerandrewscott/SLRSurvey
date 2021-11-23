@@ -258,7 +258,7 @@ gg2 = ggplot(rotated.factors)+
 
 ggsave(filename = 'output/figures/figure_factor_loadings.png',plot = gg2,width = 7,height = 5.5, units = 'in',dpi = 350)
 #plot item and respondent locations for d = 2 model
-ggplot() + 
+gg3<-ggplot() + 
   geom_point(aes(x = F1,y = F2,col = 'red'),data = rotated.factors,pch = 17,size = 2)+
   geom_label_repel(aes(y =F2,x = F1,label = item),max.overlaps = 20,data = rotated.factors) + 
   geom_point(aes(x = F1,y = F2,col = 'red'),data = rotated.factors,pch = 17,size = 2)+
@@ -270,6 +270,8 @@ ggplot() +
         legend.backgroun = element_rect(fill = alpha('white',0)))
 
 
+ggsave(filename = 'output/figures/figure_respondent_and_item_locations.png',plot = gg3,width = 7,height = 5.5, units = 'in',dpi = 350)
+#
 # compute correlations between factors scores and select variables
 # note still need to find a good way to test correlation significance without having to run cor.test a bunch of times
 
@@ -456,29 +458,62 @@ F2 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4
 F1~~F2
 '
 sem_fitfin = sem(sem_formfin,data =  facts)
-start= get_layout('Q32_InfoTypes','Q1_Focus','Q11_STAware','Q11_LTAware','Q19_Sum',
-                  NA,NA,'Concern',NA,'Engagement','Q12_STConcern','Q12_LTConcern','When_SLR',NA,NA,NA,NA,
-                  NA,NA,NA,rows = 4)
+
+##### there are basically 4 layers, each 9 wide
+start= get_layout(
+  # row 1
+  'Q4_CBO','Q4_NGO','Q4_State','Q4_RegGov','Q4_EnviroSD',
+  'Q4_WaterSD','Q4_Ed','Q4_Trade','OtherActorType',
+  # row 2
+  NA,NA,NA,'F1',NA,NA,'F2',NA,NA,
+  # row 3
+  NA,'Q4_Enviro','Q4_Multijuris',NA,'Engagement','Concern',NA,'Q4_Multistake','Q4_Political',
+  # row 4
+  NA,'Q32_InfoTypes','Q1_Focus','Q11_STAware','Q11_LTAware',
+                  'Q19_Sum','Q12_STConcern','Q12_LTConcern','When_SLR',
+                  rows = 4)
+
 sem_graph = prepare_graph(sem_fitfin,
                           layout =start)
 sem_graph = hide_var(sem_graph)
 
+(gg_sem = plot(sem_graph) + 
+    ggtitle('SEM: indicators of policy engagement') + coord_flip())
+  
+
+
+start= get_layout(
+  # row 2
+  NA,'F1',NA,'Q4_CBO',NA,'F2',NA,
+  # row 3
+  'Q32_InfoTypes',NA,'Engagement',NA,'Concern',NA,'When_SLR',
+  # row 4
+  'Q1_Focus','Q11_STAware','Q11_LTAware',
+  'Q19_Sum',NA,'Q12_STConcern','Q12_LTConcern',
+  rows = 3)
+
+sem_graph = prepare_graph(sem_fitfin,
+                          layout =start)
+sem_graph = hide_var(sem_graph)
+
+sem_graph$edges[sem_graph$edges$from=='Q4_CBO'&sem_graph$edges$to=='F2',]$label <- '---'
+sem_graph$edges[sem_graph$edges$from=='Q4_CBO'&sem_graph$edges$to=='F1',]$label <- '---'
+
+sem_graph$nodes$label[sem_graph$nodes$label=='Q4_CBO']<-''
 
 (gg_sem = plot(sem_graph) + 
-    ggtitle('SEM: indicators of policy engagement') +
-    coord_flip())
+    #ggplot() + 
+    geom_rect(data = sem_graph$nodes[sem_graph$nodes$label=='',],fill = 'white',
+              linetype = 3,colour = 'black',
+              aes(xmin = node_xmin-0.1,xmax = node_xmax+.1,ymax = node_ymax+0.1,ymin = node_ymin-0.1))+
+    geom_text(data = sem_graph$nodes[sem_graph$nodes$label=='',],
+    aes(label = 'Org. type*',x = x,y = y)) + coord_flip() +
+  annotate('text',x = 1,y =6.5,label = '*represents 13 org.\ntype indicators',col = 'black') +
+    theme(text = element_text(family = 'Times',size = 12)) +
+    ggtitle('SEM: Engagement and org. type as predictors of factor location')
+  ) 
 
-
-
-cor.test(predict(cfa_fit)[,1],facts$F1)
-
-
-
-dim(predict(sem_fitfin))
-dim(predict(cfa_fit))
-summary(sem_fitfin)
-summary(sem_fitfin,fit.measures = T)
-summary(cfa_fit)
+ggsave(plot = gg_sem,filename = 'output/figures/sem_plot_stylizedOrgType.png',width = 7,height = 5,dpi = 600, units = 'in')
 
 library(stargazer)
 summary(cfa_fit)
