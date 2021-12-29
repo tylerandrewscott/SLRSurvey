@@ -802,6 +802,148 @@ ggplot(policymatrix, aes(x=name, y=value))+
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
 
+########Kyra Edits to Figures for Paper Update 12-29-21-----------
+#Figure 1 Concerns Bar Plot
+#Fixes- Remove Other, Reorder by Frequency
+concernsums_v2 <- c(434, 393, 315, 227, 137, 128, 88, 81, 51, 41, 36, 24)
+concernnames_v2 <- c("Transpo", "Stormwater Wastewater", "DACs", "Ecosystem", "Water", "Erosion", "Housing", "Public Health", "Econ Growth", "Energy", "Property Value", "Commercial")  
+concernmatrix_v2 <- data.frame(name=concernnames_v2, value=concernsums_v2)
+
+ggsave(filename='output/figures/figure_concerns_bar_plot_final.png', width = 4.5,height = 4.5, dpi = 350)
+ggplot(concernmatrix_v2, aes(x=reorder(name, value), y=value))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())+
+  ggtitle("Concerns for SLR Impacts")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#Figure 1 Policies Bar Plot
+#Fixes- Remove Other, Reorder by Frequency
+policysums_v2 <- c(261, 167, 75, 141, 162, 120, 121, 200, 82, 100, 42, 89, 149, 243)
+policynames_v2 <- c("SLR Plan", "Vulnerability Assessment", "Local Tax", "Fund Lobbying", "Streamline Permits", "Info Platform", "DACs Focus", "Green Infrastructure", "Visioning", "Innovative Design", "Local Response", "Regional Authority", "Existing Agency", "Collaboration")  
+policymatrix_v2 <- data.frame(value=policysums_v2, name=policynames_v2)
+
+ggsave(filename='output/figures/figure_policies_bar_plot_final.png', width = 4.5,height = 4.5, dpi = 350)
+ggplot(policymatrix_v2, aes(x=reorder(name, value), y=value))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank())+
+  ggtitle("Policy Preferences")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+#Figure 4 CFA Plot
+#Fixes- Retitle and Change Labels
+
+facts$ShortTermAware <- facts$Q11_STAware
+facts$LongTermAware <- facts$Q11_LTAware
+facts$CollabActions <- facts$Q19_Sum
+facts$ShortTermConcern <- facts$Q12_STConcern
+facts$LongTermConcern <- facts$Q12_LTConcern
+facts$InfoTypes <- facts$Q32_InfoTypes
+facts$Focus <- facts$Q1_Focus
+
+cfa_form <- '
+Engagement  =~  InfoTypes + Focus + ShortTermAware + LongTermAware + CollabActions\
+Concern =~ ShortTermConcern + LongTermConcern + When_SLR
+'
+#cfa_fit = cfa(cfa_form,data = facts,ordered = c('Focus','When_SLR','ShortTermAware','LongTermAware','LongTermConcern','ShortTermConcern'))
+cfa_fit = cfa(cfa_form,data = facts)
+
+
+#### THIS IS A GRAPH OF THE CFA FOR ENGAGEMENT
+
+start= get_layout('InfoTypes','Focus','ShortTermAware','LongTermAware','CollabActions',NA,
+                  NA,NA,'Engagement','Concern',NA,NA,
+                  NA,NA,'ShortTermConcern','LongTermConcern','When_SLR',NA,rows = 3)
+
+cfa_graph = prepare_graph(cfa_fit,
+                          layout =start)
+cfa_graph = hide_var(cfa_graph)
+
+(gg_cfa = plot(cfa_graph) + 
+    ggtitle('Confirmatory factor analysis of SLR involvement constructs') +
+    coord_flip())
+ggsave(plot = gg_cfa,filename = 'output/figures/cfa_plot_final.png',width = 6,height = 4.5,dpi = 300, units = 'in')
+
+
+#Figure 5 SEM Plot
+#Fixes- Add p value key, change * note symbol for org type
+
+sem_formfin <- '
+#2 latent variables for engagement
+Engagement  =~  InfoTypes + Focus + ShortTermAware + LongTermAware + CollabActions
+
+Concern =~ ShortTermConcern + LongTermConcern + When_SLR
+
+#regression with all actor types (local gov baseline)
+F1 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+F2 ~ Engagement + Concern + Q4_CBO + Q4_NGO + Q4_Fed + Q4_State + Q4_RegGov + Q4_EnviroSD + Q4_WaterSD + Q4_Ed + Q4_Multijuris + Q4_Multistake + Q4_Political + Q4_Trade + Q4_Enviro + OtherActorType
+#resid corrs
+F1~~F2
+'
+sem_fitfin = sem(sem_formfin,data =  facts)
+
+##### there are basically 4 layers, each 9 wide
+start= get_layout(
+  # row 1
+  'Q4_CBO','Q4_NGO','Q4_State','Q4_RegGov','Q4_EnviroSD',
+  'Q4_WaterSD','Q4_Ed','Q4_Trade','OtherActorType',
+  # row 2
+  NA,NA,NA,'F1',NA,NA,'F2',NA,NA,
+  # row 3
+  NA,'Q4_Enviro','Q4_Multijuris',NA,'Engagement','Concern',NA,'Q4_Multistake','Q4_Political',
+  # row 4
+  NA,'InfoTypes','Focus','ShortTermAware','LongTermAware',
+  'CollabActions','ShortTermConcern','LongTermConcern','When_SLR',
+  rows = 4)
+
+sem_graph = prepare_graph(sem_fitfin,
+                          layout =start)
+sem_graph = hide_var(sem_graph)
+
+(gg_sem = plot(sem_graph) + 
+    ggtitle('SEM: indicators of policy engagement') + coord_flip())
+
+
+
+start= get_layout(
+  # row 2
+  NA,'F1',NA,'Q4_CBO',NA,'F2',NA,
+  # row 3
+  'InfoTypes',NA,'Engagement',NA,'Concern',NA,'When_SLR',
+  # row 4
+  'Focus','ShortTermAware','LongTermAware',
+  'CollabActions',NA,'ShortTermConcern','LongTermConcern',
+  rows = 3)
+
+sem_graph = prepare_graph(sem_fitfin,
+                          layout =start)
+sem_graph = hide_var(sem_graph)
+
+sem_graph$edges[sem_graph$edges$from=='Q4_CBO'&sem_graph$edges$to=='F2',]$label <- '---'
+sem_graph$edges[sem_graph$edges$from=='Q4_CBO'&sem_graph$edges$to=='F1',]$label <- '---'
+
+sem_graph$nodes$label[sem_graph$nodes$label=='Q4_CBO']<-''
+
+(gg_sem = plot(sem_graph) + 
+    #ggplot() + 
+    geom_rect(data = sem_graph$nodes[sem_graph$nodes$label=='',],fill = 'white',
+              linetype = 3,colour = 'black',
+              aes(xmin = node_xmin-0.1,xmax = node_xmax+.1,ymax = node_ymax+0.1,ymin = node_ymin-0.1))+
+    geom_text(data = sem_graph$nodes[sem_graph$nodes$label=='',],
+              aes(label = 'Org. type^',x = x,y = y)) + coord_flip() +
+    annotate('text',x = 2.25,y =6,label = '^ represents 13 org.\ntype indicators',col = 'black') +
+    annotate('text', x=1.25, y=6, label='p-values *<0.05, **<0.01, ***<0.001', col='black')+
+    theme(text = element_text(family = 'Times',size = 12)) +
+    ggtitle('SEM: Engagement and org. type as predictors of factor location')
+) 
+
+ggsave(plot = gg_sem,filename = 'output/figures/sem_plot_stylizedOrgType_edited.png',width = 7,height = 5,dpi = 600, units = 'in')
 
 
 
