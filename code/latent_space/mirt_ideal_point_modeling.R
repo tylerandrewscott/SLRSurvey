@@ -425,6 +425,7 @@ cfa_graph = hide_var(cfa_graph)
   coord_flip())
 ggsave(plot = gg_cfa,filename = 'output/figures/cfa_plot.png',width = 6,height = 4.5,dpi = 300, units = 'in')
 
+fitmeasures(cfa_fit)
 
 ###Graph of CFA for engagement with Q19 percent instead of sum
 cfa_form2 <- '
@@ -816,7 +817,7 @@ ggplot(concernmatrix_v2, aes(x=reorder(name, value), y=value))+
   geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
   theme(axis.title.x=element_blank(),
         axis.title.y=element_blank())+
-  ggtitle("Concerns for SLR Impacts")+
+  ggtitle("Policy Problems- Concerns for SLR Impacts")+
   theme(plot.title = element_text(hjust = 0.5))
 
 
@@ -833,7 +834,7 @@ ggplot(policymatrix_v2, aes(x=reorder(name, value), y=value))+
   geom_text(aes(label = value), vjust = 0.4, hjust=1, colour="white")+
   theme(axis.title.x=element_blank(),
         axis.title.y=element_blank())+
-  ggtitle("Policy Preferences")+
+  ggtitle("Preferred Policy Solutions")+
   theme(plot.title = element_text(hjust = 0.5))
 
 #Figure 4 CFA Plot
@@ -945,5 +946,59 @@ sem_graph$nodes$label[sem_graph$nodes$label=='Q4_CBO']<-''
 
 ggsave(plot = gg_sem,filename = 'output/figures/sem_plot_stylizedOrgType_edited.png',width = 7,height = 5,dpi = 600, units = 'in')
 
+#Attempt Figure 6- Average Location by Org Type
+
+#Average F1 and F2 for Fed
+facts %>%
+  group_by(Q4_Fed) %>%
+  dplyr::summarize(Mean = mean(F1, na.rm=TRUE))
+
+facts %>%
+  group_by(Q4_Fed) %>%
+  dplyr::summarize(Mean = mean(F2, na.rm=TRUE))
+
+#Average F1 and F2 for Local Gov
+facts %>%
+  group_by(Q4_LocalGov) %>%
+  dplyr::summarize(Mean = mean(F1, na.rm=TRUE))
+
+facts %>%
+  group_by(Q4_LocalGov) %>%
+  dplyr::summarize(Mean = mean(F2, na.rm=TRUE))
+
+#Average F1 and F2 for Enviro SD
+facts %>%
+  group_by(Q4_EnviroSD) %>%
+  dplyr::summarize(Mean = mean(F1, na.rm=TRUE))
+
+facts %>%
+  group_by(Q4_EnviroSD) %>%
+  dplyr::summarize(Mean = mean(F2, na.rm=TRUE))
+
+#Average F1 and F2 for Nonprofit
+facts %>%
+  group_by(nonprofit) %>%
+  dplyr::summarize(Mean = mean(F1, na.rm=TRUE))
+
+facts %>%
+  group_by(nonprofit) %>%
+  dplyr::summarize(Mean = mean(F2, na.rm=TRUE))
+
+SigOrgType <- c("Local Gov", "Nonprofit", "Fed Gov", "Enviro SD")
+AvgF1_OrgType <- c(0.0548, -0.479, -0.0613, 0.242)
+AvgF2_OrgType <- c(0.0804, -0.209, -0.516, -0.476)
+
+AvgFactors_OrgType <- cbind(SigOrgType, AvgF1_OrgType, AvgF2_OrgType)
+AvgFactors_OrgType <- as.data.frame(AvgFactors_OrgType)
 
 
+#Working on Getting Labels for Org Type but for some reason won't work
+AvgFact_OrgTypeFig<-ggplot(AvgFactors_OrgType, aes(x=AvgF1_OrgType, y=AvgF2_OrgType))+ 
+  geom_point()+ 
+  ggrepel::geom_text_repel(aes(label=SigOrgType))+
+  xlab('Factor 1 score') + ylab("Factor 2 score") + 
+  ggtitle('Average ideal points for survey respondents by organization type')
+
+AvgFact_OrgTypeFig
+
+ggsave(plot = AvgFact_OrgTypeFig,filename = 'output/figures/avgFscores_orgtype.png',width = 7,height = 5,dpi = 600, units = 'in')
