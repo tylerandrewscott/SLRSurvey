@@ -248,8 +248,8 @@ gg2 = ggplot(rotated.factors)+
   geom_point(aes(y =F2,x = F1,shape = type,colour = type,size = V2)) + 
   geom_text_repel(aes(y =F2,x = F1,label = item),max.overlaps = 30) + 
   theme_bw() + 
-  scale_color_tableau(type = 'regular',name = 'item type')+
-  scale_shape_discrete(name = 'item type')+
+  scale_color_tableau(type = 'regular',name = 'item type',labels = c('problem','solution'))+
+  scale_shape_discrete(name = 'item type',labels = c('problem','solution'))+
   scale_size_continuous(name = '% chosen',breaks = c(0.1,0.3,0.5,0.7),labels = c('10%','30%','50%','70%'))+
   theme(legend.position = c(0.25,0.25))+
   scale_y_continuous(name = 'Factor loading, dimension 2' ) + 
@@ -993,12 +993,14 @@ AvgFactors_OrgType <- as.data.frame(AvgFactors_OrgType)
 
 
 #Working on Getting Labels for Org Type but for some reason won't work
-AvgFact_OrgTypeFig<-ggplot(AvgFactors_OrgType, aes(x=AvgF1_OrgType, y=AvgF2_OrgType))+ 
-  geom_point()+ 
-  ggrepel::geom_text_repel(aes(label=SigOrgType))+
+(AvgFact_OrgTypeFig<-ggplot()+ 
+  geom_point(data = rotated.factors,col = 'grey50',aes(y =F2,x = F1,shape = type)) + 
+    geom_text_repel(col = 'grey50',data = rotated.factors,aes(y =F2,x = F1,label = item),max.overlaps = 30) + 
+  geom_point(data = AvgFactors_OrgType, shape = 15,aes(x=as.numeric(AvgF1_OrgType), y=as.numeric(AvgF2_OrgType)))+
+  ggrepel::geom_label_repel(data=AvgFactors_OrgType, aes(label=SigOrgType,x=as.numeric(AvgF1_OrgType), y=as.numeric(AvgF2_OrgType)),min.segment.length = 0.2)+
   xlab('Factor 1 score') + ylab("Factor 2 score") + 
-  ggtitle('Average ideal points for survey respondents by organization type')
+    theme(legend.position = c(0.2,0.2))+
+    scale_shape_discrete(name = 'item type',labels = c('problem','solution'),solid = F)+
+  ggtitle('Average ideal points for survey respondents by organization type','overlaid on item factor scores'))
 
-AvgFact_OrgTypeFig
-
-ggsave(plot = AvgFact_OrgTypeFig,filename = 'output/figures/avgFscores_orgtype.png',width = 7,height = 5,dpi = 600, units = 'in')
+ggsave(plot = AvgFact_OrgTypeFig,filename = 'output/figures/avgFscores_orgtype.png',width = 7,height = 7,dpi = 600, units = 'in')
