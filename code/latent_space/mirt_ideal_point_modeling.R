@@ -1004,3 +1004,27 @@ AvgFactors_OrgType <- as.data.frame(AvgFactors_OrgType)
   ggtitle('Average ideal points for survey respondents by organization type','overlaid on item factor scores'))
 
 ggsave(plot = AvgFact_OrgTypeFig,filename = 'output/figures/avgFscores_orgtype.png',width = 7,height = 7,dpi = 600, units = 'in')
+
+library(data.table)
+G = 1:5
+opts = data.table(expand.grid(D = 2,G = G))
+
+### this part takes a while, so I commented out and upload an RDS at the end ###
+require(doParallel)
+cluster = makeCluster(3)
+registerDoParallel(cluster)
+clusterExport(cl = cluster,varlist = list('opts','Y'))
+clusterEvalQ(cl = cluster,require(lvm4net))
+mlta_tests = foreach(i = 1:nrow(opts)) %dopar% {mlta(X = Y, D = opts$D[i], G = opts$G[i],nstarts = 5,maxiter = 1e3)}
+
+mlta_results = data.table(opts,BIC = sapply(mlta_tests,function(x) x$BIC))
+mlta_results$G_fix = paste0('G = ',mlta_results$G,mlta_results$fix)
+mlta_results$BIC <- round(mlta_results$BIC)
+mlta_cast = dcast(mlta_results[order(BIC)],G_fix ~ D,value.var = 'BIC')
+names(mlta_cast)<-c('# latent groups','BIC score')
+htmlTable(mlta_cast)
+
+
+
+
+
